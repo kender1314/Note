@@ -382,7 +382,7 @@ git branch --set-upstream-to=origin/dev dev
 
 ### 1.6.2  分支策略
 
-![image-20200703224213680](D:%5CTypora%5CPicture%5Cimage-20200703224213680.png)
+![image-20200703233931911](https://raw.githubusercontent.com/kender1314/NotePicture/master/image-20200703233931911.png)
 
 <center>图 5</center>
 
