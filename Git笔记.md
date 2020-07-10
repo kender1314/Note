@@ -135,8 +135,10 @@ git remote add origin git@github.com:michaelliao/learngit.git
 ### 1.3.12     将本地内容推送到远程库
 
 ```
-git push -u origin master
+git push -u origin master:master
 ```
+
+第一个master是本地分支名，第二个master是远程分支名。
 
 第一次推送master分支时，加上了-u参数，Git不但会把本地的master分支内容推送的远程新的master分支，还会把本地的master分支和远程的master分支关联起来，在以后的推送或者拉取时就可以简化命令。
 
@@ -152,7 +154,7 @@ git clone git@github.com:michaelliao/gitskills.git
 
 ### 1.3.14     分支
 
-#### 1.3.14.1   创建dev分支，并换到dev分支 
+#### 1.3.14.1   本地创建dev分支，并换到dev分支 ，同时远程也创建dev分支，并提交信息
 
 ```
 git checkout -b dev
@@ -167,10 +169,16 @@ $ git branch dev
 $ git checkout dev
 ```
 
+本地分支推送到远程服务器时，远程分支自动创建，推送本地分支到远程
+
+```
+git push --set-upstream <remote-name> <local-branch-name>:<remote-branch-name>
+```
+
 #### 1.3.14.2   查看所有分支
 
 ```
-git branch
+git branch -a
 ```
 
 #### 1.3.14.3   dev分支合并到master
@@ -187,7 +195,7 @@ git merge命令用于合并指定分支到当前分支。合并后，再查看re
 git branch -d dev
 ```
 
-#### 1.3.14.5   创建并切换分支， 与checkout作用相同
+#### 1.3.14.5  本地创建并切换分支， 与checkout作用相同
 
 ```
 git switch -c dev
@@ -197,6 +205,12 @@ git switch -c dev
 
 ```
 git switch master
+```
+
+本地分支推送到远程服务器时，远程分支自动创建，推送本地分支到远程
+
+```
+git push --set-upstream <remote-name> <local-branch-name>:<remote-branch-name>
 ```
 
 #### 1.3.14.6   查看分支合并情况

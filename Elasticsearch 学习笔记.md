@@ -63,7 +63,7 @@ GET /_search?timeout=10ms
 
 图 1—1
 
-###### 1.3.1.2.1    hits
+######  hits
 
 返回结果中最重要的部分是 hits ，它包含 total 字段来表示匹配到的文档总数，并且一个 hits 数组包含所查询结果的前十个文档。
 
@@ -989,7 +989,7 @@ int( (primary + 3 replicas) / 2 ) + 1 = 3
 
 注：*新索引默认有* *1* *个副本分片，这意味着为满足规定数量应该需要两个活动的分片副本。* *但是，这些默认的设置会阻止我们在单一节点上做任何事情。为了避免这个问题，要求只有当* *number_of_replicas* *大于**1**的时候，规定数量才会执行。*
 
-## 4     搜索
+## 搜索
 
 #### 4.1.1    映射（Mapping）
 
@@ -2641,21 +2641,45 @@ GET /my_index_v1/_alias/*
 
 #### 9.9.2    重新索引
 
-一个别名可以指向多个索引，所以我们在添加别名到新索引的同时必须从旧的索引中删除它。这个操作需要原子化，这意味着我们需要使用 _aliases 操作：
+一个别名可以指向多个索引，如果不想使用这个功能，那就必须在添加别名到新索引的同时，也从旧的索引中删除它。这个操作需要原子化，这意味着我们需要使用 _aliases 操作：
 
-POST /_aliases
+- ```Elasticsearch
+  POST /_aliases
+  
+  {
+  
+    "actions": [
+  
+  ​    { "remove": { "index": "my_index_v1", "alias": "my_index" }},
+  
+  ​    { "add":  { "index": "my_index_v2", "alias": "my_index" }}
+  
+    ]
+  
+  }
+  ```
 
+#### 9.9.3  Reindex
+
+使用reindex，可以将旧索引中的值转入新索引中，例如（在5.x版本中，一个index可以有多个type，但是在6.x版本中，一个index只能有一个type，推荐的type名是 _doc，7.0版本以后将完全抛弃type）。在这种情况下，就可以使用reindex对低版本的索引进行重新索引。
+
+问题：例如5.x集群中有索引IndexA，该索引上有type，typeA和typeB，reindex到6.x集群IndexA_TypeA和IndexB_TypeB，注意reindex语句。
+
+```Elasticsearch
+POST _reindex
 {
-
-  "actions": [
-
-​    { "remove": { "index": "my_index_v1", "alias": "my_index" }},
-
-​    { "add":  { "index": "my_index_v2", "alias": "my_index" }}
-
-  ]
-
+  "source": {
+    "index": "IndexA",
+    "type": "TypeA",
+    "size": 10000
+  },
+  "dest": {
+    "index": "IndexA_TypeA"
+  }
 }
+```
+
+
 
 ## 10   分片内部原理
 
@@ -10646,7 +10670,34 @@ PUT /_cluster/settings
 
 #### 16.3.3  索引性能技巧
 
+
+
+
+
+## REST APIs（from ES 7.8）
+
+###   API conventions（API约定）
+
+####  Multiple indices（多个索引）
+
+ 所有Multiple indices API均支持以下url查询字符串参数：
+
  
+
+| 参数                   | 描述                                                         |
+| ---------------------- | ------------------------------------------------------------ |
+| **ignore_unavailable** | (可选，boolean)如果为真，则响应中不包括缺失或关闭索引。默认值为false。 |
+| **allow_no_indices**   | (可选，boolean)如果为真，并且通配符表达式或_all值只检索丢失或关闭的索引，则请求不返回错误。（此参数也适用于指向缺失或关闭索引的索引别名。） |
+| **expand_wildcards**   | (可选，String)控制通配符表达式可以扩展到的索引类型。如用逗号分隔，则接受多个值 `open,hidden`。有效值为：<br/>all：展开以打开和关闭索引，包括隐藏索引。<br/>open：仅展开以打开索引。<br/>closed：仅扩展到封闭索引。<br/>hidden：通配符的扩展将包括隐藏的索引。必须与之合并open，closed或两者兼而有之。<br/>none：不接受通配符表达式。 |
+| **ignore_throttled**   | （可选，布尔值）如果为`true`，冻结时将忽略具体的索引，扩展的索引或别名索引。 |
+
+单索引API（例如[*文档API*](https://www.elastic.co/guide/en/elasticsearch/reference/current/docs.html)和 [单索引`alias`API）](https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-aliases.html)不支持多个索引。
+
+####  索引名称中的日期数学支持
+
+
+
+
 
  
 
@@ -10664,16 +10715,4 @@ PUT /_cluster/settings
 
  
 
- 
-
- 
-
- 
-
- 
-
- 
-
- 
-
- 
+ ###
