@@ -41,7 +41,7 @@ GET /_count?pretty
 
 2）     _source：可以显示指定字段
 
-```
+```java
 GET /website/blog/123?_source=title,text
 ```
 
