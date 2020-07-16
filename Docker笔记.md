@@ -2,22 +2,18 @@
 
 ## Docker命令
 
-### 登录和退出
+### 入门
 
 ```
 docker login
 docker logout
-```
-
-### 验证是否安装成功
-
-```
+验证是否安装成功
 docker version
 或者
 docker info
 ```
 
-### docker search 
+### search镜像
 
 查找官方仓库中的镜像
 
@@ -29,7 +25,7 @@ docker search -s 30 ubuntu
 docker search -s 30 --no-trunc ubuntu
 ```
 
-### 配置国内镜像源
+### 国内镜像源
 
 ```
 sudo mkdir -p /etc/docker
@@ -43,50 +39,7 @@ sudo systemctl daemon-reload
 sudo systemctl restart docker
 ```
 
-### 导出和导入容器
-
-```
-导出
-docker export 1e560fca3906 > ubuntu.tar
-导入
-cat docker/ubuntu.tar | docker import - test/ubuntu:v1
-```
-
-### 查看网络端口
-
-```
-docker port bf08b7f2cd89(容器id)
-```
-
-![image-20200711230428875](https://cdn.jsdelivr.net/gh/kender1314/NotePicture/20200711230430.png)
-
-### 查看WEB应用程序日志
-
-```
-docker logs -f bf08b7f2cd89(容器id)
-或
-docker logs bf08b7f2cd89(容器id)
-```
-
-### 查看WEB应用程序容器的进程
-
-```
-docker top bf08b7f2cd89(容器id)
-```
-
-### 查看 Docker 的底层信息
-
-```
-docker inspect bf08b7f2cd89(容器id)
-```
-
-### 查询最后一次创建的容器
-
-```
-docker ps -l
-```
-
-### Docker服务与防火墙设置
+### Docker服务
 
 #### 设置开机自动启动和关闭
 
@@ -109,28 +62,7 @@ systemctl 命令的用法
 sudo systemctl start docker
 ```
 
-#### 关闭防火墙
-
-```
-systemctl stop firewalld
-systemctl start firewalld
-firewall-cmd --zone=public --add-port=5005/tcp --permanent   （--permanent永久生效，没有此参数重启后失效）
-//删除端口
-firewall-cmd --zone=public --remove-port=80/tcp --permanent
-//查看端口
-firewall-cmd --zone=public --query-port=80/tcp
-//查看开启了哪些端口
-firewall-cmd --list-ports
-```
-
-#### 查看开启了哪些服务
-
-```
-firewall-cmd --list-services
-firewall-cmd --add-service=http
-```
-
-### Docker镜像
+### 镜像
 
 #### 列出本机的所有 image 文件
 
@@ -176,6 +108,8 @@ docker images --digests --no-trunc
 
 ### docker volume
 
+Docker的数据持久化即使数据不随着container的结束而结束，数据存在于host机器上——要么存在于host的某个指定目录中（使用bind mount），要么使用docker自己管理的volume（/var/lib/docker/volumes下）。
+
 #### 创建volume
 
 ```
@@ -200,7 +134,7 @@ docker volume rm [volumes名字]
 docker commit -m="has update" -a="runoob" e218edb10161 runoob/ubuntu:v2
 ```
 
-### Docker容器
+### 容器
 
 #### 进入容器
 
@@ -247,7 +181,87 @@ exit
 docker attach  mysql
 ```
 
-### 设置centos可以访问的端口
+#### 查询最后一次创建的容器
+
+```
+docker ps -l
+```
+
+#### 查看容器底层信息
+
+```
+docker inspect bf08b7f2cd89(容器id)
+```
+
+#### 查看容器的进程
+
+```
+docker top bf08b7f2cd89(容器id)
+```
+
+#### 导出和导入容器
+
+```
+导出
+docker export 1e560fca3906 > ubuntu.tar
+导入
+cat docker/ubuntu.tar | docker import - test/ubuntu:v1
+```
+
+#### 查看容器端口
+
+```
+docker port bf08b7f2cd89(容器id)
+```
+
+![image-20200711230428875](https://cdn.jsdelivr.net/gh/kender1314/NotePicture/20200711230430.png)
+
+#### 查看容器日志
+
+```
+docker logs -f bf08b7f2cd89(容器id)
+或
+docker logs bf08b7f2cd89(容器id)
+```
+
+### 帮助help
+
+**查看****Docker****总体帮助**
+
+```
+docker
+```
+
+**查看具体的命令帮助（以查看**stats**帮助）**
+
+```
+docker stats --help
+```
+
+ 
+
+### Centos防火墙设置
+
+#### 关闭防火墙
+
+```
+systemctl stop firewalld
+systemctl start firewalld
+firewall-cmd --zone=public --add-port=5005/tcp --permanent   （--permanent永久生效，没有此参数重启后失效）
+//删除端口
+firewall-cmd --zone=public --remove-port=80/tcp --permanent
+//查看端口
+firewall-cmd --zone=public --query-port=80/tcp
+//查看开启了哪些端口
+firewall-cmd --list-ports
+```
+
+#### 查看开启了哪些服务
+
+```
+firewall-cmd --list-services
+firewall-cmd --add-service=http
+```
 
 #### 查询端口
 
@@ -355,6 +369,7 @@ Docker 包括三个基本概念:
 - -m: 提交的描述信息。
 - -a: 指定镜像作者。
 - --name：--name 用于命名容器。
+- -q：只显示id。
 
  
 
@@ -370,12 +385,6 @@ Docker 包括三个基本概念:
 ### **普通运行**
 
 docker run ubuntu:15.10 /bin/echo "Hello world"
-
-### **后台运行**
-
-```
-docker run -d ubuntu:15.10 /bin/sh -c "while true; do echo hello world; sleep 1; done"
-```
 
 ### **容器详情**
 
@@ -413,26 +422,6 @@ dead（死亡）
 ![image-20200713201843455](../../../Typora/Picture/image-20200713201843455.png)
 
 
-
-
-
-
-
-## Docker帮助
-
-**查看****Docker****总体帮助**
-
-```
-runoob@runoob:~# docker
-```
-
-**查看具体的命令帮助（以查看**stats**帮助）**
-
-```
-runoob@runoob:~# docker stats --help
-```
-
- 
 
 ## 镜像（images）
 
