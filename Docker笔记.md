@@ -136,16 +136,13 @@ docker commit -m="has update" -a="runoob" e218edb10161 runoob/ubuntu:v2
 
 ### 容器
 
-#### 进入容器
-
-```
-sudo docker exec -it containerID /bin/bash 
-```
-
 #### 运行image 文件
 
 ```
+//后台运行 -d
 docker run --name mysql -e MYSQL_ROOT_PASSWORD=123456 -d -p 3306:3306 mysql:5.7
+//交互式运行 -it(运行之后，直接进入容器)
+docker run --name mysql -e MYSQL_ROOT_PASSWORD=123456 -it -p 3306:3306 mysql:5.7
 ```
 
 前面的3306是对应的服务器端口
@@ -153,14 +150,25 @@ docker run --name mysql -e MYSQL_ROOT_PASSWORD=123456 -d -p 3306:3306 mysql:5.7
 #### 停止和开始容器
 
 ```
+//温柔关闭容器，类似于正常关机
 docker stop mysql 
+//强制关闭容器
+docker kill mysql
+//运行容器
 docker start mysql 
 ```
 
 #### 删除容器
 
 ```
+//删除单个容器
 docker rm 7ac94d6f967f
+//强制删除
+docker rm -f 7ac94d6f967f
+//删除多个容器
+docker rm -f$(docker ps -a -q)
+或
+docker ps -a -q|xargs docker rm
 ```
 
 #### 容器中登录mysql
@@ -168,6 +176,18 @@ docker rm 7ac94d6f967f
 ```
 mysql -u root -p "123456" 
 ```
+
+#### 进入容器
+
+```
+//有两种方式进入容器
+docker attach containerID  //如果执行exit，会导致容器的停止
+docker exec -it containerID /bin/bash 
+//可以输出容器中终端的命令，不进去
+docker exec -t containerID ls 
+```
+
+![image-20200716232611728](https://cdn.jsdelivr.net/gh/kender1314/NotePicture/20200716232613.png)
 
 #### 退出容器
 
@@ -208,6 +228,15 @@ docker export 1e560fca3906 > ubuntu.tar
 cat docker/ubuntu.tar | docker import - test/ubuntu:v1
 ```
 
+#### 从容器内copy到主机
+
+```
+docker cp 容器id：容器内路径 目的主机路径
+docker cp  2de5df86252d:/anaconda-post.log /data
+```
+
+
+
 #### 查看容器端口
 
 ```
@@ -222,7 +251,11 @@ docker port bf08b7f2cd89(容器id)
 docker logs -f bf08b7f2cd89(容器id)
 或
 docker logs bf08b7f2cd89(容器id)
+//打印的日志显示打印时间，显示的日志处于一直更新状态，并且只显示最后3条
+docker logs -f -t --tail 3 a4
 ```
+
+![image-20200716230925370](../../../Typora/Picture/20200716230927.png)
 
 ### 帮助help
 
@@ -423,7 +456,9 @@ dead（死亡）
 
 
 
-## 镜像（images）
+## 镜像
+
+### 镜像命令
 
 ```
 runoob@runoob:~$ docker images           
@@ -445,6 +480,24 @@ training/webapp     latest              6fae60ef3446        11 months ago       
 - IMAGE ID：镜像ID
 - CREATED：镜像创建时间
 - SIZE：镜像大小
+
+### 镜像原理
+
+#### 镜像是什么？
+
+镜像是一种轻量级、可执行的独立软件包，用来打包软件运行环境和基于运行环境开发的软件，它包含运行某个软件所需要的所有内容，包括代码、运行时所需要的库、环境变量和配置文件等。
+
+镜像的本质：UnionFS（联合文件系统）是一种分层、轻量级并且高性能的文件系统，<span style="color: red">它支持对文件系统的修改作为一次提交来一层层的叠加。</span>
+
+#### 镜像加载原理
+
+![image-20200720222758288](https://cdn.jsdelivr.net/gh/kender1314/NotePicture/20200720222801.png)
+
+![image-20200720222933409](../../../Typora/Picture/image-20200720222933409.png)
+
+![image-20200720223344415](../../../Typora/Picture/image-20200720223344415.png)
+
+
 
 ## 构建镜像
 
