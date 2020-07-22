@@ -1,0 +1,435 @@
+# Spring框架笔记
+
+## Spring
+
+说明：Spring是一个基于IOC和AOP的结构J2EE系统的框架 
+
+参考文档：https://www.cnblogs.com/wmyskxz/p/8820371.html
+
+### 什么是Spring
+
+1. Spring 是一个轻量级的 DI / IoC 和 AOP 容器的开源框架
+
+2. Spring 提倡以“最少侵入”的方式来管理应用中的代码，这意味着我们可以随时安装或者卸载 
+
+3. Spring适用范围：任何 Java 应用
+
+4. Spring 的根本使命：简化 Java 开发
+
+### Spring 中常用术语
+
+1. 框架：是能完成一定功能的半成品。框架能够帮助我们完成的是：项目的整体框架、一些基础功能、规定了类和对象如何创建，如何协作等，当我们开发一个项目时，框架帮助我们完成了一部分功能，我们自己再完成一部分，那这个项目就完成了。
+
+2. 非侵入式设计：从框架的角度可以理解为：无需继承框架提供的任何类这样我们在更换框架时，之前写过的代码几乎可以继续使用。
+
+3. 轻量级和重量级：轻量级是相对于重量级而言的，轻量级一般就是非入侵性的、所依赖的东西非常少、资源占用非常少、部署简单等等，其实就是比较容易使用，而重量级正好相反。
+
+4. JavaBean：即符合 JavaBean 规范的 Java 类POJO：即 Plain Old Java Objects，简单老式 Java 对象，它可以包含业务逻辑或持久化逻辑，但不担当任何特殊角色且不继承或不实现任何其它Java框架的类或接口。
+
+5. 容器：在日常生活中容器就是一种盛放东西的器具，从程序设计角度看就是装对象的对象，因为存在放入、拿出等操作，所以容器还要管理对象的生命周期。一般使用ApplicationContext容器，ApplicationContext容器包含BeanFactory容器的所有功能。
+
+ 
+
+### Spring 的优势
+
+1. 低侵入 / 低耦合 （降低组件之间的耦合度，实现软件各层之间的解耦）
+
+2. 声明式事务管理（基于切面和惯例）
+
+3. 方便集成其他框架（如MyBatis、Hibernate）
+
+4. 降低 Java 开发难度
+
+5. Spring 框架中包括了 J2EE 三层的每一层的解决方案（一站式）
+
+**J2EE开发三层架构扩展**：表现层（UI）、业务逻辑层（BLL）、数据访问层（DAL）
+
+1、 表现层（UI）：通俗讲就是展现给用户的界面，即用户在使用一个系统的时候他的所见所得。表现层的主流框架有：struts1 ，struts2,，springMVC，webwork
+
+ 
+
+2、 业务逻辑层（BLL）：针对具体问题的操作，也可以说是对数据层的操作，对数据业务逻辑处理。业务逻辑层的主流框架有：Spring
+
+ 
+
+3、 数据访问层（DAL）：该层所做事务直接操作数据库，针对数据的增添、删除、修改、查找等。数据访问层测主流框架有：Hibernate，Ibatis,以及Ibatis的升级版Mybatis
+
+ 
+
+### Spring 的框架结构
+
+![https://upload-images.jianshu.io/upload_images/7896890-a7c003d175bd41af.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240](https://cdn.jsdelivr.net/gh/kender1314/NotePicture/20200722234226.png)
+
+ 
+
+1. Data Access/Integration层包含有JDBC、ORM、OXM、JMS和Transaction模块。
+
+2. Web层包含了Web、Struts、Web-Servlet、WebSocket、Web-Porlet模块。
+
+3. AOP模块提供了一个符合AOP联盟标准的面向切面编程的实现。
+
+4. Core Container(核心容器)：包含有Beans、Core、Context和SpEL模块。
+
+5. Test模块支持使用JUnit和TestNG对Spring组件进行测试。
+
+ 
+
+### Spring IoC 和 DI 简介
+
+**IoC：Inverse of Control（控制反转）**
+
+1. 读作“反转控制”，更好理解，不是什么技术，而是一种设计思想，就是将原本在程序中手动创建对象的控制权，交由Spring框架来管理。
+
+2. 正控：若要使用某个对象，需要自己去负责对象的创建
+
+3. 反控：若要使用某个对象，只需要从 Spring 容器中获取需要使用的对象，不关心对象的创建过程，也就是把创建对象的控制权反转给了Spring框架
+
+ 
+
+总结：
+
+1. 传统的方式：通过new 关键字主动创建一个对象
+
+2. IOC方式：对象的生命周期由Spring来管理，直接从Spring那里去获取一个对象。 IOC是反转控制 (Inversion Of Control)的缩写，就像控制权从本来在自己手里，交给了Spring。
+
+ 
+
+![https://upload-images.jianshu.io/upload_images/7896890-bb752724e10e0df2.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240](https://cdn.jsdelivr.net/gh/kender1314/NotePicture/20200722234300.png)
+
+ 
+
+**DI：Dependency Injection（依赖注入）**
+
+指 Spring 创建对象的过程中，将对象依赖属性（简单值，集合，对象）通过配置设值给该对象
+
+自我描述：使用DI之后，就不用再new类对象了，一切交给容器来创建
+
+![img](https://cdn.jsdelivr.net/gh/kender1314/NotePicture/20200722234306.jpg)
+
+ 
+
+总结：IoC 和 DI 其实是同一个概念的不同角度描述，DI 相对 IoC 而言，明确描述了“被注入对象依赖 IoC 容器配置依赖对象”
+
+ 
+
+### Spring AOP 简介
+
+（AOP全名Aspect Oriented Program）
+
+首先，在面向切面编程的思想里面，把功能分为核心业务功能，和周边功能。
+
+1. 所谓的核心业务，比如登陆，增加数据，删除数据都叫核心业务
+
+2. 所谓的周边功能，比如性能统计，日志，事务管理等等
+
+周边功能在 Spring 的面向切面编程AOP思想里，即被定义为切面
+
+ 
+
+在面向切面编程AOP的思想里面，核心业务功能和切面功能分别独立进行开发，然后把切面功能和核心业务功能 "编织" 在一起，这就叫AOP
+
+ 
+
+**AOP 的目的**
+
+AOP能够将那些与业务无关，却为业务模块所共同调用的逻辑或责任（例如事务处理、日志管理、权限控制等）封装起来，便于减少系统的重复代码，降低模块间的耦合度，并有利于未来的可拓展性和可维护性。
+
+ 
+
+**AOP 当中的概念：**
+
+1. 切入点（Pointcut）：在哪些类，哪些方法上切入（where）
+
+2. 通知（Advice）：在方法执行的什么实际（when:方法前/方法后/方法前后）做什么（what:增强的功能）
+
+3. 切面（Aspect）：切面 = 切入点 + 通知，通俗点就是：在什么时机，什么地方，做什么增强！
+
+4. 织入（Weaving）：把切面加入到对象，并创建出代理对象的过程。（由 Spring 来完成）
+
+ 
+
+## Spring MVC
+
+参考文档：https://www.cnblogs.com/wmyskxz/p/8848461.html#4183609
+
+ 
+
+### MVC 设计概述
+
+在早期 Java Web 的开发中，统一把显示层、控制层、数据层的操作全部交给 JSP 或者 JavaBean 来进行处理
+
+ 
+
+Model1：
+
+![img](https://cdn.jsdelivr.net/gh/kender1314/NotePicture/20200722234314.jpg)
+
+ 
+
+出现的弊端：
+
+-  JSP 和 Java Bean 之间严重耦合，Java 代码和 HTML 代码也耦合在了一起
+-  要求开发者不仅要掌握 Java ，还要有高超的前端水平
+-  前端和后端相互依赖，前端需要等待后端完成，后端也依赖前端完成，才能进行有效的测试代码难以复用
+
+正因为上面的种种弊端，所以很快这种方式就被 Servlet + JSP + Java Bean 所替代了，早期的 MVC 模型（Model2）就像下图这样
+
+ 
+
+![img](https://cdn.jsdelivr.net/gh/kender1314/NotePicture/20200722234318.png)
+
+ 
+
+首先用户的请求会到达 Servlet，然后根据请求调用相应的 Java Bean，并把所有的显示结果交给 JSP 去完成，这样的模式我们就称为 MVC 模式。
+
+ 
+
+M 代表 模型（Model）
+
+模型是什么呢？ 模型就是数据，就是 dao,bean
+
+V 代表 视图（View）
+
+视图是什么呢？ 就是网页, JSP，用来展示模型中的数据
+
+C 代表 控制器（controller)
+
+控制器是什么？ 控制器的作用就是把不同的数据(Model)，显示在不同的视图(View)上，Servlet 扮演的就是这样的角色。
+
+ 
+
+### Spring MVC 的架构
+
+为解决持久层中一直未处理好的数据库事务的编程，又为了迎合 NoSQL 的强势崛起，Spring MVC 给出了方案：
+
+![img](https://cdn.jsdelivr.net/gh/kender1314/NotePicture/20200722234528.jpg)
+
+传统的模型层被拆分为了业务层(Service)和数据访问层（DAO,Data Access Object）。在 Service 下可以通过 Spring 的声明式事务操作数据访问层，而在业务层上还允许我们访问 NoSQL ，这样就能够满足异军突起的 NoSQL 的使用了，它可以大大提高互联网系统的性能。
+
+ 
+
+特点：
+
+- 结构松散，几乎可以在 Spring MVC 中使用各类视图
+- 松耦合，各个模块分离
+- 与 Spring 无缝集成
+
+ 
+
+### 跟踪 Spring MVC 的请求
+
+每当用户在 Web 浏览器中点击链接或者提交表单的时候，请求就开始工作了，像是邮递员一样，从离开浏览器开始到获取响应返回，它会经历很多站点，在每一个站点都会留下一些信息同时也会带上其他信息，下图为 Spring MVC 的请求流程：
+
+ 
+
+![img](https://cdn.jsdelivr.net/gh/kender1314/NotePicture/20200722234524.png)
+
+ 
+
+### 使用注解配置 Spring MVC
+
+在 dispatcher-servlet.xml 文件中，注释掉之前的配置，然后增加一句组件扫描：
+
+```
+<!-- 扫描controller下的组件 --> 
+
+<context:component-scan base-package="controller"/>
+```
+
+ 
+
+在类中：
+
+@Controller 注解：
+
+很明显，这个注解是用来声明控制器的，但实际上这个注解对 Spring MVC 本身的影响并不大。
+
+@RequestMapping 注解：
+
+很显然，这就表示路径 /hello 会映射到该方法上
+
+ 
+
+### 配置视图解析器
+
+还记得我们 Spring MVC 的请求流程吗，视图解析器负责定位视图，它接受一个由 DispaterServlet 传递过来的逻辑视图名来匹配一个特定的视图。
+
+ 
+
+**需求：** 
+
+有一些页面我们不希望用户用户直接访问到，例如有重要数据的页面，例如有模型数据支撑的页面。
+
+**造成的问题：**
+
+我们可以在【web】根目录下放置一个【test.jsp】模拟一个重要数据的页面，我们什么都不用做，重新启动服务器，网页中输入 localhost/test.jsp 就能够直接访问到了，这会造成数据泄露...
+
+另外我们可以直接输入 localhost/index.jsp 试试，根据我们上面的程序，这会是一个空白的页面，因为并没有获取到 ${message} 参数就直接访问了，这会影响用户体验
+
+**解决方案：**
+
+我们将我们的 JSP 文件配置在【WEB-INF】文件夹中的【page】文件夹下，【WEB-INF】是 Java Web 中默认的安全目录，是不允许用户直接访问的（也就是你说你通过 localhost/WEB-INF/ 这样的方式是永远访问不到的）
+
+ 
+
+但是我们需要将这告诉给视图解析器，我们在 dispatcher-servlet.xml 文件中做如下配置：
+
+![img](https://cdn.jsdelivr.net/gh/kender1314/NotePicture/20200722234355.jpg)
+
+代码：
+
+```
+<bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver"> 
+<property name="prefix" value="/WEB-INF/page/" /> 
+<property name="suffix" value=".jsp" /> 
+</bean>
+```
+
+ 
+
+这里配置了一个 Spring MVC 内置的一个视图解析器，该解析器是遵循着一种约定：会在视图名上添加前缀和后缀，进而确定一个 Web 应用中视图资源的物理路径的。
+
+ 
+
+ 
+
+### 文件上传
+
+在 Spring MVC 中如何实现文件的上传和下载
+
+ 
+
+注意： 需要先导入 commons-io-1.3.2.jar 和 commons-fileupload-1.2.1.jar 两个包
+
+第一步：配置上传解析器
+
+在 dispatcher-servlet.xml 中新增一句：
+
+ 
+
+```
+<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver"/>
+```
+
+开启对上传功能的支持
+
+ 
+
+第二步：编写 JSP
+
+文件名为 upload.jsp，仍创建在【page】下：
+
+ 
+
+```
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<html>
+<head>
+  <title>测试文件上传</title>
+</head>
+<body>
+<form action="/upload" method="post" enctype="multipart/form-data">
+  <input type="file" name="picture">
+  <input type="submit" value="上 传">
+</form>
+</body>
+</html>
+```
+
+ 
+
+第三步：编写控制器
+
+在 Package【controller】下新建【UploadController】类：
+
+ 
+
+```
+package controller;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
+
+ 
+@Controller
+public class UploadController {
+
+  @RequestMapping("/upload")
+  public void upload(@RequestParam("picture") MultipartFile picture) throws Exception {
+​    System.out.println(picture.getOriginalFilename());
+  }
+
+  @RequestMapping("/test2")
+
+  public ModelAndView upload() {
+​    return new ModelAndView("upload");
+  }
+}
+```
+
+ 
+
+ 
+
+第四步：测试
+
+在浏览器地址栏中输入：localhost/test2 ，选择文件点击上传，测试成功：
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+## Mybatis
+
+ 
+
+ 
+
+## mybatis的逆向工程
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 

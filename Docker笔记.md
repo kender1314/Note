@@ -255,7 +255,18 @@ docker logs bf08b7f2cd89(容器id)
 docker logs -f -t --tail 3 a4
 ```
 
-![image-20200716230925370](../../../Typora/Picture/20200716230927.png)
+![image-20200716230925370](https://cdn.jsdelivr.net/gh/kender1314/NotePicture/20200722212708.png)
+
+#### 容器提交commit
+
+提交一个容器副本，使之成为一个新的镜像。
+
+```
+docker commit -m=“提交的描述信息” -a=“作者” 容器ID 要创建的目标镜像名:[标签名]
+docker commit -m="learn" -a="jiang.he" 32bcae4298b9 jiang/tomcat:1.2
+```
+
+
 
 ### 帮助help
 
@@ -333,7 +344,7 @@ Docker 是一个用于开发，交付和运行应用程序的开放平台。
 
 1. Docker本身并不是容器，它是创建容器的工具，是应用容器引擎。Docker就是下图中圈住的
 
-   ![image-20200713202957412](../../../Typora/Picture/image-20200713202957412.png)
+   ![image-20200713202957412](https://cdn.jsdelivr.net/gh/kender1314/NotePicture/20200722212721.png)
 
 2. K8S是基于容器的集群管理平台，它的全称，是kubernetes。
 
@@ -450,9 +461,26 @@ dead（死亡）
 - PORTS: 容器的端口信息和使用的连接类型（tcp\udp）。
 - NAMES: 自动分配的容器名称。
 
+### 容器数据卷
+
+#### 数据卷是什么？
+
+![image-20200722224553661](https://cdn.jsdelivr.net/gh/kender1314/NotePicture/20200722224624.png)
+
+#### 为什么会出现容器数据卷的需求？
+
+1. 我们有时候可能会希望将docker容器中运行产生的数据进行持久化。
+2. 容器之间希望有可能共享数据。
+
+#### 数据卷的特点
+
+![image-20200722224622719](https://cdn.jsdelivr.net/gh/kender1314/NotePicture/20200722224624.png)
+
+
+
 ## 仓库
 
-![image-20200713201843455](../../../Typora/Picture/image-20200713201843455.png)
+![image-20200713201843455](https://cdn.jsdelivr.net/gh/kender1314/NotePicture/20200722212740.png)
 
 
 
@@ -493,9 +521,19 @@ training/webapp     latest              6fae60ef3446        11 months ago       
 
 ![image-20200720222758288](https://cdn.jsdelivr.net/gh/kender1314/NotePicture/20200720222801.png)
 
-![image-20200720222933409](../../../Typora/Picture/image-20200720222933409.png)
+![image-20200720222933409](https://cdn.jsdelivr.net/gh/kender1314/NotePicture/20200722212752.png)
 
-![image-20200720223344415](../../../Typora/Picture/image-20200720223344415.png)
+#### **Docker的分层原理**
+
+![image-20200720223344415](https://cdn.jsdelivr.net/gh/kender1314/NotePicture/20200722212800.png)
+
+镜像分层的好处：
+
+最大的好处——共享资源。比如：有多个镜像都是由相同的base镜像构建而来，那么宿主机只需在磁盘中保存一份base镜像，同时内存中也只需加载一份镜像，就可以为所有容器服务。而且镜像的每一层都可以被共享。
+
+（e.g：第一次拉取镜像的时候，往往会下载比较久，后面再下载其他镜像的时候，花费的时间就会比较少）
+
+
 
 
 
