@@ -228,6 +228,16 @@ docker export 1e560fca3906 > ubuntu.tar
 cat docker/ubuntu.tar | docker import - test/ubuntu:v1
 ```
 
+#### 映射容器数据卷
+
+```
+docker run --name es -d -e "discovery.type=single-node" -v /data/csf/config:/usr/elasticsearch/config -p 9200:9200 -p 9300:9300 elasticsearch:5.6.16
+//ro->只读，容器内部只能读该文件夹中的文件，不能新建，修改或删除文件，但是主机没有影响
+docker run --name es -d -e "discovery.type=single-node" -v /data/csf/config:/usr/elasticsearch/config:ro -p 9200:9200 -p 9300:9300 elasticsearch:5.6.16
+```
+
+
+
 #### 从容器内copy到主机
 
 ```
@@ -475,6 +485,55 @@ dead（死亡）
 #### 数据卷的特点
 
 ![image-20200722224622719](https://cdn.jsdelivr.net/gh/kender1314/NotePicture/20200722224624.png)
+
+#### 映射容器数据卷命令
+
+```
+docker run --name es -d -e "discovery.type=single-node" -v /data/csf/config:/usr/elasticsearch/config -p 9200:9200 -p 9300:9300 elasticsearch:5.6.16
+//ro->只读，容器内部只能读该文件夹中的文件，不能新建，修改或删除文件，但是主机没有影响
+docker run --name es -d -e "discovery.type=single-node" -v /data/csf/config:/usr/elasticsearch/config:ro -p 9200:9200 -p 9300:9300 elasticsearch:5.6.16
+```
+
+#### 使用DockerFile管理容器卷
+
+新建DockerFile文件
+
+```
+#volumn test
+FROM tomcat
+#DockerFile为了避免面移植之后出现找不到对应文件夹的情况，VOLUME映射容器卷时，不映射主机的路径
+VOLUME ["/usr/local/tomcat/dataVolume1", "/usr/local/tomcat/dataVolume2"]
+CMD echo "finished,-----------success1"
+CMD /bin/bash
+```
+
+上面的语句相当于
+
+```
+docker run -it -v /hostpath1:/dataVolume1 -v /hostpath2:/dataVolume2 tomcat /bin/bash
+```
+
+然后建立镜像
+
+```
+docker build -f /data/docker/DockerFile -t jiang/tomcat .
+```
+
+原理：等于是在原本的tomcat镜像上再封装了一层镜像，直接运行建立后的镜像，就可以映射dataVolume1，dataVolume2到主机的路径中。
+
+#### 多个容器共享容器卷（volumes-from）
+
+```
+docker run -it --name to1 --volumes-from condescending_swirles jiang/tomcat
+```
+
+
+
+## DockerFile应用
+
+### DockerFile是什么？
+
+Docker是用来构建Docker镜像的构建文件，是由一系列命令和参数构成的脚本。
 
 
 
