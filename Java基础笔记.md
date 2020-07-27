@@ -1,12 +1,6 @@
 # Java基础笔记
 
-<center>-------------------------接触新项目或者新功能之前需要注意以下几点----------------------</center>
-
-<center>1. 弄懂项目中的专业名词或者技术中出现的技术点，必须知道概念。</center>
-
-<center>2. 使用Xmind将相关专业名词和技术点记下来，同时，将系统的功能列出来</center>				
-
-## 1.继承
+## 继承
 
 ### 什么是继承？
 
@@ -34,7 +28,7 @@ class 子类名 extends 父类名{
 
 3. 一切类的祖先——java.lang.Object，所有类都直接或者间接地继承了java.lang.Object，Object类提供了以下方法
 
-    ![image-20200704172619431](https://raw.githubusercontent.com/kender1314/NotePicture/master/20200704184314.png)
+    ![image-20200726203501158](https://cdn.jsdelivr.net/gh/kender1314/NotePicture/20200726203502.png)
 
 4. 子类继承是继承父类的所有东西，除了构造函数
 
@@ -52,7 +46,7 @@ protected：同一包中的子类可以使用，另一包中的子类也可以�
 
 default：如果不知名任何权限，则默认同一包中的类可以访问
 
- ![image-20200704172629445](https://raw.githubusercontent.com/kender1314/NotePicture/master/20200704184516.png)
+ ![image-20200726203512831](https://cdn.jsdelivr.net/gh/kender1314/NotePicture/20200726203514.png)
 
 访问权限：public>protected> default>private
 
@@ -102,83 +96,73 @@ final class 类名{
 
 #### this：当前对象的引用
 
-\1. 本类在非静态方法中使用非静态变量和非静态方法，可以使用【this.变量名】和【this.方法名(参数列表)】的方式调用，实际情况是，this关键字通常被省略
+1. 本类在非静态方法中使用非静态变量和非静态方法，可以使用【this.变量名】和【this.方法名(参数列表)】的方式调用，实际情况是，this关键字通常被省略
 
-\2. 在上面的情况下，包含一个特殊情况，假如方法中定义了一个与类成员变量同名的局部变量，这时在方法内部调用类的成员变量就必须使用this关键字来引用
+2. 在上面的情况下，包含一个特殊情况，假如方法中定义了一个与类成员变量同名的局部变量，这时在方法内部调用类的成员变量就必须使用this关键字来引用
 
-\3. 由this函数指向的构造函数默认有super()方法
+3. 由this函数指向的构造函数默认有super()方法
 
  
 
 #### super：父类对象的引用
 
-\1. 子类重写父类方法之后，再次调用父类的该方法，必须使用【super.方法名(参数列表)】调用
+1. 子类重写父类方法之后，再次调用父类的该方法，必须使用【super.方法名(参数列表)】调用
 
-\2. 子类的构造方法中默认调用了父类的无参构造方法，也可显示声明其他的构造方法，声明必须使用【super(列表参数)】
+2. 子类的构造方法中默认调用了父类的无参构造方法，也可显示声明其他的构造方法，声明必须使用【super(列表参数)】
 
-\3. 在构造方法中，super与this关键字不能同时出现，且位于构造方法首行
+3. 在构造方法中，super与this关键字不能同时出现，且位于构造方法首行
 
-\4. 静态方法中不能使用super
+4. 静态方法中不能使用super
 
-## 2.抽象和接口
+## 抽象和接口
 
 ### 抽象
 
 在Java继承中，抽象类和普通继承关系中的父类作用基本相同，但是却在一般父类的基础上添加了一些限制：
 
-\1. 抽象类不能被实例化，即不能被new对象，其子类只有实现了抽象类中的抽象方法子类才能被实例化；如果抽象类中没有抽象方法，则子类可以直接实例化
+1. 抽象类不能被实例化，即不能被new对象，其子类只有实现了抽象类中的抽象方法子类才能被实例化；如果抽象类中没有抽象方法，则子类可以直接实例化
 
-\2. 抽象类除了包含一般方法，变量，常量，同时自身还包含抽象方法
+2. 抽象类除了包含一般方法，变量，常量，同时自身还包含抽象方法
 
-\3. 抽象类的子类必须实现抽象类中的所有抽象方法，除非它自己也声明为抽象类，但是这样做，子类则不能被实例化
+3. 抽象类的子类必须实现抽象类中的所有抽象方法，除非它自己也声明为抽象类，但是这样做，子类则不能被实例化
 
-\4. 如果一个类中有抽象方法，则这个类必定是抽象类
+4. 如果一个类中有抽象方法，则这个类必定是抽象类
 
-\5. 抽象方法和抽象类看上去是多余的，当然实际运用中，抽象类能实现的，我们可以使用一般的继承和接口实现，当然，存在即是有道理的，如果熟练运用的话，可以写更少的代码实现相同的功能
+5. 抽象方法和抽象类看上去是多余的，当然实际运用中，抽象类能实现的，我们可以使用一般的继承和接口实现，当然，存在即是有道理的，如果熟练运用的话，可以写更少的代码实现相同的功能
 
-\6. 抽象方法不可以有函数体（含有大括号的叫函数体）
+6. 抽象方法不可以有函数体（含有大括号的叫函数体）
 
-\7. 抽象类可以有构造方法
-
- 
-
- 
-
- 
+7. 抽象类可以有构造方法
 
 抽象类举例：
 
- ![image-20200704172642349](https://raw.githubusercontent.com/kender1314/NotePicture/master/20200704184431.png)
+ ![image-20200726203150462](https://cdn.jsdelivr.net/gh/kender1314/NotePicture/20200726203413.png)
 
- ![image-20200704172647074](https://raw.githubusercontent.com/kender1314/NotePicture/master/20200704184438.png)
-
- 
+![image-20200726203403523](https://cdn.jsdelivr.net/gh/kender1314/NotePicture/20200726203407.png)
 
 ### 接口
 
 从本质上来说，接口是一种特殊的抽象类：
 
-\1. 接口由常量和抽象方法组成，接口中的方法可以省略abstract书写
+1. 接口由常量和抽象方法组成，接口中的方法可以省略abstract书写
 
-\2. public abstract书写（默认方法）, 默认修饰变量属性用：public static final
+2. public abstract书写（默认方法）, 默认修饰变量属性用：public static final
 
-\3. 接口中可以定义default方法，如default void d()；
+3. 接口中可以定义default方法，如default void d()；
 
-\4. 接口不能被实例化
+4. 接口不能被实例化
 
-\5. 接口可以继承多个接口
+5. 接口可以继承多个接口
 
-\6. 定义default方法时，可以有函数体，函数体内可以有变量。
+6. 定义default方法时，可以有函数体，函数体内可以有变量。
 
  
 
 接口举例：
 
- ![image-20200704172718439](https://raw.githubusercontent.com/kender1314/NotePicture/master/20200704184455.png)           
+  ![image-20200726203048417](https://cdn.jsdelivr.net/gh/kender1314/NotePicture/20200726203052.png)
 
- ![image-20200704172708751](https://raw.githubusercontent.com/kender1314/NotePicture/master/20200704184500.png)
-
- 
+ ![image-20200726203032542](https://cdn.jsdelivr.net/gh/kender1314/NotePicture/20200726203100.png)
 
  
 
@@ -192,19 +176,19 @@ final class 类名{
 
 不同点：
 
-\1. 抽象类包含一般方法，变量，常量，抽象方法；而接口只能包含常量和抽象方法
+1. 抽象类包含一般方法，变量，常量，抽象方法；而接口只能包含常量和抽象方法
 
-\2. 抽象类可以有构造方法，而接口不能有构造方法
+2. 抽象类可以有构造方法，而接口不能有构造方法
 
-\3. 一个类可以实现多个接口，但只能继承一个抽象类
+3. 一个类可以实现多个接口，但只能继承一个抽象类
 
-\4. 继承抽象类时会引发单继承所带来的局限性，而通过实现接口的方式能够解决单继承带来的局限性
+4. 继承抽象类时会引发单继承所带来的局限性，而通过实现接口的方式能够解决单继承带来的局限性
 
-\5. 接口里不能定义静态方法，抽象类可以
+5. 接口里不能定义静态方法，抽象类可以
 
-\6. 接口所有方法全是抽象方法只能用public abstract修饰 （默认public abstract修饰 ），属性默认public static final修饰。抽象类除了包含抽象方法外与普通类无区别。
+6. 接口所有方法全是抽象方法只能用public abstract修饰 （默认public abstract修饰 ），属性默认public static final修饰。抽象类除了包含抽象方法外与普通类无区别。
 
-\7. 一个类同时要实现接口和继承类，顺序为先继承再实现
+7. 一个类同时要实现接口和继承类，顺序为先继承再实现
 
  
 
@@ -224,31 +208,25 @@ final class 类名{
 
 特性：
 
-\1. 自从static变量被定义起，就会一直在类中存在，如果该变量在使用过程中，值被修改，再次调用该变量时，使用的是被改变后的值，这种情况直到类被卸载（结束）为止。
+1. 自从static变量被定义起，就会一直在类中存在，如果该变量在使用过程中，值被修改，再次调用该变量时，使用的是被改变后的值，这种情况直到类被卸载（结束）为止。
 
-\2. static修饰的变量未赋初始值，如果是int类型，则初始值为0，如果是String类型，则初始值为空
+2. static修饰的变量未赋初始值，如果是int类型，则初始值为0，如果是String类型，则初始值为空
 
- 
+3. 可以通过类名直接访问静态变量，非静态变量不能直接通过类名访问
 
-\3. 可以通过类名直接访问静态变量，非静态变量不能直接通过类名访问
+4. Static不能修饰局部变量
 
- 
+5. 如果没有定义static的方法和变量或者常量，就不会出现线程安全问题。
 
-\4. Static不能修饰局部变量
+ ![image-20200726202918176](https://cdn.jsdelivr.net/gh/kender1314/NotePicture/20200726203109.png)
 
- 
-
-\5. 如果没有定义static的方法和变量或者常量，就不会出现线程安全问题。
-
- ![image-20200704172741460](https://raw.githubusercontent.com/kender1314/NotePicture/master/20200704184526.png)
-
- ![image-20200704172744926](https://raw.githubusercontent.com/kender1314/NotePicture/master/20200704184534.png)
+ ![image-20200726202925850](https://cdn.jsdelivr.net/gh/kender1314/NotePicture/20200726203115.png)
 
  
 
 Static定义代码块：
 
- ![image-20200704172749866](https://raw.githubusercontent.com/kender1314/NotePicture/master/20200704184538.png)
+![image-20200726202929889](https://cdn.jsdelivr.net/gh/kender1314/NotePicture/20200726203119.png) 
 
  
 
@@ -256,23 +234,23 @@ Static定义代码块：
 
 特性：
 
-**1.**  **静态方法中可以直接调用同类中的静态成员，但不能直接调用非静态成员。**
+1. 静态方法中可以直接调用同类中的静态成员，但不能直接调用非静态成员。
 
-\2.  **如果希望在静态方法中调用非静态变量，可以通过创建类的对象，然后通过对象来访问非静态变量**。
+2. 如果希望在静态方法中调用非静态变量，可以通过创建类的对象，然后通过对象来访问非静态变量。
 
- 
+   ![image-20200726202842680](https://cdn.jsdelivr.net/gh/kender1314/NotePicture/20200726203125.png)
 
-**3.**  **在普通成员方法中，则可以直接访问同类的非静态变量和静态变量.**
+3. 在普通成员方法中，则可以直接访问同类的非静态变量和静态变量.
 
-**4.**  **静态方法中不能直接调用非静态方法，需要通过对象来访问非静态方法。**
+4. 静态方法中不能直接调用非静态方法，需要通过对象来访问非静态方法。
 
- ![image-20200704172756215](https://raw.githubusercontent.com/kender1314/NotePicture/master/20200704184602.png)
+   ![image-20200726202832858](https://cdn.jsdelivr.net/gh/kender1314/NotePicture/20200726203131.png)
 
-\5.  可以通过类名直接访问静态方法，非静态方法不能直接通过类名访问
+5. 可以通过类名直接访问静态方法，非静态方法不能直接通过类名访问
 
-\6.  定义顺序static final int
+6. 定义顺序static final int
 
- ![image-20200704172801942](https://raw.githubusercontent.com/kender1314/NotePicture/master/20200704184614.png)
+ ![](https://cdn.jsdelivr.net/gh/kender1314/NotePicture/20200726202534.png)
 
 ### static包静态导入
 
@@ -280,7 +258,7 @@ Static定义代码块：
 
 如第一行，当引用Math包的时候，如果在引用的时候加static，调用Math中的静态变量和静态方法的时候，就可以直接写变量名或者方法名，而不用这样写：
 
- ![image-20200704172809372](https://raw.githubusercontent.com/kender1314/NotePicture/master/20200704184620.png)
+ ![image-20200726202525988](https://cdn.jsdelivr.net/gh/kender1314/NotePicture/20200726202527.png)
 
  
 
@@ -288,7 +266,7 @@ Static定义代码块：
 
  
 
-## 5. final关键字
+## final关键字
 
 ### final
 
@@ -302,17 +280,17 @@ Static定义代码块：
 
 5.final不能修饰接口
 
- ![image-20200704172817137](https://raw.githubusercontent.com/kender1314/NotePicture/master/20200704184625.png)
+ ![image-20200726202448284](https://cdn.jsdelivr.net/gh/kender1314/NotePicture/20200726202539.png)
 
- ![image-20200704172819634](https://raw.githubusercontent.com/kender1314/NotePicture/master/20200704184654.png)
+ ![image-20200726202456744](https://cdn.jsdelivr.net/gh/kender1314/NotePicture/20200726202543.png)
 
- 
+ ![image-20200726202500631](https://cdn.jsdelivr.net/gh/kender1314/NotePicture/20200726202551.png)
 
 ### finalize方法
 
 一旦垃圾回收器准备回收内存而释放对象所占内存的时候，会先调用该对象的finalize方法，然后在下一次再需要垃圾回收的时候才真正的回收对象！
 
-## 5.内部类
+## 内部类
 
 在Java中，可以将一个类定义在另一个类里面或者方法里面，这样的类称为内部类。
 
@@ -322,13 +300,13 @@ Static定义代码块：
 
 成员内部类是最普通的内部类，它的定义位于另一个类内部
 
- ![image-20200704172826252](https://raw.githubusercontent.com/kender1314/NotePicture/master/20200704184702.png)
+ ![image-20200726202317312](https://cdn.jsdelivr.net/gh/kender1314/NotePicture/20200726202558.png)
 
-\1. 这样看起来，Draw像是Circle类的一个成员，Circle称为外部类，内部类可以无条件访问外部类的所有成员属性和成员方法（包括private成员和static成员）。
+1. 这样看起来，Draw像是Circle类的一个成员，Circle称为外部类，内部类可以无条件访问外部类的所有成员属性和成员方法（包括private成员和static成员）。
 
-\2. 当成员内部类拥有和外部类同名的成员变量或者方法时，就会发生隐藏现象，默认情况下是访问的是成员内部的成员，若要访问外部类的同名成员，则形式为----------------------外部类.this.成员变量、外部类.this.成员方法。
+2. 当成员内部类拥有和外部类同名的成员变量或者方法时，就会发生隐藏现象，默认情况下是访问的是成员内部的成员，若要访问外部类的同名成员，则形式为----------------------外部类.this.成员变量、外部类.this.成员方法。
 
-\3. 如果外部类要访问内部类的成员，必须先创建内部类的实例化。
+3. 如果外部类要访问内部类的成员，必须先创建内部类的实例化。
 
  
 
@@ -336,7 +314,7 @@ Static定义代码块：
 
 局部内部类是定义在一个方法或者一个作用域里面的类，它和成员内部类的区别在于局部内部类的访问权限仅限于方法内部或者该作用域内。
 
- ![image-20200704172831383](https://raw.githubusercontent.com/kender1314/NotePicture/master/20200704184707.png)
+ ![image-20200726202352953](https://cdn.jsdelivr.net/gh/kender1314/NotePicture/20200726202603.png)
 
 注意：局部内部类就像方法内的一个局部变量一样，是不能有public、protected、private以及static修饰符的。
 
@@ -348,27 +326,21 @@ Static定义代码块：
 
 特性：
 
-\1. 匿名内部类只能继承或者实现一个类或者接口
+1. 匿名内部类只能继承或者实现一个类或者接口
 
-\2. 匿名内部类只能用默认的构造方法不能自己添加(匿名内部类根本就没有类名!!!)
+2. 匿名内部类只能用默认的构造方法不能自己添加(匿名内部类根本就没有类名!!!)
 
-\3. 匿名内部类就是在创造的时候直接继承某个类，或者实现某个接口
-
- 
-
- 
+3. 匿名内部类就是在创造的时候直接继承某个类，或者实现某个接口
 
 例子1：
 
- ![image-20200704172838218](https://raw.githubusercontent.com/kender1314/NotePicture/master/20200704184715.png)
+ ![image-20200726202406908](https://cdn.jsdelivr.net/gh/kender1314/NotePicture/20200726202613.png)
 
 例子2：
 
- ![image-20200704172842089](https://raw.githubusercontent.com/kender1314/NotePicture/master/20200704184719.png)
+ ![image-20200726202422864](https://cdn.jsdelivr.net/gh/kender1314/NotePicture/20200726202620.png)
 
 例子2虽然能达到同样的效果，但是冗长又难以维护，所以一般使用第一种方法
-
- 
 
 匿名内部类用于继承其他类或是实现接口，并不需要增加额外的方法，只是对继承方法的实现或是重写。
 
@@ -380,7 +352,7 @@ Static定义代码块：
 
 静态内部类（又名嵌套类）也是定义在另一个类里面的类，只不过在类的前面多了一个关键字static。静态内部类是不需要依赖于外部类的，这点和类的静态成员属性有点类似，并且它不能使用外部类的非static成员变量或者方法，这点很好理解，因为在没有外部类的对象的情况下，可以创建静态内部类的对象，如果允许访问外部类的非static成员就会产生矛盾，因为外部类的非static成员必须依附于具体的对象。
 
- ![image-20200704172851453](https://raw.githubusercontent.com/kender1314/NotePicture/master/20200704184725.png)
+ ![image-20200726202631786](https://cdn.jsdelivr.net/gh/kender1314/NotePicture/20200726202633.png)
 
  
 
@@ -396,23 +368,23 @@ Static定义代码块：
 
  
 
-## 7.  Java集合框架
+##  Java集合框架
 
 概述：
 
-\1. List , Set, Map都是接口，前两个继承至collection接口，Map为独立接口
+1. List , Set, Map都是接口，前两个继承至collection接口，Map为独立接口
 
-\2. Set下有HashSet，LinkedHashSet，TreeSet
+2. Set下有HashSet，LinkedHashSet，TreeSet
 
-\3. List下有ArrayList，Vector，LinkedList
+3. List下有ArrayList，Vector，LinkedList
 
-\4. Map下有Hashtable，LinkedHashMap，HashMap，TreeMap
+4. Map下有Hashtable，LinkedHashMap，HashMap，TreeMap
 
-\5. collection接口下还有个Queue接口，有PriorityQueue、LinkedList
+5. collection接口下还有个Queue接口，有PriorityQueue、LinkedList
 
- ![image-20200704172902893](https://raw.githubusercontent.com/kender1314/NotePicture/master/20200704184732.png)
+ ![image-20200726202654408](https://cdn.jsdelivr.net/gh/kender1314/NotePicture/20200726202655.png)
 
- ![image-20200704172910595](https://raw.githubusercontent.com/kender1314/NotePicture/master/20200704184737.png)
+ ![image-20200726202703384](../../../Typora/Picture/image-20200726202703384.png)
 
  
 
@@ -526,9 +498,9 @@ LinkedHashSet
 
 底层数据结构是链表和哈希表。(FIFO插入有序,唯一)
 
-1.由链表保证元素有序
+1. 由链表保证元素有序
 
-2.由哈希表保证元素唯一
+2. 由哈希表保证元素唯一
 
  
 
@@ -536,19 +508,15 @@ TreeSet
 
 底层数据结构是红黑树。(唯一，有序)
 
-\1. 如何保证元素排序的呢?
+1. 如何保证元素排序的呢?
 
 自然排序
 
 比较器排序
 
-2.如何保证元素唯一性的呢?
+2. 如何保证元素唯一性的呢?
 
 根据比较的返回值是否是0来决定
-
- 
-
- 
 
 Set接口特点：
 
@@ -560,8 +528,6 @@ Set接口特点：
 
  \* Set接口有两个重要的实现类：HashSet和TreeSet
 
- 
-
 l HashSet
 
 引用相等性：引用堆上同一对象的两个引用是相等的。
@@ -570,13 +536,9 @@ l HashSet
 
 引用相等性被HashSet认为是重复元素，但是对于对象相等性，HashSet并不认为是重复的。
 
- 
-
 l TreeSet
 
 TreeSet存储自定义类型的对象
-
- 
 
 ### Iterator迭代器：
 
@@ -596,37 +558,23 @@ TreeSet存储自定义类型的对象
 
  
 
- 
-
 ### Map接口：
 
 Map接口有三个比较重要的实现类，分别是HashMap、TreeMap、Properties和HashTable。
 
- 
+1. TreeMap是有序的，HashMap和HashTable是无序的。
 
-\1. TreeMap是有序的，HashMap和HashTable是无序的。
+2. Hashtable的方法是同步的，HashMap的方法不是同步的。这是两者最主要的区别。
 
-\2. Hashtable的方法是同步的，HashMap的方法不是同步的。这是两者最主要的区别。
+3. 这就意味着:Hashtable是线程安全的，HashMap不是线程安全的。
 
-\3. 这就意味着:Hashtable是线程安全的，HashMap不是线程安全的。
+4. HashMap效率较高，Hashtable效率较低。
 
-\4. HashMap效率较高，Hashtable效率较低。
+5. 如果对同步性或与遗留代码的兼容性没有任何要求，建议使用HashMap。 查看Hashtable的源代码就可以发现，除构造函数外，Hashtable的所有 public 方法声明中都有 synchronized关键字，而HashMap的源码中则没有。
 
-\5. 如果对同步性或与遗留代码的兼容性没有任何要求，建议使用HashMap。 查看Hashtable的源代码就可以发现，除构造函数外，Hashtable的所有 public 方法声明中都有 synchronized关键字，而HashMap的源码中则没有。
+6. Hashtable不允许null值，HashMap允许null值（key和value都允许）
 
-\6. Hashtable不允许null值，HashMap允许null值（key和value都允许）
-
-\7. 父类不同：Hashtable的父类是Dictionary，HashMap的父类是AbstractMap
-
- 
-
- 
-
- 
-
- 
-
- 
+7. 父类不同：Hashtable的父类是Dictionary，HashMap的父类是AbstractMap
 
 （1）键（Key）不允许重复。 
 
@@ -638,7 +586,7 @@ Map接口有三个比较重要的实现类，分别是HashMap、TreeMap、Proper
 
 l HashMap
 
- ![image-20200704172933723](https://raw.githubusercontent.com/kender1314/NotePicture/master/20200704185427.png)
+ ![image-20200726202148782](../../../Typora/Picture/image-20200726202148782.png)
 
 （1）   集合中的元素不会按次序排列
 
@@ -656,25 +604,20 @@ l HashMap
 
 **HashMap****常用方法：**
 
- *void clear()-------------------------------------清除所有映射单元
+ 
 
- *Set<K> keySet()----------------------------------返回所有key的集合
-
- *Collection<V> values()---------------------------返回所有值得集合
-
- *Set<Map.Entry<K, V>> entrySet()------------------返回键值对的集合
-
- *V get(Object key)--------------------------------根据键取得值
-
- *V put(K key, V value)----------------------------存值
-
- *V remove(Object key)-----------------------------删除指定键所对应的值
-
- *void putAll(Map<? extends K, ? extends V>m)------集合复制
-
- *boolean containsKey(Object key)------------------判断是否包含某个键
-
- *boolean containsValue(Object value)--------------判断是否包含某个值
+```
+*void clear()-------------------------------------清除所有映射单元
+*Set<K> keySet()----------------------------------返回所有key的集合
+*Collection<V> values()---------------------------返回所有值得集合
+*Set<Map.Entry<K, V>> entrySet()------------------返回键值对的集合
+*V get(Object key)--------------------------------根据键取得值
+*V put(K key, V value)----------------------------存值
+*V remove(Object key)-----------------------------删除指定键所对应的值
+*void putAll(Map<? extends K, ? extends V>m)------集合复制
+*boolean containsKey(Object key)------------------判断是否包含某个键
+*boolean containsValue(Object value)--------------判断是否包含某个值
+```
 
  
 
@@ -686,25 +629,18 @@ l TreeMap
 
 （3）TreeMap常用方法：
 
+```
  *void clear()-------------------------------------清除所有映射单元
-
  *Set<K> keySet()----------------------------------返回所有key的集合
-
  *Collection<V> values()---------------------------返回所有值得集合
-
  *Set<Map.Entry<K, V>> entrySet()------------------返回键值对的集合
-
  *V get(Object key)--------------------------------根据键取得值
-
  *V put(K key, V value)----------------------------存值
-
  *V remove(Object key)-----------------------------删除指定键所对应的值
-
  *void putAll(Map<? extends K, ? extends V>m)------集合复制
-
  *boolean containsKey(Object key)------------------判断是否包含某个键
-
  *boolean containsValue(Object value)--------------判断是否包含某个值
+```
 
  
 
@@ -714,19 +650,17 @@ l TreeMap
 
 **概述：**
 
-\1. 队列是一种特殊的线性表，它只允许在表的前端进行删除操作，而在表的后端进行插入操作。
+1. 队列是一种特殊的线性表，它只允许在表的前端进行删除操作，而在表的后端进行插入操作。
 
-\2. LinkedList类实现了Queue接口，因此我们可以把LinkedList当成Queue来用。
+2. LinkedList类实现了Queue接口，因此我们可以把LinkedList当成Queue来用。
 
  
 
 **两个基本用法:**
 
-\1. 在队列尾部加人一个元素，和从队列头部移除一个元素就是说，队列以一种先进先出的方式管理数据，如果你试图向一个 已经满了的阻塞队列中添加一个元素或者是从一个空的阻塞队列中移除一个元索，将导致线程阻塞
+1. 在队列尾部加人一个元素，和从队列头部移除一个元素就是说，队列以一种先进先出的方式管理数据，如果你试图向一个 已经满了的阻塞队列中添加一个元素或者是从一个空的阻塞队列中移除一个元索，将导致线程阻塞
 
- ![image-20200704172953601](https://raw.githubusercontent.com/kender1314/NotePicture/master/20200704185422.png)
-
-\2. 在多线程进行合作时，阻塞队列是很有用的工具。工作者线程可以定期地把中间结果存到阻塞队列中而其他工作者线线程把中间结果取出并在将来修改它们。队列会自动平衡负载。如果第一个线程集运行得比第二个慢，则第二个线程集在等待结果时就会阻塞。如果第一个线程集运行得快，那么它将等待第二个线程集赶上来。
+2. 在多线程进行合作时，阻塞队列是很有用的工具。工作者线程可以定期地把中间结果存到阻塞队列中而其他工作者线线程把中间结果取出并在将来修改它们。队列会自动平衡负载。如果第一个线程集运行得比第二个慢，则第二个线程集在等待结果时就会阻塞。如果第一个线程集运行得快，那么它将等待第二个线程集赶上来。
 
  
 
@@ -750,7 +684,7 @@ put     添加一个元素        如果队列满，则阻塞
 
 take      移除并返回队列头部的元素  如果队列为空，则阻塞
 
- 
+ ![image-20200726202024339](https://cdn.jsdelivr.net/gh/kender1314/NotePicture/20200726202029.png)
 
  
 
@@ -758,29 +692,19 @@ take      移除并返回队列头部的元素  如果队列为空，则阻塞
 
 数组、栈 、队列、链表、树、堆 、图、散列表（哈希表）。
 
-1：数组是计算机编程语言上，对于“Array”的中文称呼，是用于储存多个相同类型数据的集合。
+1. 数组是计算机编程语言上，对于“Array”的中文称呼，是用于储存多个相同类型数据的集合。
+
+2. 栈是限定仅在表尾进行插入和删除操作的线性表，栈者，存储货物或供旅客住宿的地方，可引申为仓库、中转站，引入到计算机领域里，就是指数据暂时存储的地方，所以才有进栈、出栈的说法。
+
+3. 一种特殊的线性表，它只允许在表的前端进行删除操作，而在表的后端进行插入操作。
+
+4. 链表，一种物理存储单元上非连续、非顺序的存储结构，数据元素的逻辑顺序是通过链表中的指针链接次序实现的。
+
+5. 哈希表，是根据关键码值而直接进行访问的数据结构。也就是说，它通过把关键码值映射到表中一个位置来访问记录，以加快查找的速度。
 
  
 
-2：栈是限定仅在表尾进行插入和删除操作的线性表，栈者，存储货物或供旅客住宿的地方，可引申为仓库、中转站，引入到计算机领域里，就是指数据暂时存储的地方，所以才有进栈、出栈的说法。
-
- 
-
-3：一种特殊的线性表，它只允许在表的前端进行删除操作，而在表的后端进行插入操作。
-
-4：链表，一种物理存储单元上非连续、非顺序的存储结构，数据元素的逻辑顺序是通过链表中的指针链接次序实现的。
-
-5：哈希表，是根据关键码值而直接进行访问的数据结构。也就是说，它通过把关键码值映射到表中一个位置来访问记录，以加快查找的速度。
-
- 
-
- 
-
- 
-
- 
-
-## 8.  JVM虚拟机
+## JVM虚拟机
 
 l Java 虚拟机：Java 虚拟机（Java virtual machine，JVM）是运行 Java 程序必不可少的机制。
 
@@ -804,29 +728,13 @@ l classloader 有两种装载class的方式 （时机）：
 
 **双亲委派模型**
 
-1.当前 ClassLoader 首先从自己已经加载的类中查询是否此类已经加载，如果已经加载则直接返回原来已经加载的类。每个类加载器都有自己的加载缓存，当一个类被加载了以后就会放入缓存，等下次加载的时候就可以直接返回了。
+1. 当前 ClassLoader 首先从自己已经加载的类中查询是否此类已经加载，如果已经加载则直接返回原来已经加载的类。每个类加载器都有自己的加载缓存，当一个类被加载了以后就会放入缓存，等下次加载的时候就可以直接返回了。
 
-2.当前 classLoader 的缓存中没有找到被加载的类的时候，委托父类加载器去加载，父类加载器采用同样的策略，首先查看自己的缓存，然后委托父类的父类去加载，一直到 bootstrap ClassLoader.
+2. 当前 classLoader 的缓存中没有找到被加载的类的时候，委托父类加载器去加载，父类加载器采用同样的策略，首先查看自己的缓存，然后委托父类的父类去加载，一直到 bootstrap ClassLoader.
 
-\3. 当所有的父类加载器都没有加载的时候，再由当前的类加载器加载，并将其放入它自己的缓存中，以便下次有加载请求的时候直接返回。
+3. 当所有的父类加载器都没有加载的时候，再由当前的类加载器加载，并将其放入它自己的缓存中，以便下次有加载请求的时候直接返回。
 
- ![image-20200704173009110](https://raw.githubusercontent.com/kender1314/NotePicture/master/20200704185417.png)
-
- 
-
- 
-
- 
-
- 
-
- 
-
- 
-
- 
-
- 
+![image-20200726201907455](https://cdn.jsdelivr.net/gh/kender1314/NotePicture/20200726201908.png)
 
  
 
@@ -860,7 +768,7 @@ JVM内存区：程序计数器、虚拟机栈、本地方法栈、堆、方法
 
 6.运行时常量池：代表运行时每个class文件中的常量表。包括几种常量：编译时的数字常量、方法或者域的引用。
 
- ![image-20200704173020175](https://raw.githubusercontent.com/kender1314/NotePicture/master/20200704185412.png)
+  ![image-20200726201828317](https://cdn.jsdelivr.net/gh/kender1314/NotePicture/20200726201829.png)
 
  
 
@@ -887,7 +795,7 @@ JVM内存区：程序计数器、虚拟机栈、本地方法栈、堆、方法
 
  
 
-## 9.  重写，覆盖，重载
+## 重写，覆盖，重载
 
 ### 构造方法
 
@@ -932,7 +840,7 @@ JVM内存区：程序计数器、虚拟机栈、本地方法栈、堆、方法
 
  
 
-## 9.&、|、^、~、>>、>>>
+## &、|、^、~、>>、>>>
 
 l &和|属于位运算符 不管前面的条件是否正确，后面都执行
 
@@ -1028,7 +936,7 @@ l >>>表示无符号右移，也叫逻辑右移，即若该数为正，则高位
 
  
 
-## 10. 数据类型分类
+## 数据类型分类
 
 基本数据类型（或叫做原生类、内置类型）8种：
 
@@ -1046,7 +954,7 @@ l >>>表示无符号右移，也叫逻辑右移，即若该数为正，则高位
 
 注释：如果将基本数据类型定义的值传入方法中，只是将该值的地址传进去，当该方法返回该值时，原方法中该常量的值并没有改变，引用数据类型则恰恰相反，原方法中的常量的值会改变。
 
- ![image-20200704173037965](https://raw.githubusercontent.com/kender1314/NotePicture/master/20200704185404.png)
+ ![image-20200726201656339](https://cdn.jsdelivr.net/gh/kender1314/NotePicture/20200726201658.png)
 
 ### 各类型占用字节数：
 
@@ -1069,15 +977,13 @@ l >>>表示无符号右移，也叫逻辑右移，即若该数为正，则高位
 
 引用数据类型是引用传递（call by reference）：引用传递不可以改变原变量的地址，但可以改变原变量的内容
 
- ![image-20200704173055770](https://raw.githubusercontent.com/kender1314/NotePicture/master/20200704185400.png)
+ ![image-20200726201558105](https://cdn.jsdelivr.net/gh/kender1314/NotePicture/20200726201705.png)
 
  
 
- 
+ 基本数据类型是值传递（call by value）：值传递不可以改变原变量的内容和地址
 
-基本数据类型是值传递（call by value）：值传递不可以改变原变量的内容和地址
-
- ![image-20200704173101293](https://raw.githubusercontent.com/kender1314/NotePicture/master/20200704185355.png)
+ ![image-20200726201549261](https://cdn.jsdelivr.net/gh/kender1314/NotePicture/20200726201711.png)
 
  
 
@@ -1085,26 +991,13 @@ l >>>表示无符号右移，也叫逻辑右移，即若该数为正，则高位
 
 ### 引用类型
 
-1、强引用：一个对象赋给一个引用就是强引用，比如new一个对象，一个对象被赋值一个对象。
+1. 强引用：一个对象赋给一个引用就是强引用，比如new一个对象，一个对象被赋值一个对象。
 
-2、软引用：用SoftReference类实现，一般不会轻易回收，只有内存不够才会回收。
+2. 软引用：用SoftReference类实现，一般不会轻易回收，只有内存不够才会回收。
 
-3、弱引用：用WeekReference类实现，一旦垃圾回收已启动，就会回收。
+3. 弱引用：用WeekReference类实现，一旦垃圾回收已启动，就会回收。
 
-4、虚引用：不能单独存在，必须和引用队列联合使用。主要作用是跟踪对象被回收的状态。
-
- 
-
-## 11.Applet的生命周期（需要学习）
-
-
- Applet 类中的四个方法给我们提供了一个框架，你可以在该框架上开发小程序：
-
- init: 该方法的目的是为你的 Applet 提供所需的任何初始化。在 Applet 标记内的 param 标签被处理后调用该方法。
- start: 浏览器调用 init 方法后，该方法被自动调用。每当用户从其他页面返回到包含 Applet 的页面时，则调用该方法。
- stop: 当用户从包含 Applet 的页面移除的时候，该方法自动被调用。因此，可以在相同的 Applet 中反复调用该方法。
- destroy: 此方法仅当浏览器正常关闭时调用。因为 Applet 只有在 HTML 网页上有效，所以你不应该在用户离开包含 Applet 的页面后遗漏任何资源。
- paint: 该方法在 start() 方法之后立即被调用，或者在 Applet 需要重绘在浏览器的时候调用。paint() 方法实际上继承于 java.awt。
+4. 虚引用：不能单独存在，必须和引用队列联合使用。主要作用是跟踪对象被回收的状态。
 
  
 
@@ -1164,23 +1057,23 @@ DataInputStream DataOutputStream 等-提供将基础数据类型写入到文件�
 
  
 
-## 13.异常exception
+## 异常exception
 
 Java中的异常分为两大类：
 
-\1. java异常类均继承于java.lang.Throwable。
+1. java异常类均继承于java.lang.Throwable。
 
-\2. **checked exception**：指的是编译时异常，该类异常需要本函数必须处理的，用try和catch处理，或者用throws抛出异常，然后交给调用者去处理异常。
+2. **checked exception**：指的是编译时异常，该类异常需要本函数必须处理的，用try和catch处理，或者用throws抛出异常，然后交给调用者去处理异常。
 
-\3. **runtime exception**：指的是运行时异常，该类异常不必须本函数必须处理，当然也可以处理。
+3. **runtime exception**：指的是运行时异常，该类异常不必须本函数必须处理，当然也可以处理。
 
- ![image-20200704173115677](https://raw.githubusercontent.com/kender1314/NotePicture/master/20200704185349.png)
-
- 
+![image-20200726201449421](https://cdn.jsdelivr.net/gh/kender1314/NotePicture/20200726201451.png)
 
  
 
-## 14.正则表达式
+ 
+
+## 正则表达式
 
 参考文档：https://www.runoob.com/java/java-regular-expressions.html
 
@@ -1210,15 +1103,13 @@ PatternSyntaxException 是一个非强制异常类，它表示一个正则表达
 
  
 
-## 15.运算优先级
+## 运算优先级
 
- ![image-20200704173125307](https://raw.githubusercontent.com/kender1314/NotePicture/master/20200704185346.png)
-
- 
+![image-20200726191608194](https://cdn.jsdelivr.net/gh/kender1314/NotePicture/20200726191609.png)
 
  
 
-## 16.文件名后缀
+## 文件名后缀
 
 .class 编译后的Java文件 
  .java是未编译的程序 
@@ -1250,13 +1141,13 @@ javaprof.exe是剖析工具
 
  
 
-## 17.ASCII码值
+## ASCII码值
 
 常见字符的ASCII码值如下：空格的ASCII码值为32；数字0到9的ASCII码值分别为48到57；大写字母“A”到“Z”的ASCII码值分别为65到90；小写字母“a”到“z”的ASCII码值分别为97到到122。
 
  
 
-## 18.面向对象的六大基本原则和三大特性
+## 面向对象的六大基本原则和三大特性
 
 ### 封装
 
@@ -1306,7 +1197,7 @@ l 使用多个专门的接口比使用单个接口要好的多！
 
  
 
-## 19.处理字节流和字符流
+## 处理字节流和字符流
 
 字节流：
 
@@ -1340,7 +1231,7 @@ Writer
 
  
 
-## 20.String,StringBuffer与StringBuilder
+## String,StringBuffer与StringBuilder
 
 **String** **字符串常量****
  \**StringBuffer\**** **字符串变量（线程安全）****
@@ -1376,7 +1267,7 @@ l Java中严格区分大小写
 
  
 
-## 22.Java单例模式
+## Java单例模式
 
 ### 单例模式主要有3个特点：
 
@@ -1408,23 +1299,17 @@ Java Singleton模式主要作用是保证在Java应用程序中，一个类Class
 
 代码示例：
 
+```
 public class Singleton2{
-
   private static Singleton2 a ;
-
   public static Singleton2 getSingleton2(){
-
-​      if(a==null){
-
-​        a = new Singleton2();
-
-​      }
-
-​      retrun a;
-
-​    }
-
+      if(a==null){
+        a = new Singleton2();
+      }
+      retrun a;
+    }
 }
+```
 
  
 
@@ -1438,41 +1323,40 @@ public class Singleton2{
 
 代码示例：
 
+```
 public class Singleton1{
 
   private static Singleton1 a = new Singleton1();
 
   public static Singleton1 getSingleton1(){
-
-​      retrun a;
-
-​    }
-
+      retrun a;
+    }
 }
+```
 
  
 
 ### 懒汉单例类和饿汉单例类的区别：
 
-\1.  饿汉模式是线程安全的而懒汉模式存在安全问题,如需解决需添加双重检查锁机制
+1. 饿汉模式是线程安全的而懒汉模式存在安全问题,如需解决需添加双重检查锁机制
 
-\2.  **懒汉模式**：它的特点是运行时获得对象的速度比较慢，但加载类的时候比较快。它在整个应用的生命周期只有一部分时间在占用资源。**饿汉模式**：它的特点是加载类的时候比较慢，但运行时获得对象的速度比较快。它从加载到应用结束会一直占用资源。
+2. **懒汉模式**：它的特点是运行时获得对象的速度比较慢，但加载类的时候比较快。它在整个应用的生命周期只有一部分时间在占用资源。**饿汉模式**：它的特点是加载类的时候比较慢，但运行时获得对象的速度比较快。它从加载到应用结束会一直占用资源。
 
-\3.  对重量级对象应用饿汉模式，类加载时速度慢，但运行时速度快；懒汉模式则与之相反，类加载时速度快，但运行时第一次获得对象的速度慢。
+3. 对重量级对象应用饿汉模式，类加载时速度慢，但运行时速度快；懒汉模式则与之相反，类加载时速度快，但运行时第一次获得对象的速度慢。
 
  
 
 ### 什么情况下使用单例模式：
 
-\1. 控制资源的使用，通过线程同步来控制资源的并发访问；
+1. 控制资源的使用，通过线程同步来控制资源的并发访问；
 
-\2. 控制实例产生的数量，达到节约资源的目的。
+2. 控制实例产生的数量，达到节约资源的目的。
 
-\3. 作为通信媒介使用，也就是数据共享，它可以在不建立直接关联的条件下，让多个不相关的两个线程或者进程之间实现通信。
+3. 作为通信媒介使用，也就是数据共享，它可以在不建立直接关联的条件下，让多个不相关的两个线程或者进程之间实现通信。
 
  
 
-## 23.J2EE容器
+## J2EE容器
 
 WEB容器：给处于其中的应用程序组件（jsp，servlet）提供一个环境，使jsp，servlet直接与容器中的环境变量交互，不必关注其它系统问题。主要由WEB服务器来实现。 例如：tomcat,weblogic,websphere等。
 
@@ -1490,7 +1374,7 @@ WEB容器更多的是跟基于HTTP的请求打交道。而EJB容器更多的和�
 
  
 
-## 24. throw与throws
+## throw与throws
 
 异常有两个过程，一个是抛出异常；一个是捕捉异常。
 
@@ -1548,7 +1432,7 @@ throws是方法可能抛出异常的声明。(用在声明方法时，表示该�
 
  
 
-## 25.内联函数
+## 内联函数
 
 1.内联函数就是指函数在被调用的地方直接展开，编译器在调用时不用像一般函数那样，参数压栈，返回时参数出栈以及资源释放等，这样提高了程序执行速度。
 
@@ -1566,13 +1450,13 @@ public final void doSomething() {
 
 \3. 内联不一定好，当被指定为内联的方法体很大时，展开的开销可能就已经超过了普通函数调用调用的时间，引入了内联反而降低了性能，因为在选择这个关键字应该慎重些，不过，在以后高版本的JVM中，在处理内联时做出了优化，它会根据方法的规模来确定是否展开调用。
 
-## 26.java关键字
+## java关键字
 
- ![image-20200704173150842](https://raw.githubusercontent.com/kender1314/NotePicture/master/20200704185332.png)
+![image-20200726191431261](https://cdn.jsdelivr.net/gh/kender1314/NotePicture/20200726191631.png)
 
  
 
-## 27. Java中的序列化和反序列化
+##  Java中的序列化和反序列化
 
 对象序列化是一个用于将对象状态转换为字节流的过程，可以将其保存到磁盘文件中或通过网络发送到任何其他程序；从字节流创建对象的相反的过程称为反序列化。
 
@@ -1583,8 +1467,6 @@ public final void doSomething() {
 2.方便存储，不管是存储成文件还是数据库，都行，存储为文件，下回要用可以直接反序列拿到对象
 
 ### 如何使Java类可序列化？
-
- 
 
 通过实现java.io.Serializable接口，可以在Java类中启用可序列化。它是一个标记接口，意味着它不包含任何方法或字段，仅用于标识可序列化的语义。
 
@@ -1610,7 +1492,7 @@ transient修饰符仅适用于变量，不适用于方法和类。在序列化�
 
  
 
-## 28.int和Integer
+## int和Integer
 
 ①无论如何，Integer与new Integer不会相等。不会经历拆箱过程
 
@@ -1630,9 +1512,9 @@ transient修饰符仅适用于变量，不适用于方法和类。在序列化�
 
  
 
-## 29.IO流
+## IO流
 
-### 1.字节流和字符流
+### 字节流和字符流
 
 字节流：可以处理所有类型的数据，如MP3，文字，视频等。在读取时，都到一个字节就返回一个字节。
 
@@ -1642,7 +1524,7 @@ transient修饰符仅适用于变量，不适用于方法和类。在序列化�
 
 在java中对应的类都以“Writer”或“Reader”结尾。
 
-### 2.字符字节与编码
+### 字符字节与编码
 
 字符：人们试用的记号；
 
@@ -1656,7 +1538,7 @@ ANSI编码：系统预设的标准文字储存格式，不同国家和地区试�
 
 Unicode：国际组织统一规定的UNICODE字符集，满足跨语言，跨平台进行文本转、处理的要求。
 
-### 3.Buffer代表缓冲区的意思
+### Buffer代表缓冲区的意思
 
 带有缓冲的的字节输出流效率是非常高的，尤其是在进行大型文件的复制的时候，使用Buffer进行复制要快得多。
 
@@ -1664,7 +1546,7 @@ InputStreamReader：将字节流转换为字符流
 
  
 
-## 30.同步与异步
+## 同步与异步
 
 **定义：**
 
@@ -1693,37 +1575,62 @@ l 异步:发送一个请求,不等待返回,随时可以再发送下一个请求
 
  
 
-## 31.lambda表达式
+## lambda表达式
+
+### Lambda简介
+
+Lambda表达式，也可称为闭包，它是推动Java8发布的最重要的新特性。
+
+Lambda允许把函数为一个方法的参数（函数作为参数传递进方法中）。
+
+### Lambda的优势
+
+1. 使用lambda表达式可以使代码变得更加简介紧凑。
+2. 尤其是集合的遍历和其他集合操作中，可以极大地优化代码结构。
+
+### Lambda对接口的要求
+
+Lambda规定接口中<span style="color: red">只能有一个必须需要被实现的方法</span>，不是规定接口中只能有一个方法。
+
+如下面这个例子：
+
+![image-20200726194105385](https://cdn.jsdelivr.net/gh/kender1314/NotePicture/20200726194108.png)
+
+如果使用default，并且为方法定义方法体，就可以有多个方法。method方法则是为必须需要被实现的方法。
+
+@**FunctionalInterface**
+
+专门用于修饰函数式接口，要求接口中的抽象方法只有一个。这个注解一般会和lambda表达式一起使用。
+
+
 
 ### 表达式示例：
 
 示例1：
 
- ![image-20200704173214107](D:%5CTypora%5CPicture%5Cimage-20200704173214107.png)
+ ![image-20200704173214107](https://cdn.jsdelivr.net/gh/kender1314/NotePicture/20200726191342.png)
 
 示例2：
 
- ![image-20200704173217667](https://raw.githubusercontent.com/kender1314/NotePicture/master/20200704185326.png)
+ ![image-20200726191335240](https://cdn.jsdelivr.net/gh/kender1314/NotePicture/20200726191337.png)
 
 ### lambda使用场景
 
-\1. 实现延迟执行
+1. 实现延迟执行
 
-延迟执行的大概原因：
+   延迟执行的大概原因：
 
-1) 另一个单独的线程运行代码
+   1) 另一个单独的线程运行代码
 
-2) 多次运行代码
+   2) 多次运行代码
 
-3) 在算法的恰当时刻运行代码（例如，排序中的比较操作）
+   3) 在算法的恰当时刻运行代码（例如，排序中的比较操作）
 
-4) 当某些情况发生时运行代码（按钮被单击、数据到达等）
+   4) 当某些情况发生时运行代码（按钮被单击、数据到达等）
 
-5) 只有在需要的时候运行代码
+   5) 只有在需要的时候运行代码
 
-\2. 延迟执行的
-
- 
+2. 延迟执行的
 
  
 
@@ -1731,39 +1638,23 @@ l 异步:发送一个请求,不等待返回,随时可以再发送下一个请求
 
 Lambda表达式的方法体与嵌套代码块有着相同的作用域。因此，也适用同样的命名冲突和屏蔽规则。
 
- 
+  
 
- 
-
- 
-
- 
-
- 
-
- 
-
- 
-
- 
-
- 
-
-## 32.方法引用和构造函数引用
+## 方法引用和构造函数引用
 
 ### 方法引用
 
 方法引用示例：
 
- ![image-20200704173228730](https://raw.githubusercontent.com/kender1314/NotePicture/master/20200704185321.png)
+ ![image-20200726201310229](https://cdn.jsdelivr.net/gh/kender1314/NotePicture/20200726201312.png)
 
 操作符::将方法名称或类对象名称分隔开，三种书写方式：
 
-\1. 类::实例方法
+1. 类::实例方法
 
-\2. 类::静态方法
+2. 类::静态方法
 
-\3. 对象::实例方法
+3. 对象::实例方法
 
  
 
@@ -1773,7 +1664,7 @@ Lambda表达式的方法体与嵌套代码块有着相同的作用域。因此�
 
  
 
-## 33.java日志logger 
+## java日志logger 
 
 ### 日志记录器
 
@@ -1781,7 +1672,7 @@ Lambda表达式的方法体与嵌套代码块有着相同的作用域。因此�
 
 创建示例：
 
- 
+ ![image-20200726201248900](https://cdn.jsdelivr.net/gh/kender1314/NotePicture/20200726201249.png)
 
  
 
@@ -1789,13 +1680,13 @@ Lambda表达式的方法体与嵌套代码块有着相同的作用域。因此�
 
 日志共分为7个级别：
 
+ ![image-20200726201223335](https://cdn.jsdelivr.net/gh/kender1314/NotePicture/20200726201224.png)
+
+默认情况下，前三个级别的日志会被记录下来。也可以设置不同的阀值，如：![image-20200726201234832](https://cdn.jsdelivr.net/gh/kender1314/NotePicture/20200726201237.png)  ，FINE及以上级别的日志就会被记录下来。
+
  
 
-默认情况下，前三个级别的日志会被记录下来。也可以设置不同的阀值，如：  ，FINE及以上级别的日志就会被记录下来。
-
- 
-
-## 34.泛型编程
+## 泛型编程
 
 泛型学习网址https://www.cnblogs.com/penghuwan/p/8420791.html
 
@@ -1805,51 +1696,49 @@ Lambda表达式的方法体与嵌套代码块有着相同的作用域。因此�
 
 ### 泛型特性
 
-\1. JavaSE7以后，在实例化一个泛型类对象时，构造函数中可以省略泛型类型
+1. JavaSE7以后，在实例化一个泛型类对象时，构造函数中可以省略泛型类型
 
- ![image-20200704173243221](https://raw.githubusercontent.com/kender1314/NotePicture/master/20200704185313.png)
+![image-20200726201022856](https://cdn.jsdelivr.net/gh/kender1314/NotePicture/20200726201024.png)
 
-\2. *T extends SuperClass* 与 *? extends SuperClass*的使用与区别
+2. *T extends SuperClass* 与 *? extends SuperClass*的使用与区别
 
 编译器可以通过泛型定义变量，但是不能通过通配符定义变量，
 
 通配符需要调用泛型定义的方法进行变量定义：
 
- ![image-20200704173249835](https://raw.githubusercontent.com/kender1314/NotePicture/master/20200704185308.png)
+ ![image-20200726201039417](../../../Typora/Picture/image-20200726201039417.png)
 
 泛型（T）：
 
- ![image-20200704173254427](https://raw.githubusercontent.com/kender1314/NotePicture/master/20200704185302.png)
+ ![](https://cdn.jsdelivr.net/gh/kender1314/NotePicture/20200726201101.png)
 
 通配符（?）:
 
- ![image-20200704173258498](https://raw.githubusercontent.com/kender1314/NotePicture/master/20200704185255.png)
+ ![image-20200726201117452](https://cdn.jsdelivr.net/gh/kender1314/NotePicture/20200726201118.png)
 
-\3. 对于要求实现接口， 或者继承自某个父类， 统一使用extends关键字
+3. 对于要求实现接口， 或者继承自某个父类， 统一使用extends关键字
 
-\4. 问题
+4. 问题
 
- ![image-20200704173304003](https://raw.githubusercontent.com/kender1314/NotePicture/master/20200704185251.png)
+ ![image-20200726201133322](https://cdn.jsdelivr.net/gh/kender1314/NotePicture/20200726201135.png)
 
- ![image-20200704173312018](https://raw.githubusercontent.com/kender1314/NotePicture/master/20200704185244.png)
-
-\5.  
+ ![image-20200726201145756](https://cdn.jsdelivr.net/gh/kender1314/NotePicture/20200726201147.png)
 
 ### 泛型方法：
 
 泛型变量T放在修饰符（这里是public static）的后面， 返回类型的前面
 
- ![image-20200704173317807](https://raw.githubusercontent.com/kender1314/NotePicture/master/20200704185241.png)
+ ![image-20200726201157607](https://cdn.jsdelivr.net/gh/kender1314/NotePicture/20200726201158.png)
 
- 
 
- 
 
-## 35.Java反射
+## Java反射
 
 反射链接：[反射学习网址](https://www.sczyh30.com/posts/Java/java-reflection-1/#一、回顾：什么是反射？) 
 
 ### 什么是反射
+
+反射：将类中的各个组成部分封装为其他对象，这就是反射机制。
 
 反射 (Reflection) 是 Java 的特征之一，它允许运行中的 Java 程序获取自身的信息，并且可以操作类或对象的内部属性。
 
@@ -1857,7 +1746,9 @@ Lambda表达式的方法体与嵌套代码块有着相同的作用域。因此�
 
 在java.lang.reflect包中有三个类：Field类、Method类和Constructor类分别描述了一个类的域、方法、构造函数。Field类有一个getType方法，该方法返回一个Class类型的对象，描述域的类型信息。
 
- ![image-20200704173323439](https://raw.githubusercontent.com/kender1314/NotePicture/master/20200704184824.png)
+![image-20200710232121701](../../../Typora/Picture/20200710232158.png)
+
+
 
 **反射主要提供的功能：**
 
@@ -1877,7 +1768,145 @@ Lambda表达式的方法体与嵌套代码块有着相同的作用域。因此�
 
 **反射最重要的用途就是开发各种通用框架。**很多框架（比如 Spring）都是配置化的（比如通过 XML 文件配置 Bean），为了保证框架的通用性，它们可能需要根据配置文件加载不同的对象或类，调用不同的方法，这个时候就必须用到反射，运行时动态加载需要加载的对象。
 
- 
+
+
+### 反射结构图
+
+![image-20200709224741725](../../../Typora/Picture/20200709224745.png)
+
+### 反射的好处
+
+1. 可以在程序运行过程中，操作这些对象。
+
+   在Idea运行过程中，就可以使用代码自动补全工具，比如输入string.之后，会提示你想要输入的方法（本例中使用了length()方法）：
+
+   ```
+   String string = "";
+   System.out.println(string.length());
+   ```
+
+   为什么我能调用string的length()方法呢，这就是通过反射原理。
+
+2. 可以解耦，提高程序的可扩展性。
+
+### 获取类对象的方式
+
+总共分为三种方式，分别对应Java代码在计算机中的三个方向：
+
+1. Class.forName("全类名")：将字节码文件 加载进内存，返回Class对象。（全类名：包路径+类名）。（源代码阶段（Source））
+
+   *多用于配置文件
+
+2. 类名.class：通过类名的属性class获取。（类对象阶段阶段（Class））
+
+   *多用于参数传递
+
+3. 实例对象.getClass()：getClass()方法在Object中定义的。（运行时阶段（Runtime））
+
+   *多用于对象的获取字节码的方式
+
+结论：在一次程序运行过程中，同一个字节码文件，只会被加载一次，不管你用什么方式将该类加载进入内存，获取到的Class对象，都是同一个。
+
+### Class对象功能
+
+#### 获取功能
+
+##### 获取成员变量数组
+
+```
+Field[] getFields()
+Field getField(String name)
+
+Field[] getDeclaredFields()  //可以获取所有类型字段，包括private类型
+Field getDeclaredField(String name) 
+```
+
+主要作用：
+
+1. 可以通过set(Object obj, Object value)为类字段设置值
+
+   ```
+   People people = new People();
+   Field interest = cls.getField("interestPublic");
+   interest.set(people, "football");
+   ```
+
+2. 可以通过get(Object obj)获取类中字段的值
+
+   ```
+   Object o = interest.get(people);
+   ```
+
+3. 通过getDeclaredFields和getDeclaredField可以试想暴力反射，连对象的private变量也可以设置值以及获取值
+
+   ```
+   Field name = cls.getDeclaredField("name");
+   System.out.println("\ngetDeclaredField获取指定类字段，可获取所有类型字段->>>\n" + name);
+   //需要设置忽略访问权限修饰符的安全检查
+   name.setAccessible(true);   //暴力反射
+   name.set(people, "hejia");
+   Object o = name.get(people);
+   System.out.println("\ngetDeclaredField获取private字段的值->>>\n" + o);
+   ```
+
+##### 获取构造方法数组
+
+```
+Constructor<?>[] getDeclaredConstructors() 
+Constructor<T> getDeclaredConstructor(Class<?>... parameterTypes) 
+
+Constructor<T> getConstructor(Class<?>... parameterTypes) 
+Constructor<?>[] getConstructors() 
+```
+
+可以通过类的构造方法，创建类的实例对象
+
+```
+Class cls = People.class;
+Constructor constructor = cls.getConstructor(String.class, Integer.class);
+assert constructor != null;
+Object obj = constructor.newInstance("hejina", 22);
+System.out.println(obj);
+```
+
+
+
+##### 获取成员方法数组
+
+```
+Method getDeclaredMethod(String name, Class<?>... parameterTypes) 
+Method[] getDeclaredMethods() 
+
+Method getMethod(String name, Class<?>... parameterTypes) 
+Method[] getMethods() 
+```
+
+invoke()方法，其实是调用该类的指定方法。
+
+##### 获取类名
+
+```
+String getName()
+```
+
+
+
+## 反射案例
+
+需求：写一个“框架”，在不修改代码的前提下，可以帮我们创建任意类的对象，并且执行其中任意的方法。
+
+解决思路：
+
+1. 配置文件
+2. 反射
+
+解决步骤：
+
+1. 将需要创建的对象的全类名和需要执行的方法定义在配置文件中
+2. 在程序中加载读取配置文件
+3. 使用反射技术来加载类文件进内存，
+4. 创建对象
+5. 执行方法
 
 
 
