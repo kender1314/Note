@@ -1,5 +1,32 @@
 # <center>Linux命令</center>
 
+## Centos配置网络
+
+Centos安装后，IP是动态的，下次重启系统后，IP地址也会变化，这时候我们可以把系统的IP设置为静态的，设置步骤如下：
+（1）点击VMware虚拟机左上角的“编辑”，选择“虚拟网络编译器”。
+（2）选中VMnet8（NAT模式），再点击右侧的“NAT设置”此时会看到如下界面
+
+![这里写图片描述](https://img-blog.csdn.net/20180804201749749?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2FraXBhMTE=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70)
+
+（3）在命令行中输入：vim /etc/sysconfig/network-scripts/ifcfg-ens33
+
+（5）将ONBOOT=no改为yes，将BOOTPROTO=dhcp改为BOOTPROTO=static,并在后面增加几行内容：
+
+```
+IPADDR=192.168.127.128
+NETMASK=255.255.255.0
+GATEWAY=192.168.127.2
+DNS1=119.29.29.29
+```
+
+![这里写图片描述](https://img-blog.csdn.net/20180804202050977?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2FraXBhMTE=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70)
+
+（6）保存后退出，然后输入命令：systemctl restart network.service来重启网络服务。
+
+（7）配置完成之后，还需要在配置端口
+
+![image-20200730160124962](https://cdn.jsdelivr.net/gh/kender1314/NotePicture/20200730160125.png)
+
 ## Linux垃圾清理
 
 ### 显示当前磁盘挂载（包含剩余空间）
