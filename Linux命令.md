@@ -1,6 +1,8 @@
-# <center>Linux命令</center>
+# Linux命令
 
 ## Centos配置网络
+
+### 配置NAT静态网络
 
 Centos安装后，IP是动态的，下次重启系统后，IP地址也会变化，这时候我们可以把系统的IP设置为静态的，设置步骤如下：
 （1）点击VMware虚拟机左上角的“编辑”，选择“虚拟网络编译器”。
@@ -26,6 +28,18 @@ DNS1=119.29.29.29
 （7）配置完成之后，还需要在配置端口
 
 ![image-20200730160124962](https://cdn.jsdelivr.net/gh/kender1314/NotePicture/20200730160125.png)
+
+### 配置挂起重启后正常访问端口
+
+```
+sudo vi /usr/lib/sysctl.d/00-system.conf
+```
+
+在最后添加 IPv4转发状态
+
+```
+net.ipv4.ip_forward = 1
+```
 
 ## Linux垃圾清理
 

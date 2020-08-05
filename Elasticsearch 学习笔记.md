@@ -2,15 +2,15 @@
 
 ————笔记参考elasticsearch 2.x
 
-## 1     Elasticsearch概述
+## Elasticsearch概述
 
-### 1.1      Elasticsearch是什么
+### Elasticsearch是什么
 
 1. Elasticsearch 是一个分布式、可扩展、实时的搜索与数据分析引擎。
 
 2. Elasticsearch 是一个开源的搜索引擎，建立在一个全文搜索引擎库 Apache Lucene™ 基础之上。
 
-### 1.2      Elasticsearch优势
+###  Elasticsearch优势
 
 1. 在处理大规模的数据的时候，以很快的速度进行数据搜索。
 
@@ -22,11 +22,11 @@
 
 5. 能胜任上百个服务节点的扩展，并支持 PB 级别的结构化或者非结构化数据
 
-### 1.3      Elasticsearch请求方式
+### Elasticsearch请求方式
 
-#### 1.3.1    GET 查询与搜索
+#### GET 查询与搜索
 
-##### 1.3.1.1    请求过程中使用的参数
+##### 请求过程中使用的参数
 
 1）     pretty：将会调用 Elasticsearch 的 pretty-print 功能，该功能 使得 JSON 响应体更加可读。（这个参数可以用于很多地方）
 
@@ -57,7 +57,7 @@ GET /_search?timeout=10ms
 
 **注**：*应当注意的是* *timeout* *不是停止执行查询，它仅仅是告知正在协调的节点返回到目前为止收集的结果并且关闭连接。在后台，其他的分片可能仍在执行查询即使是结果已经被发送了。*
 
-##### 1.3.1.2    响应体中的字段
+##### 响应体中的字段
 
 ​          ![image-20200704000042896](https://raw.githubusercontent.com/kender1314/NotePicture/master/image-20200704000042896.png)                     
 
@@ -69,11 +69,11 @@ GET /_search?timeout=10ms
 
 在 hits 数组中每个结果包含文档的 _index 、 _type 、 _id ，加上 _source 字段。这意味着我们可以直接从返回的搜索结果中使用整个文档。这不像其他的搜索引擎，仅仅返回文档的ID，需要你单独去获取文档。
 
-###### 1.3.1.2.2    took
+###### took
 
 took 值告诉我们执行整个搜索请求耗费了多少毫秒。
 
-###### 1.3.1.2.3    shards
+###### shards
 
 _shards 部分告诉我们在查询中参与分片的总数，以及这些分片成功了多少个失败了多少个。
 
@@ -81,9 +81,9 @@ _shards 部分告诉我们在查询中参与分片的总数，以及这些分片
 
 让查询到的数据分页显示。
 
-**size****：**显示应该返回的结果数量，默认是 10
+**size：**显示应该返回的结果数量，默认是 10
 
-**from****：**显示应该跳过的初始结果数量，默认是 0
+**from：**显示应该跳过的初始结果数量，默认是 0
 
 如果每页展示 5 条结果，可以用下面方式请求得到 1 到 3 页的结果：
 
@@ -1934,11 +1934,11 @@ GET /_search
 
 评分的计算方式取决于查询类型 不同的查询语句用于不同的目的： 
 
-\1.   fuzzy 查询会计算与关键词的拼写相似程度。
+1. fuzzy 查询会计算与关键词的拼写相似程度。
 
-\2.   terms 查询会计算找到的内容与关键词组成部分匹配的百分比。
+2. terms 查询会计算找到的内容与关键词组成部分匹配的百分比。
 
-\3.   通常我们说的 relevance 是我们用来计算全文本字段的值相对于全文本检索词相似程度的算法。
+3. 通常我们说的 relevance 是我们用来计算全文本字段的值相对于全文本检索词相似程度的算法。
 
 Elasticsearch 的相似度算法被定义为检索词频率/反向文档频率， TF/IDF ，包括以下内容：
 
@@ -6722,23 +6722,22 @@ GET /my_index/_analyze?analyzer=dbl_metaphone
 
 Smith Smythe
 
-## 13   聚合（待）
+## 聚合（待）
 
-### 13.1   高阶概念
+### 高阶概念
 
 要掌握聚合，需要明白两个主要的概念：
 
-l **桶（****Buckets****）：**满足特定条件的文档的集合
-
-l **指标（****Metrics****）：**对桶内的文档进行统计计算
+- **桶（Buckets）：**满足特定条件的文档的集合
+- **指标（Metrics）：**对桶内的文档进行统计计算
 
 粗略的用SQL语句来解释：
 
+```
 SELECT COUNT(color) 
-
 FROM table
-
 GROUP BY color 
+```
 
 注：
 
@@ -6756,105 +6755,73 @@ GROUP BY color
 
 首先设置fielddata
 
+```
 PUT /cars
-
 {
-
  "mappings": {
-
   "transactions" :{
-
    "properties" :{
-
-​    "color" : {
-
-​     "type" : "text",
-
-​     "fielddata" :true
-
-​    }
-
+    "color" : {
+     "type" : "text",
+     "fielddata" :true
+    }
    }
-
   }
-
  }
-
 }
+```
 
 输入数据
 
-POST /cars/transactions/_bulk
-
+```
+POST /cars/_bulk
 { "index": {}}
-
 { "price" : 10000, "color" : "red", "make" : "honda", "sold" : "2014-10-28" }
-
 { "index": {}}
-
 { "price" : 20000, "color" : "red", "make" : "honda", "sold" : "2014-11-05" }
-
 { "index": {}}
-
 { "price" : 30000, "color" : "green", "make" : "ford", "sold" : "2014-05-18" }
-
 { "index": {}}
-
 { "price" : 15000, "color" : "blue", "make" : "toyota", "sold" : "2014-07-02" }
-
 { "index": {}}
-
 { "price" : 12000, "color" : "green", "make" : "toyota", "sold" : "2014-08-19" }
-
 { "index": {}}
-
 { "price" : 20000, "color" : "red", "make" : "honda", "sold" : "2014-11-05" }
-
 { "index": {}}
-
 { "price" : 80000, "color" : "red", "make" : "bmw", "sold" : "2014-01-01" }
-
 { "index": {}}
-
 { "price" : 25000, "color" : "blue", "make" : "ford", "sold" : "2014-02-12" }
+```
 
 车颜色统计车受欢迎程度
 
-GET /cars/transactions/_search
-
+```
+GET /cars/_search
 {
-
   "size" : 0,
-
   "aggs" : { 
-
-​    "popular_colors" : { 
-
-​      "terms" : { 
-
-​       "field" : "color"
-
-​      }
-
-​    }
-
+    "popular_colors" : { 
+      "terms" : { 
+       "field" : "color"
+      }
+    }
   }
-
 }
+```
 
 
 
-#### 13.2.2  fielddata内存数据结构
+#### fielddata内存数据结构
 
-在es中，text类型的字段使用一种叫做fielddata的查询时内存数据结构。当字段被排序，聚合或者通过脚本访问时这种数据结构会被创建。它是通过从磁盘读取每个段的整个反向索引来构建的，然后存存储在java的堆内存中。
+在es中，text类型的字段使用一种叫做fielddata的查询时内存数据结构。当字段被排序（sort），聚合（aggs）或者通过脚本（script）访问时这种数据结构会被创建，它将会完整加载这个字段所有 Segment 中的倒排索引到java的堆内存中，以便获得更快的加载速度。
 
 fileddata默认是不开启的。Fielddata可能会消耗大量的堆空间，尤其是在加载高基数文本字段时。一旦fielddata已加载到堆中，它将在该段的生命周期内保留。此外，加载fielddata是一个昂贵的过程，可能会导致用户遇到延迟命中。
 
-##### 13.2.2.1  Fielddata的大小
+##### Fielddata的大小
 
 indices.fielddata.cache.size 控制为 fielddata 分配的堆空间大小。 当你发起一个查询，分析字符串的聚合将会被加载到 fielddata，如果这些字符串之前没有被加载过。如果结果中 fielddata 大小超过了指定 大小 ，其他的值将会被回收从而获得空间。
 
-##### 13.2.2.2  监控 fielddata
+##### 监控 fielddata
 
 Fielddata 的使用可以被监控：
 
@@ -6876,49 +6843,36 @@ GET /_nodes/stats/indices/fielddata?fields=*
 GET /_nodes/stats/indices/fielddata?level=indices&fields=*
 ```
 
-##### 13.2.2.3  断路器
+##### 断路器
 
-机敏的读者可能已经发现 fielddata 大小设置的一个问题。fielddata 大小是在数据加载 之后 检查的。 如果一个查询试图加载比可用内存更多的信息到 fielddata 中会发生什么？答案：我们会碰到 OutOfMemoryException 。
+机敏的读者可能已经发现 fielddata 大小设置的一个问题。fielddata 大小是在数据加载 之后 检查的。 如果一个查询试图加载比可用内存更多的信息到 fielddata 中会发生什么？
 
-#### 13.2.3  桶里嵌套度量指标
+答案：我们会碰到 OutOfMemoryException 。
+
+#### 桶里嵌套度量指标
 
 继续为汽车的例子加入 average 平均度量：
 
+```
 GET /cars/transactions/_search
-
 {
-
   "size" : 0,
-
   "aggs": {
-
    "colors": {
-
-​     "terms": {
-
-​      "field": "color"
-
-​     },
-
-​     "aggs": { 
-
-​      "avg_price": { 
-
-​        "avg": {
-
-​         "field": "price" 
-
-​        }
-
-​      }
-
-​     }
-
+     "terms": {
+      "field": "color"
+     },
+     "aggs": { 
+      "avg_price": { 
+        "avg": {
+         "field": "price" 
+        }
+      }
+     }
    }
-
   }
-
 }
+```
 
 注：
 
@@ -6940,87 +6894,53 @@ GET /cars/transactions/_search
 
 首先为color和make设置fielddata
 
+```
 PUT /cars
-
 {
-
  "mappings": {
-
   "transactions" :{
-
    "properties" :{
-
-​    "color" : {
-
-​     "type" : "text",
-
-​     "fielddata" :true
-
-​    },
-
-​    "make" :{
-
-​     "type" : "text",
-
-​     "fielddata" :true
-
-​    }
-
-​    }
-
+    "color" : {
+     "type" : "text",
+     "fielddata" :true
+    },
+    "make" :{
+     "type" : "text",
+     "fielddata" :true
+    }
+   }
   }
-
  }
-
 }
+```
 
 输入数据，省略，将桶嵌套进 另外一个桶：
 
+```
 GET /cars/transactions/_search
-
 {
-
   "size" : 0,
-
   "aggs": {
-
    "colors": {
-
-​     "terms": {
-
-​      "field": "color"
-
-​     },
-
-​     "aggs": {
-
-​      "avg_price": { 
-
-​        "avg": {
-
-​         "field": "price"
-
-​        }
-
-​      },
-
-​      "make": { 
-
-​        "terms": {
-
-​          "field": "make" 
-
-​        }
-
-​      }
-
-​     }
-
+     "terms": {
+      "field": "color"
+     },
+     "aggs": {
+      "avg_price": { 
+        "avg": {
+         "field": "price"
+        }
+      },
+      "make": { 
+        "terms": {
+          "field": "make" 
+        }
+      }
+     }
    }
-
   }
-
 }
+```
 
 注：
 
@@ -7038,53 +6958,34 @@ GET /cars/transactions/_search
 
 设置最低和最高价格：
 
+```
 GET /cars/transactions/_search
-
 {
-
   "size" : 0,
-
   "aggs": {
-
    "colors": {
-
-​     "terms": {
-
-​      "field": "color"
-
-​     },
-
-​     "aggs": {
-
-​      "avg_price": { "avg": { "field": "price" }
-
-​      },
-
-​      "make" : {
-
-​        "terms" : {
-
-​          "field" : "make"
-
-​        },
-
-​        "aggs" : { 
-
-​          "min_price" : { "min": { "field": "price"} }, 
-
-​          "max_price" : { "max": { "field": "price"} } 
-
-​        }
-
-​      }
-
-​     }
-
+     "terms": {
+      "field": "color"
+     },
+     "aggs": {
+      "avg_price": { "avg": { "field": "price" }
+      },
+      "make" : {
+        "terms" : {
+          "field" : "make"
+        },
+        "aggs" : { 
+          "min_price" : { "min": { "field": "price"} }, 
+          "max_price" : { "max": { "field": "price"} } 
+        }
+      }
+     }
    }
-
   }
-
 }
+```
+
+
 
 ### 13.3   条形图
 
@@ -7670,11 +7571,11 @@ GET /cars/transactions/_search
 
 小结：
 
-\1.   在 filter 过滤中的 non-scoring 查询，同时影响搜索结果和聚合结果。
+1. 在 filter 过滤中的 non-scoring 查询，同时影响搜索结果和聚合结果。
 
-\2.   filter 桶影响聚合。
+2. filter 桶影响聚合。
 
-\3.   post_filter 只影响搜索结果。
+3. post_filter 只影响搜索结果。
 
 #### 13.4.6  多桶排序
 
@@ -8452,7 +8353,7 @@ PUT /music/_mapping/_song
 
 广度优先仅仅适用于每个组的聚合数量远远小于当前总组数的情况下，因为广度优先会在内存中缓存裁剪后的仅仅需要缓存的每个组的所有数据，以便于它的子聚合分组查询可以复用上级聚合的数据。
 
-## 14   地理位置
+## 地理位置
 
 ### 14.1   地理坐标点
 
@@ -9046,11 +8947,11 @@ GET /attractions/restaurant/_search
 
 图 14—3
 
-### 14.4   地理形状
+### 地理形状
 
-#### 14.4.1  映射地理形状（geo-shapes）
+#### 映射地理形状（geo-shapes）
 
-##### 14.4.1.1  映射地理形状
+##### 映射地理形状
 
 geo-shapes 有以下作用：判断查询的形状与索引的形状的关系；这些 关系 可能是以下之一：
 
@@ -9094,7 +8995,7 @@ PUT /attractions
 
 同时需要考虑修改两个非常重要的设置： 精度 和 距离误差 。
 
-##### 14.4.1.2  精度
+##### 精度
 
 精度 （ precision ）参数 用来控制生成的 geohash 的最大长度。默认精度为 9 ，等同于尺寸在 5m x 5m 的geohash 。这个精度可能比你需要的精确得多。
 
@@ -9102,11 +9003,11 @@ PUT /attractions
 
 可以使用距离来指定精度 —— 如 50m 或 2km—不过这些距离最终也会转换成对应的Geohashes等级。
 
-##### 14.4.1.3  距离误差
+##### 距离误差
 
 距离误差 指定地理形状可以接受的最大错误率。它的默认值是 0.025 ， 即 2.5% 。
 
-#### 14.4.2  索引地理形状
+#### 索引地理形状
 
 地理形状通过 GeoJSON 来表示，这是一种开放的使用 JSON 实现的二维形状编码方式。 每个形状都包含了形状类型— point, line, polygon, envelope —和一个或多个经纬度点集合的数组。
 
@@ -9264,7 +9165,7 @@ GET /attractions/landmark/_search
 
 *2.*    *这个多边形表示安姆斯特丹中心区域。*
 
-#### 14.4.4  在查询中使用已索引的形状
+#### 在查询中使用已索引的形状
 
 对于那些经常会在查询中使用的形状，可以把它们索引起来以便在查询中可以方便地直接引用名字。以之前的阿姆斯特丹中部为例，我们可以把它存储成一个类型为 neighborhood 的文档。
 
@@ -9378,11 +9279,11 @@ GET /attractions/landmark/_search
 
 注：*指定* *indexed_shape* *而不是* *shape* *，**Elasticesearch* *就知道需要从指定的文档和* *path* *检索出对应的形状了。*
 
-## 15   数据建模
+## 数据建模
 
-### 15.1   关联关系处理（不可用）
+### 关联关系处理（不可用）
 
-#### 15.1.1  应用层联接
+#### 应用层联接
 
 例如，比方说我们正在对用户和他们的博客文章进行索引。在关系世界中，我们会这样来操作：
 
@@ -9440,7 +9341,7 @@ GET /my_index/blogpost/_search
 
 }
 
-#### 15.1.2  非规范化你的数据（关系嵌套）
+#### 非规范化你的数据（关系嵌套）
 
 如果我们希望能够通过某个用户姓名找到他写的博客文章，可以在博客文档中包含这个用户的姓名：
 
@@ -9483,7 +9384,7 @@ GET /my_index/blogpost/_search
 
 数据非规范化的优点是速度快。因为每个文档都包含了所需的所有信息，当这些信息需要在查询进行匹配时，并不需要进行昂贵的联接操作。
 
-#### 15.1.3  字段折叠
+#### 字段折叠
 
 一个普遍的需求是需要通过特定字段进行分组。例如我们需要按照用户名称 分组 返回最相关的博客文章。 按照用户名分组意味着进行 terms 聚合。 为能够按照用户 整体 名称进行分组，名称字段应保持 not_analyzed 的形式。
 
