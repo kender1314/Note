@@ -36,17 +36,24 @@ Groovy 是 用于Java[虚拟机](https://baike.baidu.com/item/虚拟机)的一�
 2. 不再像maven那样的xml语言。
 3. 导入插件的语言更简洁
 
+## Gradle进行项目发布
+
+Gradle项目执行前后可以执行相关方法。
 
 
 
 
 
+## gretty应用
 
-
-
-
-
-
+1. 选择servlet 容器
+2. 热部署
+3. 快速加载，监听`webapp/`中的内容，文件发生改变，无需重启。
+4. HTTPS 支持
+5.  转发
+6. 远程调试（Debug）
+7. 将项目生成像tomcat一样，点击就能运行的项目
+8. archiveProduct，压缩项目（.zip）
 
 
 

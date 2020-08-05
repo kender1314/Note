@@ -595,6 +595,8 @@ dead（死亡）
 #### 映射容器数据卷命令
 
 ```
+先给docker写入的权限
+sudo chown -R 1000:1000 /data
 docker run --name es -d -e "discovery.type=single-node" -v /data/csf/config:/usr/elasticsearch/config -p 9200:9200 -p 9300:9300 elasticsearch:5.6.16
 //ro->只读，容器内部只能读该文件夹中的文件，不能新建，修改或删除文件，但是主机没有影响
 docker run --name es -d -e "discovery.type=single-node" -v /data/csf/config:/usr/elasticsearch/config:ro -p 9200:9200 -p 9300:9300 elasticsearch:5.6.16
@@ -645,23 +647,23 @@ DockerFile是用来构建Docker镜像的构建文件，是由一系列命令和�
 
 ![image-20200726085918876](https://cdn.jsdelivr.net/gh/kender1314/NotePicture/20200726085924.png)
 
-|                             指令                             |                             描述                             |
-| :----------------------------------------------------------: | :----------------------------------------------------------: |
-|                             FROM                             |             镜像基础，当前新镜像是基于哪个镜像的             |
-|                          MAINTAINER                          |                   镜像维护者者的姓名和邮箱                   |
-|                             RUN                              |                   容器构建时需要运行的命令                   |
-|                            EXPOSE                            |                  当前容器对外暴露出的端口号                  |
-|                           WORKDIR                            |   指定在创建容器后，终端默认登录进来的工作目录，一个落脚点   |
-|                             ENV                              |               用来在构建镜像过程中设置环境变量               |
-|                             ADD                              | 将宿主机目录下的文件拷贝进镜像且ADD命令会自动处理URL和解压tar压缩包 |
-|                             COPY                             |             （1）类似ADD，拷贝文件和目录到镜像中             |
-| （2）将从构建上下文<源路径>的文件/目录复制到新的一层的镜像内的<目标路径>位置 |                                                              |
-|                            VOLUME                            |             容器数据卷，用于数据保存和持久化工作             |
-|                             CMD                              |             （1）指定一个容器启动时要运行的命令              |
-| （2）Dockerfile中可以有多个CMD命令，但只有最后一个生效，CMD会被docker run之后的参数替换 |                                                              |
-|                          ENTRYPOINT                          |             （1）指定一个容器启动时要运行的命令              |
-| （2）ENTRYPOINT的目的和CMD一样，都是在指定容器启动程序及参数，与CMD区别在于，ENTRYPOINT在执行docker run之后，参数会被追加，而不是替换 |                                                              |
-|                           ONBUILD                            | 当构建一个被继承的Dockerfile时运行命令，父镜像在被子继承后父镜像的onbuild被触发，等同于为父镜像构建一个触发器 |
+|    指令    |                             描述                             |
+| :--------: | :----------------------------------------------------------: |
+|    FROM    |             镜像基础，当前新镜像是基于哪个镜像的             |
+| MAINTAINER |                   镜像维护者者的姓名和邮箱                   |
+|    RUN     |                   容器构建时需要运行的命令                   |
+|   EXPOSE   |                  当前容器对外暴露出的端口号                  |
+|  WORKDIR   |   指定在创建容器后，终端默认登录进来的工作目录，一个落脚点   |
+|    ENV     |               用来在构建镜像过程中设置环境变量               |
+|    ADD     | 将宿主机目录下的文件拷贝进镜像且ADD命令会自动处理URL和解压tar压缩包 |
+|    COPY    |             （1）类似ADD，拷贝文件和目录到镜像中             |
+|            | （2）将从构建上下文<源路径>的文件/目录复制到新的一层的镜像内的<目标路径>位置 |
+|   VOLUME   |             容器数据卷，用于数据保存和持久化工作             |
+|    CMD     |             （1）指定一个容器启动时要运行的命令              |
+|            | （2）Dockerfile中可以有多个CMD命令，但只有最后一个生效，CMD会被docker run之后的参数替换 |
+| ENTRYPOINT |             （1）指定一个容器启动时要运行的命令              |
+|            | （2）ENTRYPOINT的目的和CMD一样，都是在指定容器启动程序及参数，与CMD区别在于，ENTRYPOINT在执行docker run之后，参数会被追加，而不是替换 |
+|  ONBUILD   | 当构建一个被继承的Dockerfile时运行命令，父镜像在被子继承后父镜像的onbuild被触发，等同于为父镜像构建一个触发器 |
 
 #### ENV举例
 
