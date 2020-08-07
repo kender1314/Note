@@ -1,6 +1,11 @@
 #         Elasticsearch 学习笔记
 
-————笔记参考elasticsearch 2.x
+[^2020-02-10]: 笔记参考elasticsearch 2.x
+[^2020-08-06]: 更新和完善聚合（aggs）中的部分内容
+
+[TOC]
+
+
 
 ## Elasticsearch概述
 
@@ -231,13 +236,7 @@ PUT /website/blog/2?version=5&version_type=external
 
  
 
- 
-
- 
-
- 
-
-## 2     基本知识
+## 基本知识
 
 ### 2.1      Elasticsearch 交互
 
@@ -895,7 +894,7 @@ l 将集群中任一节点的请求路由到存有相关数据的节点。
 
 l 集群扩容时无缝整合新节点，重新分配分片以便从离群节点恢复。
 
-## 3     集群原理
+## 集群原理
 
 ### 3.1      集群扩容
 
@@ -991,19 +990,19 @@ int( (primary + 3 replicas) / 2 ) + 1 = 3
 
 ## 搜索
 
-#### 4.1.1    映射（Mapping）
+###  映射（Mapping）
 
 描述数据在每个字段内如何存储
 
-#### 4.1.2    分析（Analysis）
+#### 分析（Analysis）
 
 全文是如何处理使之可以被搜索的
 
-#### 4.1.3    领域特定查询语言（Query DSL）
+#### 领域特定查询语言（Query DSL）
 
 Elasticsearch 中强大灵活的查询语言
 
-#### 4.1.4    多种搜索方式
+#### 多种搜索方式
 
 **/_search**
 
@@ -1033,33 +1032,35 @@ Elasticsearch 中强大灵活的查询语言
 
 在所有的索引中搜索 user 和 tweet 类型
 
-## 5     映射和分析
+## 映射和分析
 
-### 5.1      倒排索引（重要）
+### 倒排索引（重要）
 
-#### 5.1.1    原理讲解
+#### 原理讲解
 
 假设我们有两个文档，每个文档的 content 域包含如下内容：
 
-\1.   The quick brown fox jumped over the lazy dog
+1. The quick brown fox jumped over the lazy dog
 
-\2.   Quick brown foxes leap over lazy dogs in summer
+2. Quick brown foxes leap over lazy dogs in summer
 
 将词条规范为标准模式，可以找到与用户搜索的词条不完全一致，但具有足够相关性的文档。例如：
 
-l Quick 和 quick 以独立的词条出现，然而用户可能认为它们是相同的词。
+- Quick 和 quick 以独立的词条出现，然而用户可能认为它们是相同的词。
 
-l fox 和 foxes 非常相似, 就像 dog 和 dogs ；他们有相同的词根。
+- fox 和 foxes 非常相似, 就像 dog 和 dogs ；他们有相同的词根。
 
-l jumped 和 leap, 尽管没有相同的词根，但他们的意思很相近。他们是同义词。
+- jumped 和 leap, 尽管没有相同的词根，但他们的意思很相近。他们是同义词。
+
 
 进一步延伸
 
-l Quick 可以小写化为 quick 。
+- Quick 可以小写化为 quick 。
 
-l foxes 可以 *词干提取* --变为词根的格式-- 为 fox 。类似的， dogs 可以为提取为 dog 。
+- foxes 可以 *词干提取* --变为词根的格式-- 为 fox 。类似的， dogs 可以为提取为 dog 。
 
-l jumped 和 leap 是同义词，可以索引为相同的单词 jump 。
+- jumped 和 leap 是同义词，可以索引为相同的单词 jump 。
+
 
 现在索引看上去像这样：
 
@@ -1429,7 +1430,7 @@ user 和 name 域的映射结构与 tweet 类型的相同。事实上， type �
 
  
 
-## 6     请求体查询
+## 请求体查询
 
 ### 6.1      空查询
 
@@ -1799,7 +1800,7 @@ GET /website/blog/_validate/query?explain
 
 图 6—3
 
-## 7     排序与相关性
+## 排序与相关性
 
 ### 7.1      排序
 
@@ -2084,7 +2085,7 @@ Doc values 通过转置两者间的关系来解决这个问题。倒排索引将
 
  
 
-## 8     执行分布式检索
+## 执行分布式检索
 
 ### 8.1      在分片上索引和 文档
 
@@ -2205,7 +2206,7 @@ GET /_search/scroll
 }
 ```
 
-## 9     索引管理
+## 索引管理
 
 ### 9.1      创建一个索引
 
@@ -2682,7 +2683,7 @@ POST _reindex
 
 
 
-## 10   分片内部原理
+## 分片内部原理
 
 ### 10.1   使文本可被搜索
 
@@ -2828,7 +2829,7 @@ POST /logstash-2014-10/_optimize?max_num_segments=1
 
 请注意，使用 optimize API 触发段合并的操作不会受到任何资源上的限制。这可能会消耗掉你节点上全部的I/O资源, 使其没有余裕来处理搜索请求，从而有可能使集群失去响应。 如果你想要对索引执行 optimize，你需要先使用分片分配（查看 迁移旧索引）把索引移到一个安全的节点，再执行。
 
-## 11   深入搜索
+## 深入搜索
 
 ### 11.1   结构化搜索
 
@@ -5257,7 +5258,7 @@ l b：这个参数控制着字段长归一值所起的作用， 0.0 会禁用归
 
  
 
-## 12   处理语言
+## 处理语言
 
 ### 12.1   使用各种语言
 
@@ -6672,43 +6673,27 @@ GET /my_index/my_type/_search
 
 创建一个使用语音语汇单元过滤器的自定义分析器，并尝试下面的方法：
 
+```json
 PUT /my_index
-
 {
-
  "settings": {
-
   "analysis": {
-
    "filter": {
-
-​    "dbl_metaphone": { 
-
-​     "type":  "phonetic",
-
-​     "encoder": "double_metaphone"
-
-​    }
-
+    "dbl_metaphone": { 
+     "type":  "phonetic",
+     "encoder": "double_metaphone"
+    }
    },
-
    "analyzer": {
-
-​    "dbl_metaphone": {
-
-​     "tokenizer": "standard",
-
-​     "filter":  "dbl_metaphone" 
-
-​    }
-
+    "dbl_metaphone": {
+     "tokenizer": "standard",
+     "filter":  "dbl_metaphone" 
+    }
    }
-
   }
-
  }
-
 }
+```
 
 注：
 
@@ -6723,6 +6708,8 @@ GET /my_index/_analyze?analyzer=dbl_metaphone
 Smith Smythe
 
 ## 聚合（待）
+
+<!--在elasticsearch 6.0和6.1版本，已经弃用了索引的多type类型，一个索引只支持含有一个type；在6.2及以上版本，type的值只支持“_doc”，在url中，很多操作都可以省略type不写-->
 
 ### 高阶概念
 
@@ -6747,9 +6734,9 @@ GROUP BY color
 
 桶在概念上类似于 SQL 的分组（GROUP BY），而指标则类似于 COUNT() 、 SUM() 、 MAX() 等统计方法。
 
-### 13.2   使用聚合
+### 使用聚合
 
-#### 13.2.1  聚合举例
+####  聚合举例
 
 根据车颜色统计车受欢迎程度
 
@@ -6808,8 +6795,6 @@ GET /cars/_search
   }
 }
 ```
-
-
 
 #### fielddata内存数据结构
 
@@ -6884,17 +6869,63 @@ GET /cars/transactions/_search
 
 结果：
 
- ![image-20200704003221622](../../../Typora/Picture/image-20200704003221622.png)
+```json
+{
+  "took" : 2,
+  "timed_out" : false,
+  "_shards" : {
+    "total" : 1,
+    "successful" : 1,
+    "skipped" : 0,
+    "failed" : 0
+  },
+  "hits" : {
+    "total" : {
+      "value" : 10,
+      "relation" : "eq"
+    },
+    "max_score" : null,
+    "hits" : [ ]
+  },
+  "aggregations" : {
+    "colors" : {
+      "doc_count_error_upper_bound" : 0,
+      "sum_other_doc_count" : 0,
+      "buckets" : [
+        {
+          "key" : "red",
+          "doc_count" : 6,
+          "avg_price" : {
+            "value" : 30000.0
+          }
+        },
+        {
+          "key" : "blue",
+          "doc_count" : 2,
+          "avg_price" : {
+            "value" : 20000.0
+          }
+        },
+        {
+          "key" : "green",
+          "doc_count" : 2,
+          "avg_price" : {
+            "value" : 21000.0
+          }
+        }
+      ]
+    }
+  }
+}
+```
 
-图 13—1
-
-#### 13.2.4  桶嵌套桶
+#### 桶嵌套桶
 
 将make作为桶嵌套如另外一个桶
 
 首先为color和make设置fielddata
 
-```
+```json
 PUT /cars
 {
  "mappings": {
@@ -6916,7 +6947,7 @@ PUT /cars
 
 输入数据，省略，将桶嵌套进 另外一个桶：
 
-```
+```json
 GET /cars/transactions/_search
 {
   "size" : 0,
@@ -6958,7 +6989,7 @@ GET /cars/transactions/_search
 
 设置最低和最高价格：
 
-```
+```json
 GET /cars/transactions/_search
 {
   "size" : 0,
@@ -6987,47 +7018,31 @@ GET /cars/transactions/_search
 
 
 
-### 13.3   条形图
+### 条形图
 
 直方图使用histogram
 
+```json
 GET /cars/transactions/_search
-
 {
-
   "size" : 0,
-
   "aggs":{
-
    "price":{
-
-​     "histogram":{ 
-
-​      "field": "price",
-
-​      "interval": 20000
-
-​     },
-
-​     "aggs":{
-
-​      "revenue": {
-
-​        "sum": { 
-
-​         "field" : "price"
-
-​        }
-
-​       }
-
-​     }
-
+     "histogram":{ 
+      "field": "price",
+      "interval": 20000
+     },
+     "aggs":{
+      "revenue": {
+        "sum": { 
+         "field" : "price"
+        }
+       }
+     }
    }
-
   }
-
 }
+```
 
 注：  
 
@@ -7037,49 +7052,112 @@ GET /cars/transactions/_search
 
 响应结果如下：
 
- ![image-20200704003253311](../../../Typora/Picture/image-20200704003253311.png)
-
-图 13—3
+```json
+{
+  "took" : 1,
+  "timed_out" : false,
+  "_shards" : {
+    "total" : 1,
+    "successful" : 1,
+    "skipped" : 0,
+    "failed" : 0
+  },
+  "hits" : {
+    "total" : {
+      "value" : 8,
+      "relation" : "eq"
+    },
+    "max_score" : null,
+    "hits" : [ ]
+  },
+  "aggregations" : {
+    "price-h" : {
+      "buckets" : [
+        {
+          "key" : 10000.0,
+          "doc_count" : 3,
+          "sum-p" : {
+            "value" : 37000.0
+          }
+        },
+        {
+          "key" : 20000.0,
+          "doc_count" : 3,
+          "sum-p" : {
+            "value" : 65000.0
+          }
+        },
+        {
+          "key" : 30000.0,
+          "doc_count" : 1,
+          "sum-p" : {
+            "value" : 30000.0
+          }
+        },
+        {
+          "key" : 40000.0,
+          "doc_count" : 0,
+          "sum-p" : {
+            "value" : 0.0
+          }
+        },
+        {
+          "key" : 50000.0,
+          "doc_count" : 0,
+          "sum-p" : {
+            "value" : 0.0
+          }
+        },
+        {
+          "key" : 60000.0,
+          "doc_count" : 0,
+          "sum-p" : {
+            "value" : 0.0
+          }
+        },
+        {
+          "key" : 70000.0,
+          "doc_count" : 0,
+          "sum-p" : {
+            "value" : 0.0
+          }
+        },
+        {
+          "key" : 80000.0,
+          "doc_count" : 1,
+          "sum-p" : {
+            "value" : 80000.0
+          }
+        }
+      ]
+    }
+  }
+}
+```
 
 各种统计的条形图：
 
+```json
 GET /cars/transactions/_search
-
 {
-
  "size" : 0,
-
  "aggs": {
-
   "makes": {
-
    "terms": {
-
-​    "field": "make",
-
-​    "size": 10
-
+    "field": "make",
+    "size": 10
    },
-
    "aggs": {
-
-​    "stats": {
-
-​     "extended_stats": {
-
-​      "field": "price"
-
-​     }
-
-​    }
-
+    "stats": {
+     "extended_stats": {
+      "field": "price"
+     }
+    }
    }
-
   }
-
  }
-
 }
+```
 
 效果：
 
@@ -7087,39 +7165,31 @@ GET /cars/transactions/_search
 
 图 13—4
 
-### 13.4   折线图
+### 折线图
 
-#### 13.4.1  折线图统计时间
+#### 折线图统计时间
+
+<!--在elasticsearch 7.2版本及以上，已经弃用interval字段，转而使用calendar_interval和fixed_interval代替，如果时间间隔是1w,1M或1y，则使用calendar_interval，否则使用fixed_interval-->
 
 折线图使用date_histogram
 
 构建一个简单的折线图回答如下问题： 每月销售多少台汽车？
 
+```json
 GET /cars/transactions/_search
-
 {
-
   "size" : 0,
-
   "aggs": {
-
    "sales": {
-
-​     "date_histogram": {
-
-​      "field": "sold",
-
-​      "interval": "month", 
-
-​      "format": "yyyy-MM-dd" 
-
-​     }
-
+     "date_histogram": {
+      "field": "sold",
+      "interval": "month", 
+      "format": "yyyy-MM-dd" 
+     }
    }
-
   }
-
 }
+```
 
 注：
 
@@ -7129,9 +7199,87 @@ GET /cars/transactions/_search
 
 运行效果：
 
- ![image-20200704003310870](../../../Typora/Picture/image-20200704003310870.png)
-
-图 13—5
+```json
+{
+  "took" : 1,
+  "timed_out" : false,
+  "_shards" : {
+    "total" : 1,
+    "successful" : 1,
+    "skipped" : 0,
+    "failed" : 0
+  },
+  "hits" : {
+    "total" : {
+      "value" : 10,
+      "relation" : "eq"
+    },
+    "max_score" : null,
+    "hits" : [ ]
+  },
+  "aggregations" : {
+    "statistics" : {
+      "buckets" : [
+        {
+          "key_as_string" : "2014-01-01",
+          "key" : 1388534400000,
+          "doc_count" : 1
+        },
+        {
+          "key_as_string" : "2014-02-01",
+          "key" : 1391212800000,
+          "doc_count" : 3
+        },
+        {
+          "key_as_string" : "2014-03-01",
+          "key" : 1393632000000,
+          "doc_count" : 0
+        },
+        {
+          "key_as_string" : "2014-04-01",
+          "key" : 1396310400000,
+          "doc_count" : 0
+        },
+        {
+          "key_as_string" : "2014-05-01",
+          "key" : 1398902400000,
+          "doc_count" : 1
+        },
+        {
+          "key_as_string" : "2014-06-01",
+          "key" : 1401580800000,
+          "doc_count" : 0
+        },
+        {
+          "key_as_string" : "2014-07-01",
+          "key" : 1404172800000,
+          "doc_count" : 1
+        },
+        {
+          "key_as_string" : "2014-08-01",
+          "key" : 1406851200000,
+          "doc_count" : 1
+        },
+        {
+          "key_as_string" : "2014-09-01",
+          "key" : 1409529600000,
+          "doc_count" : 0
+        },
+        {
+          "key_as_string" : "2014-10-01",
+          "key" : 1412121600000,
+          "doc_count" : 1
+        },
+        {
+          "key_as_string" : "2014-11-01",
+          "key" : 1414800000000,
+          "doc_count" : 2
+        }
+      ]
+    }
+  }
+}
+```
 
 #### 13.4.2  返回空 Buckets
 
@@ -7139,117 +7287,155 @@ GET /cars/transactions/_search
 
 有些时候，我们可能希望文档数目为零的 buckets也返回，可以通过设置两个额外参数来实现这种效果：
 
+```json
 GET /cars/transactions/_search
-
 {
-
   "size" : 0,
-
   "aggs": {
-
    "sales": {
-
-​     "date_histogram": {
-
-​      "field": "sold",
-
-​      "interval": "month",
-
-​      "format": "yyyy-MM-dd",
-
-​      "min_doc_count" : 0, 
-
-​      "extended_bounds" : { 
-
-​        "min" : "2014-01-01",
-
-​        "max" : "2014-12-31"
-
-​      }
-
-​     }
-
+     "date_histogram": {
+      "field": "sold",
+      "interval": "month",
+      "format": "yyyy-MM-dd",
+      "min_doc_count" : 0, 
+      "extended_bounds" : { 
+        "min" : "2014-01-01",
+        "max" : "2014-12-31"
+      }
+     }
    }
-
   }
-
 }
+```
 
 这样就可以返回文档数目为零的 buckets，就能顺利做出折线图。
 
- ![image-20200704003318058](../../../Typora/Picture/image-20200704003318058.png)
-
-图 13—6
+```json
+{
+  "took" : 3,
+  "timed_out" : false,
+  "_shards" : {
+    "total" : 1,
+    "successful" : 1,
+    "skipped" : 0,
+    "failed" : 0
+  },
+  "hits" : {
+    "total" : {
+      "value" : 10,
+      "relation" : "eq"
+    },
+    "max_score" : null,
+    "hits" : [ ]
+  },
+  "aggregations" : {
+    "statistics" : {
+      "buckets" : [
+        {
+          "key_as_string" : "2014-01-01",
+          "key" : 1388534400000,
+          "doc_count" : 1
+        },
+        {
+          "key_as_string" : "2014-02-01",
+          "key" : 1391212800000,
+          "doc_count" : 3
+        },
+        {
+          "key_as_string" : "2014-03-01",
+          "key" : 1393632000000,
+          "doc_count" : 0
+        },
+        {
+          "key_as_string" : "2014-04-01",
+          "key" : 1396310400000,
+          "doc_count" : 0
+        },
+        {
+          "key_as_string" : "2014-05-01",
+          "key" : 1398902400000,
+          "doc_count" : 1
+        },
+        {
+          "key_as_string" : "2014-06-01",
+          "key" : 1401580800000,
+          "doc_count" : 0
+        },
+        {
+          "key_as_string" : "2014-07-01",
+          "key" : 1404172800000,
+          "doc_count" : 1
+        },
+        {
+          "key_as_string" : "2014-08-01",
+          "key" : 1406851200000,
+          "doc_count" : 1
+        },
+        {
+          "key_as_string" : "2014-09-01",
+          "key" : 1409529600000,
+          "doc_count" : 0
+        },
+        {
+          "key_as_string" : "2014-10-01",
+          "key" : 1412121600000,
+          "doc_count" : 1
+        },
+        {
+          "key_as_string" : "2014-11-01",
+          "key" : 1414800000000,
+          "doc_count" : 2
+        },
+        {
+          "key_as_string" : "2014-12-01",
+          "key" : 1417392000000,
+          "doc_count" : 0
+        }
+      ]
+    }
+  }
+}
+```
 
 #### 13.4.3  折线图的复杂应用
 
 作为例子，我们构建聚合以便按季度展示所有汽车品牌总销售额。同时按季度、按每个汽车品牌计算销售总额，以便可以找出哪种品牌最赚钱：
 
+```
 GET /cars/transactions/_search
-
 {
-
   "size" : 0,
-
   "aggs": {
-
    "sales": {
-
-​     "date_histogram": {
-
-​      "field": "sold",
-
-​      "interval": "quarter", 
-
-​      "format": "yyyy-MM-dd",
-
-​      "min_doc_count" : 0,
-
-​      "extended_bounds" : {
-
-​        "min" : "2014-01-01",
-
-​        "max" : "2014-12-31"
-
-​      }
-
-​     },
-
-​     "aggs": {
-
-​      "per_make_sum": {
-
-​        "terms": {
-
-​         "field": "make"
-
-​        },
-
-​        "aggs": {
-
-​         "sum_price": {
-
-​           "sum": { "field": "price" } 
-
-​         }
-
-​        }
-
-​      },
-
-​      "total_sum": {
-
-​        "sum": { "field": "price" } 
-
-​      }
-
-​     }
-
+     "date_histogram": {
+      "field": "sold",
+      "interval": "quarter", 
+      "format": "yyyy-MM-dd",
+      "min_doc_count" : 0,
+      "extended_bounds" : {
+        "min" : "2014-01-01",
+        "max" : "2014-12-31"
+      }
+     },
+     "aggs": {
+      "per_make_sum": {
+        "terms": {
+         "field": "make"
+        },
+        "aggs": {
+         "sum_price": {
+           "sum": { "field": "price" } 
+         }
+        }
+      },
+      "total_sum": {
+        "sum": { "field": "price" } 
+      }
+     }
    }
-
   }
-
 }
+```
 
 注：
 
@@ -10276,7 +10462,7 @@ PUT /forums/post/1
 
 *2.*    *每个帖子都必须包含一个* *forum_id* *来标识它属于哪个论坛。*
 
-## 16   管理、监控和部署
+## 管理、监控和部署
 
 ### 16.1   监控
 
