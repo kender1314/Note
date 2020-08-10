@@ -147,6 +147,10 @@ docker -m="has update" -a="runoob" e218edb10161 runoob/ubuntu:v2
 docker run --name mysql -e MYSQL_ROOT_PASSWORD=123456 -d -p 3306:3306 mysql:5.7
 //交互式运行 -it(运行之后，直接进入容器)
 docker run --name mysql -e MYSQL_ROOT_PASSWORD=123456 -it -p 3306:3306 mysql:5.7
+//挂在容器中的文件到主机
+docker run -p 3306:3306 --name mysql -v /data/mysql/conf:/etc/mysql/conf.d -v /data/mysql/logs:/logs -v /data/mysql/data:/var/lib/mysql -e MYSQL_ROOT_PASSWORD=123456 -d mysql:5.7.31
+//运行tomcat
+docker run -it -d --name tomcat -v /data/tomcat:/usr/local/tomcat -p 8888:8080 tomcat:latest
 ```
 
 前面的3306是对应的服务器端口

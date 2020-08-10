@@ -73,9 +73,19 @@ Jenkins是一款流行的开源持续集成工具，广泛应用于项目开发�
 
 
 
+## Jenkins安装需要的包
+
+1. Role-based Authorization Strategy（用户角色权限分配）
+2. Credentials Binding Plugin（建立凭证，例如设置gitlab的凭证）
+3. Git（版本控制）
+4. Gradle或者Maven
+5. JDK
 
 
 
+## Pipeline构建项目
+
+Pipeline是由Groove语言写的
 
 
 
