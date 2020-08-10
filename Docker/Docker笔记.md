@@ -240,6 +240,11 @@ docker run --name es -d -e "discovery.type=single-node" -v /data/csf/config:/usr
 docker run --name es -d -e "discovery.type=single-node" -v /data/csf/config:/usr/elasticsearch/config:ro -p 9200:9200 -p 9300:9300 elasticsearch:5.6.16
 ```
 
+```
+//为docker用户分配权限
+sudo chown -R 1000 /data
+```
+
 
 
 #### 从容器内copy到主机
@@ -296,7 +301,11 @@ docker
 docker stats --help
 ```
 
- 
+###  查看容器内的ip地址
+
+```
+docker inspect 容器id（或容器名字） |grep IPAddress
+```
 
 ### Centos防火墙设置
 
