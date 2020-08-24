@@ -189,13 +189,19 @@ git merge dev
 
 git merge命令用于合并指定分支到当前分支。合并后，再查看readme.txt的内容，就可以看到，和dev分支的最新提交是完全一样的。
 
-#### 1.3.14.4   删除分支
+#### 删除分支
 
 ```
 git branch -d dev
 ```
 
-#### 1.3.14.5  本地创建并切换分支， 与checkout作用相同
+#### 删除远程分支
+
+```
+git push origin --delete dev
+```
+
+#### 本地创建并切换分支， 与checkout作用相同
 
 ```
 git switch -c dev

@@ -136,7 +136,7 @@ rm -rf /var/lib/docker
 
 
 
-## linux权限
+## chmod命令
 
 ```
 1.更改目录所有者命令:
@@ -196,7 +196,7 @@ nohup java -jar XXX.jar &
 ```
 将command的输出重定向到out.file文件，即输出内容不打印到屏幕上，而是输出到out.file文件中。
 nohup java -jar XXX.jar >temp.txt &
-输出错误的结局方法
+输出错误的解决方法
 nohup java -jar springboot-1.0.0.jar > master.log 2>&1 &
 ```
 
@@ -225,8 +225,6 @@ fg 23
 -s, --sleep-interval=S 与-f合用,表示在每次反复的间隔休眠S秒
 ```
 
-
-
 ```
 显示 notes.log 文件的最后 10 行
 tail notes.log
@@ -246,6 +244,42 @@ tail +20 notes.log
 显示文件 notes.log 的最后 10 个字符:
 tail -c 10 notes.log
 ```
+
+## netstat和lsof命令
+
+```
+查询端口占用情况
+lsof -i:端口号
+或
+netstat -tunlp | grep 端口号
+```
+
+```
+lsof -i:8080：查看8080端口占用
+lsof abc.txt：显示开启文件abc.txt的进程
+lsof -c abc：显示abc进程现在打开的文件
+lsof -c -p 1234：列出进程号为1234的进程所打开的文件
+lsof -g gid：显示归属gid的进程情况
+lsof +d /usr/local/：显示目录下被进程开启的文件
+lsof +D /usr/local/：同上，但是会搜索目录下的目录，时间较长
+lsof -d 4：显示使用fd为4的进程
+lsof -i -U：显示所有打开的端口和UNIX domain文件
+```
+
+```
+杀死端口对应的进程
+kill -9 PID
+```
+
+## history
+
+```
+查看历史命令
+
+history
+```
+
+
 
 
 
