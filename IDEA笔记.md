@@ -4,7 +4,7 @@
 
 在IDEA中选中File -> Settings -> Build, Execution, Deployment -> Deployment
 
-![image-20200816105551863](D:%5CTypora%5CPicture%5Cimage-20200816105551863.png)
+![image-20200816105551863](https://cdn.jsdelivr.net/gh/kender1314/NotePicture/20200911225921.png)
 
 
 
