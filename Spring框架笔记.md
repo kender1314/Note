@@ -123,9 +123,35 @@
 
 总结：Spring是使用DI实现了IOC的功能，Spring底层创建对象，是使用的反射机制。
 
- 
+#### 注解
 
-### Spring AOP 简介
+##### 使用注解的步骤
+
+1. 使用注解，必须将spring-aop的包加入项目中（当项目中加入spring-context的时候，就会间接地加入spring-aop依赖）
+2. 在类中加入spring的注解
+3. 在spring的配置文件中，加入一个组件扫描器的标签，说明注解在你项目中的位置
+
+##### 注解
+
+1. @Component
+
+2. @Respotory（放在持久层：dao的实现类上面，访问数据库）
+
+3. @Service（业务层：Service可以做业务处理，可以有事务等功能）
+
+4. @Controller（控制层：能接收用户提交的参数，实现请求的处理结果）
+
+   以上四个基本功能相同，都是创建对象，但是下面三个有额外功能。
+
+5. @Value（为指定字段注入值）
+
+6. @Autowired
+
+7. @Resource（来源于JDK的注解）
+
+### Spring AOP
+
+#### Spring AOP 简介
 
 （AOP全名Aspect Oriented Program）
 
@@ -137,35 +163,77 @@
 
 周边功能在 Spring 的面向切面编程AOP思想里，即被定义为切面
 
- 
-
 在面向切面编程AOP的思想里面，核心业务功能和切面功能分别独立进行开发，然后把切面功能和核心业务功能 "编织" 在一起，这就叫AOP
 
  
 
-**AOP 的目的**
+#### **AOP 的目的**
 
 AOP能够将那些与业务无关，却为业务模块所共同调用的逻辑或责任（例如事务处理、日志管理、权限控制等）封装起来，便于减少系统的重复代码，降低模块间的耦合度，并有利于未来的可拓展性和可维护性。
 
  
 
-**AOP 当中的概念：**
+#### **AOP 当中的概念**
 
 1. 切入点（Pointcut）：在哪些类，哪些方法上切入（where）
-
 2. 通知（Advice）：在方法执行的什么实际（when:方法前/方法后/方法前后）做什么（what:增强的功能）
-
-3. 切面（Aspect）：切面 = 切入点 + 通知，通俗点就是：在什么时机，什么地方，做什么增强！
-
+3. 切面（Aspect）：表示增强功能，就是一堆代码，完成某个功能。非业务功能，常见的切面有事务，统计信息，参数检查参数检查，权限认证等。
 4. 织入（Weaving）：把切面加入到对象，并创建出代理对象的过程。（由 Spring 来完成）
 
- 
+#### AOP的实现
+
+aop是一种规范，是动态的一个规范，一个标准。
+
+aop 的技术实现框架：
+
+1. spring：spring在内部实现了aop的规范，能做aop的工作。spring主要在事务处理时使用aop。我们在项目开发中很少使用spring的aop实现，因为spring的aop比较笨重。
+
+2. aspectJ：一个开源的专门做aop的框架。spring框架中集成了aspectJ框架，通过spring就可以使用aspectJ的功能。
+
+   使用aspectJ框架实现aop有两种方式：
+
+   1. 使用xml的配置文件：配置全局事务。
+   2. 使用注解
+
+#### AspectJ框架的使用
+
+##### 切面的执行时间
+
+@Before
+
+@AfterReturning
+
+@Around
+
+@AfterThrowing
+
+@After
+
+@Pointcut
+
+##### AspectJ切入点表达式
+
+execution(...)
+
+
+
+####  动态代理
+
+在不改变目标对象方法的情况下对方法进行增强，这就是动态代理。比如，我们希望对方法的调用增加日志记录，或者对方法的调用进行拦截，等等...
+
+##### JDK动态代理
+
+![image-20200820224627810](https://cdn.jsdelivr.net/gh/kender1314/NotePicture/20200820224629.png)
+
+##### CGLIB动态代理
+
+![image-20200820224652060](https://cdn.jsdelivr.net/gh/kender1314/NotePicture/20200820224653.png)
+
+
 
 ## Spring MVC
 
 参考文档：https://www.cnblogs.com/wmyskxz/p/8848461.html#4183609
-
- 
 
 ### MVC 设计概述
 
@@ -261,7 +329,21 @@ C 代表 控制器（controller)
 
 很显然，这就表示路径 /hello 会映射到该方法上
 
- 
+###  domain的概念
+
+domain的概念，通常会分很多层，比如经典的三层架构，控制层、业务层、数据访问层（DAO），此外，还有一个层，就是domain层
+
+domain层，通常就是用于放置这个系统中，与数据库中的表，一一对应起来的JavaBean的
+
+
+
+model层：和domain区别；可能都是javaBean，
+
+这个区别是用途不同，domain通常就代表了与数据库表--一一对应的javaBean,
+
+model通常代表了不与数据库一一对应的javaBean，但是封装的数据是前端的JS脚本，需要使用的数据
+
+
 
 ### 配置视图解析器
 
@@ -417,7 +499,46 @@ public class UploadController {
 
  
 
+##  事务
+
  
+
+###  什么是事务？
+
+事务是指是程序中一系列严密的逻辑操作，而且所有操作必须全部成功完成，否则在每个操作中所作的所有更改都会被撤消。
+
+ 
+
+### Spring中，事务用在什么地方？
+
+在Spring中，事务一般是用在服务层的业务方法上，因为业务方法会调用多个到dao方法，执行多个sql语句
+
+
+
+### JDBC和Mybatis访问数据库怎么处理事务？
+
+jdbc访问数据库，处理事务  Connection conn;  conn.commit(); conn.rollback();
+
+mybatis访问数据，处理事务 SqlSession.commit(); SqlSession.rollback();
+
+
+
+缺点：虽然底层封装的都是一样的，但是如果使用的话，还是需要了解各种范文数据库的使用方法，麻烦。
+
+### Spring处理事务
+
+spring提供了一种处理事务的统一模型，能使用统一的步骤，方式完成多种不同数据库访问技术的事务处理。
+
+
+
+也就是说，可以使用spring的事务处理机制，可以完成mybatis，JPA等访问数据库的事务处理
+
+
+
+###  spring支持编程式事务管理和声明式事务管理两种方式。
+
+1. 编程式事务使用TransactionTemplate或者直接使用底层的PlatformTransactionManager。对于编程式事务管理，spring推荐使用TransactionTemplate。
+2. 声明式事务是建立在AOP之上的。其本质是对方法前后进行拦截，然后在目标方法开始之前创建或者加入一个事务，在执行完目标方法之后根据执行情况提交或者回滚事务。声明式事务最大的优点就是不需要通过编程的方式管理事务，这样就不需要在业务逻辑代码中掺杂事务管理的代码，只需在配置文件中做相关的事务规则声明(或通过基于@Transactional注解的方式)，便可以将事务规则应用到业务逻辑中。
 
  
 
@@ -433,16 +554,4 @@ public class UploadController {
 
  
 
- 
-
- 
-
- 
-
- 
-
- 
-
- 
-
- 
+###
