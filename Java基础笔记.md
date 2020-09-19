@@ -192,10 +192,6 @@ final class 类名{
 
  
 
- 
-
- 
-
 ## Static关键字
 
 ### Static简述：
@@ -400,11 +396,7 @@ Map   Properties      安全
 
 1、Collection 是一个集合接口。它提供了对集合对象进行基本操作的通用接口方法。Collection接口在Java 类库中有很多具体的实现。Collection接口的意义是为各种具体的集合提供了最大化的统一操作方式
 
- 
-
 2、Collections 是一个包装类。它包含有各种有关集合操作的静态多态方法。此类不能实例化，就像一个工具类，服务于Java的Collection框架。
-
- 
 
 异同：Collections 是一个包装类，Collection 表示一组对象，这些对象也称为 collection 的元素。一些 collection 允许有重复的元素，而另一些则不允许，一些 collection 是有序的，而另一些则是无序的。
 
@@ -414,21 +406,15 @@ Map   Properties      安全
 
 — List 有序,可重复
 
- 
-
- 
-
-l Vector
+#### Vector
 
 优点: 底层数据结构是数组，查询快，增删慢。
 
 缺点: 线程安全，效率低
 
- 
 
- 
 
-l 可变数组ArrayList
+#### 可变数组ArrayList
 
 ArrayList底层使用数组作为实现结构，但是元素个数不受限制，是大小可变的数组在内存中分配连续的空间。
 
@@ -438,23 +424,17 @@ ArrayList底层使用数组作为实现结构，但是元素个数不受限制�
 
 缺点: 线程不安全，效率高
 
- 
-
- 
-
 注：ArrayList集合中的元素是有序的
 
 泛型<E>：可以保证接口中的操作内容更加安全，不这样做就很难避免存储类型杂乱
 
  
 
-l 链接表LinkedList
+#### 链接表LinkedList
 
 LinkedList底层采用链式存储结构，插入、删除元素是不会引起大量元素的移动，效率高。
 
 它专门提供了对尾部和头部添加和删除的删除方法，而且效率很高
-
- 
 
 优点: 底层数据结构是链表，查询慢，增删快。
 
@@ -462,13 +442,9 @@ LinkedList底层采用链式存储结构，插入、删除元素是不会引起�
 
  
 
- 
-
 ### Set接口：
 
 —Set 无序,唯一
-
- 
 
 HashSet
 
@@ -584,9 +560,9 @@ Map接口有三个比较重要的实现类，分别是HashMap、TreeMap、Proper
 
  
 
-l HashMap
+#### HashMap
 
- ![image-20200726202148782](../../../Typora/Picture/image-20200726202148782.png)
+![image-20200911230433081](https://cdn.jsdelivr.net/gh/kender1314/NotePicture/20200911230443.png)
 
 （1）   集合中的元素不会按次序排列
 
@@ -706,13 +682,14 @@ take      移除并返回队列头部的元素  如果队列为空，则阻塞
 
 ## JVM虚拟机
 
-l Java 虚拟机：Java 虚拟机（Java virtual machine，JVM）是运行 Java 程序必不可少的机制。
+- Java 虚拟机：Java 虚拟机（Java virtual machine，JVM）是运行 Java 程序必不可少的机制。
 
-l JVM实现了Java语言最重要的特征：即平台无关性。
+- JVM实现了Java语言最重要的特征：即平台无关性。
 
-l 原理：编译后的 Java 程序指令并不直接在硬件系统的 CPU 上执行，而是由 JVM 执行。JVM屏蔽了与具体平台相关的信息，使Java语言编译程序只需要生成在JVM上运行的目标字节码（.class）,就可以在多种平台上不加修改地运行。Java 虚拟机在执行字节码时，把字节码解释成具体平台上的机器指令执行。因此实现java平台无关性。它是 Java 程序能在多平台间进行无缝移植的可靠保证，同时也是 Java 程序的安全检验引擎（还进行安全检查）。
+- 原理：编译后的 Java 程序指令并不直接在硬件系统的 CPU 上执行，而是由 JVM 执行。JVM屏蔽了与具体平台相关的信息，使Java语言编译程序只需要生成在JVM上运行的目标字节码（.class）,就可以在多种平台上不加修改地运行。Java 虚拟机在执行字节码时，把字节码解释成具体平台上的机器指令执行。因此实现java平台无关性。它是 Java 程序能在多平台间进行无缝移植的可靠保证，同时也是 Java 程序的安全检验引擎（还进行安全检查）。
 
-l JVM = 类加载器 classloader + 执行引擎 execution engine + 运行时数据区域 runtime data area。类加载器（classloader）把硬盘上的class 文件加载到JVM中的运行时数据区域（runtime data area）, 但是它不负责这个类文件能否执行，而这个是执行引擎（execution engine）负责
+- JVM = 类加载器 classloader + 执行引擎 execution engine + 运行时数据区域 runtime data area。类加载器（classloader）把硬盘上的class 文件加载到JVM中的运行时数据区域（runtime data area）, 但是它不负责这个类文件能否执行，而这个是执行引擎（execution engine）负责
+
 
  
 
@@ -740,31 +717,17 @@ l classloader 有两种装载class的方式 （时机）：
 
 ### Jvm内存区
 
-JVM内存区：程序计数器、虚拟机栈、本地方法栈、堆、方法
-
-区（包括常量池）。
-
- 
+JVM内存区：程序计数器、虚拟机栈、本地方法栈、堆、方法区（包括常量池）。
 
 1.程序计数器：是一个数据结构，用于保存当前正常执行的程序的内存地址。Java虚拟机的多线程就是通过线程轮流切换并分配处理器时间来实现的，为了线程切换后能恢复到正确的位置，每条线程都需要一个独立的程序计数器，互不影响，该区域为“线程私有”。
 
- 
-
 2.Java虚拟机栈：线程私有的，与线程生命周期相同，用于存储局部变量表，操作栈，方法返回值。局部变量表放着基本数据类型，还有对象的引用。
-
- 
 
 3.本地方法栈：跟虚拟机栈很像，不过它是为虚拟机使用到的Native方法服务。
 
- 
-
 4.Java堆：所有线程共享的一块内存区域，对象实例几乎都在这分配内存。
 
- 
-
 5.方法区：各个线程共享的区域，储存虚拟机加载的类信息，常量，静态变量，编译后的代码。
-
- 
 
 6.运行时常量池：代表运行时每个class文件中的常量表。包括几种常量：编译时的数字常量、方法或者域的引用。
 
@@ -1053,10 +1016,6 @@ DataInputStream DataOutputStream 等-提供将基础数据类型写入到文件�
 
  
 
- 
-
- 
-
 ## 异常exception
 
 Java中的异常分为两大类：
@@ -1287,10 +1246,6 @@ Java Singleton模式主要作用是保证在Java应用程序中，一个类Class
 
  
 
- 
-
- 
-
 代码示例：
 
 ```
@@ -1356,17 +1311,9 @@ public class Singleton1{
 
 WEB容器：给处于其中的应用程序组件（jsp，servlet）提供一个环境，使jsp，servlet直接与容器中的环境变量交互，不必关注其它系统问题。主要由WEB服务器来实现。 例如：tomcat,weblogic,websphere等。
 
- 
-
 EJB容器：Enterprise java bean容器。供给运行在其中的组件EJB各种管理功能,满足J2EE规范的EJB放入该容器，马上就会被容器进行高效率的管理,并且可以通过现成的接口来获得系统级别的服务。例如邮件服务、事务管理。
 
- 
-
 WEB容器更多的是跟基于HTTP的请求打交道。而EJB容器更多的和数据库、其它服务打交道。但他们都是把与外界的交互实现从而减轻应用程序的负担。例如SERVLET不用关心HTTP的细节，直接引用环境变量session,request,response就行、EJB不用关心数据库连接速度、各种事务控制，直接由容器来完成。
-
- 
-
- 
 
  
 
@@ -1492,15 +1439,9 @@ transient修饰符仅适用于变量，不适用于方法和类。在序列化�
 
 ①无论如何，Integer与new Integer不会相等。不会经历拆箱过程
 
- 
-
 ②两个都是非new出来的Integer，如果数在-128到127之间，则是true,否则为false，java在编译Integer i2 = 128的时候,被翻译成-> Integer i2 = Integer.valueOf(128);而valueOf()函数只会对-128到127之间的数进行缓存 
 
- 
-
 ③两个都是new出来的,都为false 
-
- 
 
 ④int和integer(无论new否)比，都为true，因为会把Integer自动拆箱为int再去比
 
@@ -1566,8 +1507,6 @@ l 异步:发送一个请求,不等待返回,随时可以再发送下一个请求
  **举例：**
 
 电话，就是一个同步例子。发起者需要等待接收者，接通电话后，通信才开始。需要等待接收者的返回信息
-
- 
 
  
 
@@ -1654,8 +1593,6 @@ Lambda表达式的方法体与嵌套代码块有着相同的作用域。因此�
 
  
 
- 
-
 ### 构造函数引用
 
  
@@ -1702,11 +1639,11 @@ Lambda表达式的方法体与嵌套代码块有着相同的作用域。因此�
 
 通配符需要调用泛型定义的方法进行变量定义：
 
- ![image-20200726201039417](../../../Typora/Picture/image-20200726201039417.png)
+ ![](https://cdn.jsdelivr.net/gh/kender1314/NotePicture/20200726201101.png)
 
 泛型（T）：
 
- ![](https://cdn.jsdelivr.net/gh/kender1314/NotePicture/20200726201101.png)
+![image-20200911230817706](https://cdn.jsdelivr.net/gh/kender1314/NotePicture/20200911230819.png)
 
 通配符（?）:
 
@@ -1742,7 +1679,7 @@ Lambda表达式的方法体与嵌套代码块有着相同的作用域。因此�
 
 在java.lang.reflect包中有三个类：Field类、Method类和Constructor类分别描述了一个类的域、方法、构造函数。Field类有一个getType方法，该方法返回一个Class类型的对象，描述域的类型信息。
 
-![image-20200710232121701](../../../Typora/Picture/20200710232158.png)
+![image-20200911230856558](https://cdn.jsdelivr.net/gh/kender1314/NotePicture/20200911230858.png)
 
 
 
