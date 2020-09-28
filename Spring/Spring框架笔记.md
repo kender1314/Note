@@ -542,11 +542,68 @@ spring提供了一种处理事务的统一模型，能使用统一的步骤，�
 
  
 
- 
+###  事务的类型
 
- 
+#### 事务的隔离级别：有4个值。
 
- 
+1. DEFAULT：采用 DB 默认的事务隔离级别。MySql 的默认为 REPEATABLE_READ； Oracle默认为 READ_COMMITTED。
+2. READ_UNCOMMITTED：读未提交。未解决任何并发问题。
+3. READ_COMMITTED：读已提交。解决脏读，存在不可重复读与幻读。
+4. REPEATABLE_READ：可重复读。解决脏读、不可重复读，存在幻读
+5. SERIALIZABLE：串行化。不存在并发问题。
+
+#### 事务的超时时间
+
+表示一个方法最长的执行时间，如果方法执行时超过了时间，事务就回滚。
+
+单位是秒， 整数值， 默认是 -1. 
+
+#### 事务的传播行为
+
+控制业务方法是不是有事务的， 是什么样的事务的。
+
+7个传播行为，表示你的业务方法调用时，事务在方法之间是如果使用的。
+
+1. PROPAGATION_REQUIRED（支持当前事务，如果当前没有事务，就新建一个事务。这是最常见的选择。 ）
+
+2. PROPAGATION_REQUIRES_NEW（新建事务，如果当前存在事务，把当前事务挂起，直到新事务执行完毕，再执行存在的事务。 ）
+
+3. PROPAGATION_SUPPORTS（支持当前事务，如果当前没有事务，就以非事务方式执行。 ）
+
+   以上三个需要掌握的
+
+4. PROPAGATION_MANDATORY（支持当前事务，如果当前没有事务，就抛出异常。 ）
+
+5. PROPAGATION_NESTED
+
+6. PROPAGATION_NEVER
+
+7. PROPAGATION_NOT_SUPPORTED
+
+##### PROPAGATION_REQUIRED
+
+假如当前正要执行的事务不在另外一个事务里，那么就起一个新的事务 
+比如说，ServiceB.methodB的事务级别定义为PROPAGATION_REQUIRED, 那么由于执行ServiceA.methodA的时候
+
+ 1、如果ServiceA.methodA已经起了事务，这时调用ServiceB.methodB，ServiceB.methodB看到自己已经运行在ServiceA.methodA的事务内部，就不再起新的事务。这时只有外部事务并且他们是共用的，所以这时ServiceA.methodA或者ServiceB.methodB无论哪个发生异常methodA和methodB作为一个整体都将一起回滚。
+
+ 2、如果ServiceA.methodA没有事务，ServiceB.methodB就会为自己分配一个事务。这样，在ServiceA.methodA中是没有事务控制的。只是在ServiceB.methodB内的任何地方出现异常，ServiceB.methodB将会被回滚，不会引起ServiceA.methodA的回滚
+
+
+
+
+
+####    事务提交事务，回滚事务的时机
+
+1. 当你的业务方法，执行成功，没有异常抛出，当方法执行完毕，spring在方法执行后提交事务。事务管理器commit
+
+2. 当你的业务方法抛出运行时异常或ERROR， spring执行回滚，调用事务管理器的rollback
+
+   运行时异常的定义： RuntimeException  和他的子类都是运行时异常， 例如NullPointException , NumberFormatException
+
+3. 当你的业务方法抛出非运行时异常， 主要是受查异常时，提交事务
+
+   受查异常：在你写代码中，必须处理的异常。例如IOException, SQLException
 
  
 
