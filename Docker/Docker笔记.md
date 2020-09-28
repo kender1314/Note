@@ -289,6 +289,30 @@ docker commit -m=“提交的描述信息” -a=“作者” 容器ID 要创建�
 docker commit -m="learn" -a="jiang.he" 32bcae4298b9 jiang/tomcat:1.2
 ```
 
+#### 容器开机重启
+
+```
+--restart=always
+```
+
+#### docker run的--rm选项
+
+在Docker容器退出时，默认容器内部的文件系统仍然被保留，以方便调试并保留用户数据。
+
+但是，对于foreground容器，由于其只是在开发调试过程中短期运行，其用户数据并无保留的必要，因而可以在容器启动时设置--rm选项，这样在容器退出时就能够自动清理容器内部的文件系统。
+
+#### privileged参数
+
+大约在0.6版，privileged被引入docker。
+使用该参数，container内的root拥有真正的root权限。
+否则，container内的root只是外部的一个普通用户权限。
+privileged启动的容器，可以看到很多host上的设备，并且可以执行mount。
+甚至允许你在docker容器中启动docker容器。
+
+```
+docker run -d -it --restart=always --privileged=true  ......
+```
+
 
 
 ### 帮助help
