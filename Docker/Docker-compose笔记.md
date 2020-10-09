@@ -138,6 +138,84 @@ docker-compose stop
 
 
 
+## 多个docker-compose文件
+
+在本节中，有两个常见的用例，用于多个Compose文件：针对不同的环境更改Compose应用程序，以及针对Compose应用程序运行管理任务。
+
+定义服务规范配置的基本文件**docker-compose.yml**
+
+```
+web:
+  image: example/my_web_app:latest
+  depends_on:
+    - db
+    - cache
+
+db:
+  image: postgres:latest
+
+cache:
+  image: redis:latest
+```
+
+**示例一**
+
+开发配置将一些端口暴露给主机，将我们的代码作为卷安装，并构建Web映像。
+
+**docker-compose.override.yml**
+
+```
+web:
+  build: .
+  volumes:
+    - '.:/code'
+  ports:
+    - 8883:80
+  environment:
+    DEBUG: 'true'
+
+db:
+  command: '-d'
+  ports:
+    - 5432:5432
+
+cache:
+  ports:
+    - 6379:6379
+```
+
+运行`docker-compose up`它将自动读取docker-compose.override.yml。
+
+**示例二**
+
+现在另外建一个**docker-compose.prod.yml**，用于别的用途
+
+```
+web:
+  ports:
+    - 80:80
+  environment:
+    PRODUCTION: 'true'
+
+cache:
+  environment:
+    TTL: '500'
+```
+
+运行则执行
+
+```
+docker-compose -f docker-compose.yml -f docker-compose.prod.yml up -d
+```
+
+
+
+
+
+
+
+
+
 
 
  
