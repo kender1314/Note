@@ -43,10 +43,15 @@ net.ipv4.ip_forward = 1
 
 ## Linux垃圾清理
 
-### 显示当前磁盘挂载（包含剩余空间）
+### df显示磁盘剩余空间
 
 ```
-df -h
+df -h：查看磁盘信息
+df -hl：查看磁盘剩余空间
+df -h：查看每个根路径的分区大小
+du -sh [目录名]：返回该目录的大小
+du -sm [文件夹]：返回该文件夹总M数
+du -h [目录名]：查看指定文件夹下的所有文件大小（包含子文件夹）
 ```
 
 ### 删除缓存
@@ -146,6 +151,8 @@ chmod -R 755 /data/gitlab
 chmod -R 1000 /data/gitlab
 3、查看文件夹的权限
 ls -la /data/gitlab
+4.脚本执行权限？
+chmod 777 ./service-demo.sh
 ```
 
 ```
@@ -279,19 +286,65 @@ kill -9 PID
 history
 ```
 
+## adduser创建用户
 
 
 
+```
+adduser kender
+passwd kender
+```
 
+## time 命令
 
+如果你想查看一条命令（比如 ls）到底执行了多长时间，我们可以这样做：
 
+```
+[roc@roclinux ~]$ time ls
+program  public_html  repo  rocscm
+ 
+real    0m0.002s
+user    0m0.002s
+sys 0m0.000s
+```
 
+real、user 和 sys，它们都代表什么含义呢？哪个才是 ls 命令的执行时间呢？
 
+- real：从进程 ls 开始执行到完成所耗费的 CPU 总时间。该时间包括 ls 进程执行时实际使用的 CPU 时间，ls 进程耗费在阻塞上的时间（如等待完成 I/O 操作）和其他进程所耗费的时间（Linux 是多进程系统，ls 在执行过程中，可能会有别的进程抢占 CPU）。
+- user：进程 ls 执行用户态代码所耗费的 CPU 时间。该时间仅指 ls 进程执行时实际使用的 CPU 时间，而不包括其他进程所使用的时间和本进程阻塞的时间。
+- sys：进程 ls 在内核态运行所耗费的 CPU 时间，即执行内核系统调用所耗费的 CPU 时间。
 
+## make命令
 
+### make概述
 
+管理员用它通过命令行来编译和安装很多开源的工具，程序员用它来管理他们大型复杂的项目编译问题。
 
+### make如何工作
 
+当 make 命令第一次执行时，它扫描 Makefile 找到目标以及其依赖。如果这些依赖自身也是目标，继续为这些依赖扫描 Makefile 建立其依赖关系，然后编译它们。
+
+### 编译
+
+为了编译整个工程，你可以简单的使用 `make` 或者在 make 命令后带上目标 `all`。
+
+```
+make 
+或
+make all
+```
+
+### 通过 -B 选项让所有目标总是重新建立
+
+```
+make -B
+```
+
+### 使用 -d 选项打印调试信息
+
+```
+make -d | more
+```
 
 
 
