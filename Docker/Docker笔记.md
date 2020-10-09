@@ -177,6 +177,8 @@ docker rm -f 7ac94d6f967f
 docker rm -f$(docker ps -a -q)
 或
 docker ps -a -q|xargs docker rm
+#删除未使用容器
+sudo docker rm $(sudo docker ps -a -q)
 ```
 
 #### 容器中登录mysql
@@ -313,6 +315,23 @@ privileged启动的容器，可以看到很多host上的设备，并且可以执
 docker run -d -it --restart=always --privileged=true  ......
 ```
 
+### docker network
+
+```
+docker network create
+
+docker network connect
+
+docker network ls
+
+docker network rm
+
+docker network disconnect
+
+docker network inspect
+
+```
+
 
 
 ### 帮助help
@@ -369,7 +388,6 @@ firewall-cmd --zone=public --list-ports
 
 ```
 firewall-cmd --zone=public --add-port=3306/tcp --permanent 
-firewall-cmd --add-port=3306/tcp
 firewall-cmd --reload
 ```
 
