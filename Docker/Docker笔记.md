@@ -588,7 +588,7 @@ Docker 包括三个基本概念:
 
  
 
-##  容器
+##  容器（container）
 
 ### 容器定义
 
@@ -692,7 +692,7 @@ docker run -it --name to1 --volumes-from condescending_swirles jiang/tomcat
 
 
 
-## DockerFile应用
+## DockerFile
 
 ### DockerFile是什么？
 
@@ -825,13 +825,13 @@ docker build -f /data/docker/DockerFile -t 新镜像名字:TAG .
 
 
 
-## 仓库
+## 仓库（repository）
 
 ![image-20200713201843455](https://cdn.jsdelivr.net/gh/kender1314/NotePicture/20200722212740.png)
 
 
 
-## 镜像
+## 镜像（images）
 
 ### 镜像命令
 
@@ -884,7 +884,7 @@ training/webapp     latest              6fae60ef3446        11 months ago       
 
 
 
-## 构建镜像
+## 构建镜像（build images）
 
 我们使用命令 docker build ， 从零开始来创建一个新的镜像。为此，我们需要创建一个 Dockerfile 文件，其中包含一组指令来告诉 Docker 如何构建我们的镜像。
 
@@ -959,6 +959,26 @@ Docker Machine 也可以集中管理所有的 docker 主机，比如快速的给
 ## Swarm 集群管理
 
 Docker Swarm 是 Docker 的集群管理工具。它将 Docker 主机池转变为单个虚拟 Docker 主机。 Docker Swarm 提供了标准的 Docker API，所有任何已经与 Docker 守护程序通信的工具都可以使用 Swarm 轻松地扩展到多个主机。
+
+
+
+## 网络设置（network）
+
+Docker 默认提供了 5 种网络驱动模式。
+
+1. bridge: 默认的网络驱动模式。如果不指定驱动程序，bridge 便会作为默认的网络驱动模式。当应用程序运行在需要通信的独立容器(standalone containers)中时，通常会选择 bridge 模式。
+
+2. host：移除容器和 Docker 宿主机之间的网络隔离，并直接使用主机的网络。host 模式仅适用于 Docker 17.06+。
+
+3. overlay：overlay 网络将多个 Docker 守护进程连接在一起，并使集群服务能够相互通信。您还可以使用 overlay 网络来实现 swarm 集群和独立容器之间的通信，或者不同 Docker 守护进程上的两个独立容器之间的通信。该策略实现了在这些容器之间进行操作系统级别路由的需求。
+
+4. macvlan：Macvlan 网络允许为容器分配 MAC 地址，使其显示为网络上的物理设备。 Docker 守护进程通过其 MAC 地址将流量路由到容器。对于希望直连到物理网络的传统应用程序而言，使用 macvlan 模式一般是最佳选择，而不应该通过 Docker 宿主机的网络进行路由。
+
+5. none：对于此容器，禁用所有联网。通常与自定义网络驱动程序一起使用。none 模式不适用于集群服务。
+
+   通过在 Docker 上安装和使用第三方网络插件可以算作额外的扩展方式。
+
+
 
 
 

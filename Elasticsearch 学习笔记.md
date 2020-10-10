@@ -7172,7 +7172,7 @@ GET /cars/transactions/_search
 
 构建一个简单的折线图回答如下问题： 每月销售多少台汽车？
 
-```json
+```
 GET /cars/transactions/_search
 {
   "size" : 0,
