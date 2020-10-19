@@ -14,7 +14,11 @@ Docker Compose 是 Docker 官方编排（Orchestration）项目之一，负责�
 ## 安装Docker-compose
 
 ```
-yum install docker-compose
+#yum install docker-compose
+yum -y install epel-release
+yum -y install python-pip
+pip install --upgrade pip
+pip install docker-compose
 ```
 
 

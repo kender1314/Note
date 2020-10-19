@@ -361,6 +361,7 @@ docker inspect 容器id（或容器名字） |grep IPAddress
 ```
 systemctl stop firewalld
 systemctl start firewalld
+systemctl disable firewalld.service 
 firewall-cmd --zone=public --add-port=5005/tcp --permanent   （--permanent永久生效，没有此参数重启后失效）
 //删除端口
 firewall-cmd --zone=public --remove-port=80/tcp --permanent

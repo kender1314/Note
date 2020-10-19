@@ -25,10 +25,6 @@ DNS1=119.29.29.29
 
 （6）保存后退出，然后输入命令：systemctl restart network.service来重启网络服务。
 
-（7）配置完成之后，还需要在配置端口
-
-![image-20200730160124962](https://cdn.jsdelivr.net/gh/kender1314/NotePicture/20200730160125.png)
-
 ### 配置挂起重启后正常访问端口
 
 ```
@@ -40,6 +36,34 @@ sudo vi /usr/lib/sysctl.d/00-system.conf
 ```
 net.ipv4.ip_forward = 1
 ```
+
+## centos7调整分区大小
+
+查看磁盘的空间大小： df -h
+
+备份/home : cp -r /home/ homebak/
+
+卸载 /home ： umount /home
+
+如果出现 home 存在进程，使用 fuser -m -v -i -k /home 终止 home 下的进程，最后使用 umount /home 卸载 /home
+
+删除/home所在的lv ： lvremove /dev/mapper/centos-home
+
+扩展/root所在的lv，增加4430G ： lvextend -L +4430G /dev/mapper/centos-root
+
+扩展/root文件系统 ： `xfs_growfs /dev/mapper/centos-root`
+
+重新创建`home lv` ： `lvcreate -L 167G -n home centos`
+
+重新创建`home lv` 分区的大小，根据 vgdisplay 中的free PE 的大小确定
+
+创建文件系统： `mkfs.xfs /dev/centos/home`
+
+挂载 `home`： `mount /dev/centos/home /home`
+
+
+
+
 
 ## Linux垃圾清理
 
@@ -345,6 +369,60 @@ make -B
 ```
 make -d | more
 ```
+
+## vim和vi
+
+按下Esc进入控制模式
+
+1. u 表示撤销上一步命令；
+2. Ctr+r 表示恢复上一步被撤销的命令；
+3. /内容：表示查询指定内容
+
+
+
+## rename命令
+
+将main1.c重命名为main.c
+
+```
+rename main1.c main.c main1.c
+```
+
+**rename支持通配符**
+
+```
+?  可替代单个字符
+*  可替代多个字符
+[charset]  可替代charset集中的任意单个字符
+```
+
+**rename支持正则表达式**
+
+字母的替换
+
+```
+rename "s/AA/aa/" *  //把文件名中的AA替换成aa
+```
+
+修改文件的后缀
+
+```
+rename "s//.html//.php/" *     //把.html 后缀的改成 .php后缀
+```
+
+批量添加文件后缀
+
+```
+rename "s/$//.txt/" *     //把所有的文件名都以txt结尾
+```
+
+批量删除文件名
+
+```
+rename "s//.txt//" *      //把所有以.txt结尾的文件名的.txt删掉
+```
+
+
 
 
 
