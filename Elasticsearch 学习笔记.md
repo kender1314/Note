@@ -509,7 +509,31 @@ GET /website/blog/_mget
 
 注：*即使有某个文档没有找到，上述请求的* *HTTP* *状态码仍然是* *200* *。事实上，即使请求* *没有* *找到任何文档，它的状态码依然是* *200 --**因为* *mget* *请求本身已经成功执行。* *为了确定某个文档查找是成功或者失败，你需要检查* *found* *标记。*
 
-##### 2.2.5.8    _source
+##### _msearch
+
+可以使用一个API请求执行多个条件搜索
+
+```
+GET .kibana-event*/_msearch
+{ }
+{"query" : {"match" : { "message": "this is a test"}}}
+{"index": ".kibana-event*"}
+{"query" : {"match_all" : {}}}
+```
+
+*注：数据的最后一行必须以换行符\n结束。每个换行字符前面可以有一个回车\r。当向这个端点发送请求时，Content-Type头应该设置为application/x-ndjson。*
+
+运行结果
+
+![image-20201021191112145](https://cdn.jsdelivr.net/gh/kender1314/NotePicture/20201021191120.png)
+
+
+
+
+
+
+
+##### _source
 
 Elasticsearch 在 _source 字段存储代表文档体的JSON字符串。字段edit
 
