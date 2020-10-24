@@ -419,9 +419,10 @@ POST /website/blog/1/_update
 **使用脚本部分更新文档**
 
 ```
-POST /website/blog/1/_update
+#r1WKVHUBIezPQeaZe9Kq是文档的id
+POST website/_update/r1WKVHUBIezPQeaZe9Kq   
 {
-   "script" : "ctx._source.views+=1"
+  "script": "ctx._source.doc.views += 1"
 }
 ```
 

@@ -36,15 +36,145 @@ Redis 比其他 key-value 缓存产品有以下三个特点：
 
 
 
+## Redis的数据类型
+
+Redis数据库支持五种数据类型。
+
+- 字符串（string）
+- 哈希（hash）
+- 列表（list）
+- 集合（set）
+- 有序集合（sorted set）
+
+### 字符串
+
+String是一组字节。在Redis数据库中，字符串是二进制安全的。这意味着它们具有已知长度，并且不受任何特殊终止字符的影响。可以在一个字符串中存储最多512兆字节的内容。
+
+例
+
+使用SET命令在name键中存储字符串“redis.com.cn”，然后使用GET命令查询name。
+
+```
+SET name "redis.com.cn"  
+```
+
+OK  
+
+```
+GET name   
+```
+
+"redis.com.cn" 
+
+![Redis数据类型1](https://cdn.jsdelivr.net/gh/kender1314/NotePicture/20201024152530.png)
 
 
 
+### 哈希
 
+哈希是键值对的集合。在Redis中，哈希是字符串字段和字符串值之间的映射。因此，它们适合表示对象。
 
+例
 
+让我们存储一个用户的对象，其中包含用户的基本信息。
 
+```
+HMSET user:1 username ajeet password javatpoint alexa 2000  
+OK  
+HGETALL  user:1  
+"username"  
+"ajeet"  
+"password"  
+"javatpoint"  
+"alexa"  
+"2000" 
+```
 
+![Redis数据类型2](../../../../Typora/picture/redis-data-types2-1.png)
 
+这里，HMSET和HGETALL是Redis的命令，而user：1是键。
+
+每个哈希可以存储多达232 – 1亿个字段 – 值对。
+
+### 列表
+
+Redis列表定义为字符串列表，按插入顺序排序。可以将元素添加到Redis列表的头部或尾部。
+
+例
+
+```
+lpush javatpoint java  
+(integer) 1  
+lpush javatpoint java  
+(integer) 1  
+lpush javatpoint java  
+(integer) 1  
+lpush javatpoint java  
+(integer) 1  
+lrange javatpoint 0 10  
+"cassandra"  
+"mongodb"  
+"sql"  
+"java"  
+```
+
+![Redis数据类型3](../../../../Typora/picture/redis-data-types3-1.png)
+
+列表的最大长度为232 – 1个元素（每个列表超过40亿个元素）。
+
+### 集合
+
+集合（set）是Redis数据库中的无序字符串集合。在Redis中，添加，删除和查找的时间复杂度是O(1)。
+
+例
+
+```
+sadd tutoriallist redis  
+(integer) 1  
+redis 127.0.0.1:6379> sadd tutoriallist sql  
+(integer) 1  
+redis 127.0.0.1:6379> sadd tutoriallist postgresql  
+(integer) 1  
+redis 127.0.0.1:6379> sadd tutoriallist postgresql  
+(integer) 0  
+redis 127.0.0.1:6379> sadd tutoriallist postgresql  
+(integer) 0  
+redis 127.0.0.1:6379> smembers tutoriallist  
+1) "redis"  
+2) "postgresql"  
+3) "sql" 
+```
+
+![Redis数据类型4](../../../../Typora/picture/redis-data-types4-1.png)
+
+在上面的示例中，您可以看到postgresql被添加了三次，但由于该集的唯一属性，它只添加一次。
+
+集合中的最大成员数为232 – 1个元素（每个列表超过40亿个元素）。
+
+### 有序集合
+
+Redis有序集合类似于Redis集合，也是一组非重复的字符串集合。但是，排序集的每个成员都与一个分数相关联，该分数用于获取从最小到最高分数的有序排序集。虽然成员是独特的，但可以重复分数。
+
+例
+
+```
+redis 127.0.0.1:6379> zadd tutoriallist 0 redis  
+(integer) 1  
+redis 127.0.0.1:6379> zadd tutoriallist 0 sql  
+(integer) 1  
+redis 127.0.0.1:6379> zadd tutoriallist 0 postgresql  
+(integer) 1  
+redis 127.0.0.1:6379> zadd tutoriallist 0 postgresql  
+(integer) 0  
+redis 127.0.0.1:6379> zadd tutoriallist 0 postgresql  
+(integer) 0  
+redis 127.0.0.1:6379> ZRANGEBYSCORE tutoriallist 0 10  
+1) "postgresql"  
+2) "redis"  
+3) "sql"   
+```
+
+![Redis数据类型5](../../../../Typora/picture/redis-data-types5-1.png)
 
 
 
