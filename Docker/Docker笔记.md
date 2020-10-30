@@ -140,6 +140,15 @@ docker -m="has update" -a="runoob" e218edb10161 runoob/ubuntu:v2
 
 ### 容器
 
+#### 容器安装vim
+
+```
+apt-get update
+apt-get install vim
+```
+
+
+
 #### 运行image 文件
 
 ```
@@ -258,6 +267,13 @@ sudo chown -R 1000 /data
 ```
 docker cp 容器id：容器内路径 目的主机路径
 docker cp  2de5df86252d:/anaconda-post.log /data
+```
+
+#### 从主机copy到容器内
+
+```
+docker cp 目的主机路径 容器id：容器内路径
+docker cp /data 2de5df86252d:/anaconda-post.log
 ```
 
 

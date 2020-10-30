@@ -163,7 +163,75 @@ yum remove docker-ce.x86_64 ddocker-ce-cli.x86_64 -y
 rm -rf /var/lib/docker
 ```
 
+## **linux系统信息**
 
+**Linux查看当前操作系统版本信息** 
+
+```
+cat /proc/version
+```
+
+**Linux查看版本当前操作系统内核信息** 
+
+```
+uname -a
+```
+
+**linux查看版本当前操作系统发行信息**
+
+```
+cat /etc/issue 或 
+cat /etc/centos-release
+```
+
+**Linux查看cpu相关信息，包括型号、主频、内核信息等**
+
+```
+ cat /etc/cpuinfo
+```
+
+## **uname命令**
+
+uname命令用于打印当前系统相关信息（内核版本号、硬件架构、主机名称和操作系统类型等）。
+
+uname -a显示全部信息
+
+-m或--machine：显示电脑类型；
+
+-r或--release：显示操作系统的发行编号；
+
+-s或--sysname：显示操作系统名称；
+
+-v：显示操作系统的版本；
+
+-p或--processor：输出处理器类型或"unknown"；
+
+-i或--hardware-platform：**输出硬件平台或"unknown"；** 
+
+-o或--operating-system：输出操作系统名称；
+
+--help：显示帮助；
+
+--version：显示版本信息。
+
+
+
+
+
+## 关机与重启命令
+
+Linux centos重启命令：
+　　1、reboot  普通重启
+　　2、shutdown -r now 立刻重启(root用户使用)
+　　3、shutdown -r 10 过10分钟自动重启(root用户使用)
+　　4、shutdown -r 20:35 在时间为20:35时候重启(root用户使用)
+　　如果是通过shutdown命令设置重启的话，可以用shutdown -c命令取消重启
+　Linux centos关机命令：
+　　1、halt 立刻关机
+　　2、poweroff 立刻关机
+　　3、shutdown -h now 立刻关机(root用户使用)
+　　4、shutdown -h 10 10分钟后自动关机
+　　如果是通过shutdown命令设置关机的话，可以用shutdown -c命令取消重启
 
 ## chmod命令
 
@@ -421,6 +489,165 @@ rename "s/$//.txt/" *     //把所有的文件名都以txt结尾
 ```
 rename "s//.txt//" *      //把所有以.txt结尾的文件名的.txt删掉
 ```
+
+
+
+## nohup和&后台运行
+
+### **&**
+
+当在前台运行某个作业时，终端被该作业占据；可以在命令后面加上& 实现后台运行。例如：sh test.sh &
+适合在后台运行的命令有find、费时的排序及一些shell脚本。在后台运行作业时要当心：需要用户交互的命令不要放在后台执行，因为这样你的机器就会在那里傻等。不过，作业在后台运行一样会将结果输出到屏幕上，干扰你的工作。如果放在后台运行的作业会产生大量的输出，最好使用下面的方法把它的输出重定向到某个文件中：
+
+```
+command > out.file 2>&1 &
+```
+
+这样，所有的标准输出和错误输出都将被重定向到一个叫做out.file 的文件中。
+PS：当你成功地提交进程以后，就会显示出一个进程号，可以用它来监控该进程，或杀死它。(ps -ef | grep 进程号 或者 kill -9 进程号）
+
+### **nohup**
+
+使用&命令后，作业被提交到后台运行，当前控制台没有被占用，但是一但把当前控制台关掉(退出帐户时)，作业就会停止运行。nohup命令可以在你退出帐户之后继续运行相应的进程。nohup就是不挂起的意思( no hang up)。该命令的一般形式为：
+
+```
+nohup command &
+```
+
+如果使用nohup命令提交作业，那么在缺省情况下该作业的所有输出都被重定向到一个名为nohup.out的文件中，除非另外指定了输出文件：
+
+```
+nohup command > myout.file 2>&1 &
+```
+
+使用了nohup之后，很多人就这样不管了，其实这样有可能在当前账户非正常退出或者结束的时候，命令还是自己结束了。所以在使用nohup命令后台运行命令之后，需要使用exit正常退出当前账户，这样才能保证命令一直在后台运行。
+
+ctrl + z 可以将一个正在前台执行的命令放到后台，并且处于暂停状态。
+
+Ctrl+c 终止前台命令。
+
+### **jobs**
+
+查看当前有多少在后台运行的命令。
+jobs -l  选项可显示所有任务的PID，jobs的状态可以是running, stopped, Terminated。但是如果任务被终止了（kill），shell 从当前的shell环境已知的列表中删除任务的进程标识。
+
+### 案例
+
+1. nohup command > myout.file 2>&1 &  
+
+在上面的例子中，0 – stdin (standard input)，1 – stdout (standard output)，2 – stderr (standard error) ；
+
+2>&1是将标准错误（2）重定向到标准输出（&1），标准输出（&1）再被重定向输入到myout.file文件中。
+
+2. 0 22 * * * /usr/bin/python /home/pu/download_pdf/download_dfcf_pdf_to_oss.py > /home/pu/download_pdf/download_dfcf_pdf_to_oss.log 2>&1
+
+这是放在crontab中的定时任务，晚上22点时候怕这个任务，启动这个python的脚本，并把日志写在download_dfcf_pdf_to_oss.log文件中
+
+## tar命令
+
+**语法** 
+
+```
+tar(选项)(参数)
+```
+
+**选项** 
+
+```
+-A或--catenate：新增文件到以存在的备份文件；
+-B：设置区块大小；
+-c或--create：建立新的备份文件；
+-C <目录>：这个选项用在解压缩，若要在特定目录解压缩，可以使用这个选项。
+-d：记录文件的差别；
+-x或--extract或--get：从备份文件中还原文件；
+-t或--list：列出备份文件的内容；
+-z或--gzip或--ungzip：通过gzip指令处理备份文件；
+-Z或--compress或--uncompress：通过compress指令处理备份文件；
+-f<备份文件>或--file=<备份文件>：指定备份文件；
+-v或--verbose：显示指令执行过程；
+-r：添加文件到已经压缩的文件；
+-u：添加改变了和现有的文件到已经存在的压缩文件；
+-j：支持bzip2解压文件；
+-v：显示操作过程；
+-l：文件系统边界设置；
+-k：保留原有文件不覆盖；
+-m：保留文件不被覆盖；
+-w：确认压缩文件的正确性；
+-p或--same-permissions：用原来的文件权限还原文件；
+-P或--absolute-names：文件名使用绝对名称，不移除文件名称前的“/”号；
+-N <日期格式> 或 --newer=<日期时间>：只将较指定日期更新的文件保存到备份文件里；
+--exclude=<范本样式>：排除符合范本样式的文件。
+```
+
+**实例** 
+
+将文件全部打包成tar包：
+
+```
+tar -cvf log.tar log2012.log    仅打包，不压缩！ 
+tar -zcvf log.tar.gz log2012.log   打包后，以 gzip 压缩 
+tar -jcvf log.tar.bz2 log2012.log  打包后，以 bzip2 压缩 
+```
+
+在选项`f`之后的文件档名是自己取的，我们习惯上都用 .tar 来作为辨识。 如果加`z`选项，则以.tar.gz或.tgz来代表gzip压缩过的tar包；如果加`j`选项，则以.tar.bz2来作为tar包名。
+
+**查阅上述tar包内有哪些文件**：
+
+```
+tar -ztvf log.tar.gz
+```
+
+由于我们使用 gzip 压缩的log.tar.gz，所以要查阅log.tar.gz包内的文件时，就得要加上`z`这个选项了。
+
+**将tar包解压缩**：
+
+```
+tar -zxvf /opt/soft/test/log.tar.gz
+```
+
+在预设的情况下，我们可以将压缩档在任何地方解开的
+
+**只将tar内的部分文件解压出来**：
+
+```
+tar -zxvf /opt/soft/test/log30.tar.gz log2013.log
+```
+
+我可以透过`tar -ztvf`来查阅 tar 包内的文件名称，如果单只要一个文件，就可以透过这个方式来解压部分文件！
+
+**文件备份下来，并且保存其权限**：
+
+```
+tar -zcvpf log31.tar.gz log2014.log log2015.log log2016.log
+```
+
+这个`-p`的属性是很重要的，尤其是当您要保留原本文件的属性时。
+
+**在文件夹当中，比某个日期新的文件才备份**：
+
+```
+tar -N "2012/11/13" -zcvf log17.tar.gz test
+```
+
+**备份文件夹内容是排除部分文件：**
+
+```
+tar --exclude scf/service -zcvf scf.tar.gz scf/*
+```
+
+**其实最简单的使用 tar 就只要记忆底下的方式即可：**
+
+```
+压　缩：tar -jcv -f filename.tar.bz2 要被压缩的文件或目录名称
+查　询：tar -jtv -f filename.tar.bz2
+解压缩：tar -jxv -f filename.tar.bz2 -C 欲解压缩的目录
+```
+
+
+
+
+
+
 
 
 
