@@ -62,7 +62,11 @@ git commit -m "wrote a readme file"
 
 -m后面填写提交的信息。
 
-### 1.3.4  查看当前仓库状态
+### 暂时保存当前分支改变
+
+切换分支之前，应该先GIT --> Repository --> Stash changes 保存该分支下的改动。 切换回来后，GIT --> Repository --> UnStash changes 恢复之前的改动
+
+### 查看当前仓库状态
 
 ```
 git status
@@ -170,19 +174,13 @@ $ git branch dev
 $ git checkout dev
 ```
 
-本地分支推送到远程服务器时，远程分支自动创建，推送本地分支到远程
-
-```
-git push --set-upstream <remote-name> <local-branch-name>:<remote-branch-name>
-```
-
-#### 1.3.14.2   查看所有分支
+#### 
 
 ```
 git branch -a
 ```
 
-#### 1.3.14.3   dev分支合并到master
+#### dev分支合并到master
 
 ```
 git merge dev
@@ -218,15 +216,16 @@ git switch master
 
 ```
 git push --set-upstream <remote-name> <local-branch-name>:<remote-branch-name>
+git push --set-upstream origin dbg_lichen_star:dbg_lichen_star
 ```
 
-#### 1.3.14.6   查看分支合并情况
+#### 查看分支合并情况
 
 ```
 git log --graph --pretty=oneline --abbrev-commit
 ```
 
-#### 1.3.14.7   强行删除未被merge分支
+#### 强行删除未被merge分支
 
 ```
 git branch -D feature-vulcan
@@ -234,14 +233,14 @@ git branch -D feature-vulcan
 
 需要使用大写的-D参数
 
-#### 1.3.14.8   查看远程仓库名称及信息
+#### 查看远程仓库名称及信息
 
 ```
 git remote
 git remote -v
 ```
 
-#### 1.3.14.9   推送分支
+#### 推送分支
 
 ```
 //将本地master分支推送到远程origin分支上
@@ -250,7 +249,7 @@ git push origin master
 git push origin dev
 ```
 
-#### 1.3.14.10  抓取分支
+#### 抓取分支
 
 抓取远程的分支，将远程的origin/dev抓取下来，并且放入本地的dev中：
 
@@ -258,7 +257,7 @@ git push origin dev
 git checkout -b dev origin/dev
 ```
 
-#### 1.3.14.11  rebase操作可以把本地未push的分叉提交历史整理成直线
+#### Rebase操作可以把本地未push的分叉提交历史整理成直线
 
 ```
 git rebase

@@ -346,6 +346,7 @@ docker network disconnect
 
 docker network inspect
 
+docker run -d -it --restart=always --net=host  ......
 ```
 
 

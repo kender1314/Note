@@ -643,6 +643,16 @@ tar --exclude scf/service -zcvf scf.tar.gz scf/*
 解压缩：tar -jxv -f filename.tar.bz2 -C 欲解压缩的目录
 ```
 
+## 查看进程和端口（ps和ss）
+
+netstat -nap|
+
+
+
+
+
+
+
 
 
 
