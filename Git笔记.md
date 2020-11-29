@@ -216,7 +216,7 @@ git switch master
 
 ```
 git push --set-upstream <remote-name> <local-branch-name>:<remote-branch-name>
-git push --set-upstream origin dbg_lichen_star:dbg_lichen_star
+git push --set-upstream origin dev:dev
 ```
 
 #### 查看分支合并情况
