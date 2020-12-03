@@ -13,7 +13,7 @@ Git 与常用的版本控制工具 CVS, Subversion 等不同，它采用了分�
 
 ### 1.2.1  集中式
 
-![image-20200703223129699](https://raw.githubusercontent.com/kender1314/NotePicture/master/image-20200703223129699.png)
+![image-20200703223129699](https://cdn.jsdelivr.net/gh/kender1314/NotePicture/20201128101505.png)
 
 <center>图 1集中式</center>
 
@@ -26,7 +26,7 @@ Git 与常用的版本控制工具 CVS, Subversion 等不同，它采用了分�
 
 ### 1.2.2  分布式
 
- ![image-20200703223112397](https://raw.githubusercontent.com/kender1314/NotePicture/master/image-20200703223112397.png)
+ ![image-20200703223112397](https://cdn.jsdelivr.net/gh/kender1314/NotePicture/image-20200703223112397.png)
 
 <center>图 2分布式</center>
 
@@ -94,7 +94,7 @@ git reset --hard 1094a
 根据版本号
 ```
 
- ![image-20200703223936494](https://raw.githubusercontent.com/kender1314/NotePicture/master/image-20200703223936494.png)
+ ![image-20200703223936494](https://cdn.jsdelivr.net/gh/kender1314/NotePicture/image-20200703223936494.png)
 
 <center>图 3</center>
 
@@ -336,7 +336,7 @@ git push origin :refs/tags/v0.9
 
 就是在电脑里能看到的目录，比如GitRepository文件夹就是一个工作区：
 
- ![image-20200703224009134](https://raw.githubusercontent.com/kender1314/NotePicture/master/image-20200703224009134.png)
+ ![image-20200703224009134](https://cdn.jsdelivr.net/gh/kender1314/NotePicture/image-20200703224009134.png)
 
 <center>图 4</center>
 
@@ -402,7 +402,7 @@ git branch --set-upstream-to=origin/dev dev
 
 ### 1.6.2  分支策略
 
-![image-20200703233931911](https://raw.githubusercontent.com/kender1314/NotePicture/master/image-20200703233931911.png)
+![image-20200703233931911](https://cdn.jsdelivr.net/gh/kender1314/NotePicture/image-20200703233931911.png)
 
 <center>图 5</center>
 

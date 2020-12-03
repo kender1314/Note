@@ -878,7 +878,7 @@ OK
 
 ## Redis 基准测试
 
-Redis基准测试redis-benchmark是一种实用工具，用于通过同时使用multiple(n)命令来检查Redis的性能。
+<font style="color:red">Redis基准测试redis-benchmark是一种实用工具，用于通过同时使用multiple(n)命令来检查Redis的性能。</font>
 
 **句法**
 
@@ -923,6 +923,174 @@ redis-benchmark -h 127.0.0.1 -p 6379 -t set,lpush -n 100000 -q
 ```
 
 ![Redis基准3](https://cdn.jsdelivr.net/gh/kender1314/NotePicture/20201101163158.png)
+
+##  Redis客户端连接
+
+Redis 可以在配置的监听 TCP 端口和 Unix 套接字上接受不同类型的客户端连接。
+
+接受新客户端连接时，它将执行以下操作：
+
+- 由于 Redis 使用多路复用和非阻塞 I/O，因此客户端套接字处于非阻塞状态。
+- 设置 TCP_NODELAY 选项是为了确保我们的连接没有延迟。
+- 创建可读文件事件，以便一旦可以在套接字上读取新数据，Redis 就能够收集客户端查询。
+
+------
+
+
+
+### 最大客户端数
+
+在 Redis config（redis.conf）中，有一个名为 `maxclients` 的属性，它指定可以连接到 Redis 的客户端数量。
+
+以下是命令的基本语法。
+
+```
+Config get maxclients  
+"maxclients"  
+"4064"  
+```
+
+![Redis客户端连接1](https://cdn.jsdelivr.net/gh/kender1314/NotePicture/20201128104436.png)
+
+
+
+最大客户端数取决于 OS 的最大文件描述符数限制。它的默认值为 10000，但您可以更改此属性。
+
+
+
+例
+
+我们举一个例子，在启动服务器时将最大客户端数设置为 100000。
+
+```
+redis-server --maxclients 100000  
+```
+
+### Redis 客户端命令
+
+| 命令                                                         | 描述                                       |
+| ------------------------------------------------------------ | ------------------------------------------ |
+| [CLIENT LIST](https://www.redis.com.cn/commands/client-list.html) | 返回连接到 redis 服务的客户端列表          |
+| [CLIENT SETNAME](https://www.redis.com.cn/commands/client-setname.html) | 设置当前连接的名称                         |
+| [CLIENT GETNAME](https://www.redis.com.cn/commands/client-getname.html) | 获取通过 CLIENT SETNAME 命令设置的服务名称 |
+| [CLIENT PAUSE](https://www.redis.com.cn/commands/client-pause.html) | 挂起客户端连接，指定挂起的时间以毫秒计     |
+| [CLIENT KILL](https://www.redis.com.cn/commands/client-kill.html) | 关闭客户端连接                             |
+
+##  Redis Pipelining 流水线
+
+在了解流水线之前，首先要了解 Redis 的概念：
+
+Redis 是一个支持请求/响应协议的 TCP 服务器。在 Redis 中，请求分两步完成：
+
+- 客户端通常以阻塞方式向服务器发送命令。
+- 服务器处理该命令并将响应发送回客户端。
+
+------
+
+
+
+### 什么是流水线
+
+流水线操作有助于客户端向服务器发送多个请求，而无需等待回复，最后只需一步即可读取回复。
+
+**例**
+
+让我们看一下 Redis 流水线的例子。在这个例子中，我们将向 Redis 提交一次命令，Redis 将在一个步骤中提供所有命令的输出。
+
+打开 Redis 终端并使用以下命令：
+
+```
+（echo -en  “PING \ r \ n SET sssit javatraining \ r \ n GET sssit \ r \ n INCR visitor \ r \ n INCR visitor \ r \ n INCR visitor \ r \ n” ; sleep  10 ）|  
+ nc localhost  6379  
+```
+
+![Redis流水线1](https://cdn.jsdelivr.net/gh/kender1314/NotePicture/20201128105727.png)
+
+这里：
+
+- PING 命令用于检查 Redis 连接。
+- 设置名为“sssit”的字符串，其值为“javatraining”。
+- 获得了 key 值并将访问者数量增加了三倍。
+
+每次增加值时都可以看到。
+
+------
+
+
+
+### 流水线的优势
+
+Redis 流水线操作的主要优点是提高了 Redis 的性能。由于多个命令同时执行，它极大地提高了协议性能。
+
+
+
+### Pipelining vs Scripting
+
+Redis Scripting 可在 Redis 2.6 或更高版本中使用。
+
+脚本的主要优点是它可以以最小的延迟同时读取和写入数据。它使读取，计算，写入等操作变得非常快。
+
+在流水线操作中，客户端在调用 write 命令之前需要 read 命令的回复。
+
+## Redis分区
+
+分区用于将 Redis 数据拆分为多个 Redis 实例，以便每个实例仅包含一部分 key。
+
+它通常用于大型数据库。
+
+
+
+### 分区类型
+
+redis 中有两种类型的分区：
+
+- 范围分区
+- 哈希分区
+
+------
+
+
+
+### 范围分区
+
+范围分区是执行分区的最简单方法之一。它通过将对象的范围映射到特定的 Redis 实例来完成。
+
+**例如：**
+
+假设您有 3000 个用户。因此，您可以说从 ID 0 到 ID 1000 的用户将进入实例 R0，而用户表单 ID 1001 到 ID 2000 将进入实例 R1，用户表单 ID 2001 到 ID 3000 将进入实例 R2，依此类推。
+
+
+
+### 哈希分区
+
+散列分区是 Range 分区的替代方法。在散列分区中，散列函数用于将 key 转换为数字，然后将数据存储在不同的 Redis 实例中。
+
+
+
+### Redis分区的优点
+
+- 分区有助于您使用多台计算机的集体内存。例如：对于较大的数据库，您需要大量内存，因此分区可以提供来自不同计算机的内存总和。如果不进行分区，则只能使用单台计算机可以支持的有限内存量。
+- 分区还用于将计算能力扩展到多个核心和多个计算机，以及网络带宽扩展到多个计算机和网络适配器。
+
+
+
+### Redis分区的缺点
+
+分区存在一些缺点，因为 Redis 的某些功能受到分区的阻碍。
+
+- 分区通常不支持具有多个键的操作。例如，如果两个集合存储在映射到不同 Redis 实例的键中，则无法执行它们之间的交集。
+- 分区不支持具有多个 key 的事务。
+- 分区粒度是关键，因此不可能使用单个巨大的 key（如非常大的有序集）对数据集进行分片。
+- 使用分区时，数据处理更复杂，例如，您必须处理多个 RDB / AOF 文件，并且需要从多个实例和主机聚合持久性文件来备份数据。
+- 添加和删除容量可能很复杂。例如，Redis Cluster 支持大多数透明的数据重新平衡，能够在运行时添加和删除节点，但客户端分区和代理等其他系统不支持此功能。然而，一种称为预分片的技术在这方面有所帮助。
+
+
+
+
+
+
+
+
 
 
 

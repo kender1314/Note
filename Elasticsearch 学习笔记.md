@@ -172,7 +172,7 @@ GET /website/blog/1
 
 响应体包含相同的 _version 版本号 1 ：
 
- ![image-20200704000142066](https://raw.githubusercontent.com/kender1314/NotePicture/master/image-20200704000142066.png)
+ ![image-20200704000142066](https://cdn.jsdelivr.net/gh/kender1314/NotePicture/image-20200704000142066.png)
 
 图 1—2
 
@@ -190,13 +190,13 @@ PUT /website/blog/1?version=1
 
 此请求成功，并且响应体告诉我们 _version 已经递增到 2 ：
 
- ![image-20200704000147729](https://raw.githubusercontent.com/kender1314/NotePicture/master/image-20200704000147729.png)
+ ![image-20200704000147729](https://cdn.jsdelivr.net/gh/kender1314/NotePicture/image-20200704000147729.png)
 
 图 1—3
 
 然而，如果我们重新运行相同的索引请求，仍然指定 version=1 ， Elasticsearch 返回 409 ConflictHTTP 响应码，和一个如下所示的响应体：
 
- ![image-20200704000151585](https://raw.githubusercontent.com/kender1314/NotePicture/master/image-20200704000151585.png)
+ ![image-20200704000151585](https://cdn.jsdelivr.net/gh/kender1314/NotePicture/image-20200704000151585.png)
 
 图 1—4
 
@@ -311,7 +311,7 @@ POST /website/blog/
 
 结果：
 
- ![image-20200704000250921](https://raw.githubusercontent.com/kender1314/NotePicture/master/image-20200704000250921.png)
+ ![image-20200704000250921](https://cdn.jsdelivr.net/gh/kender1314/NotePicture/image-20200704000250921.png)
 
 图 2—1
 
@@ -456,7 +456,7 @@ GET /_mget
 
 结果
 
- ![image-20200704000319611](https://raw.githubusercontent.com/kender1314/NotePicture/master/image-20200704000319611.png)
+ ![image-20200704000319611](https://cdn.jsdelivr.net/gh/kender1314/NotePicture/image-20200704000319611.png)
 
 图 2—2
 
@@ -736,7 +736,7 @@ GET /megacorp/employee/_search
 
 显示结果
 
- ![image-20200704000457409](https://raw.githubusercontent.com/kender1314/NotePicture/master/image-20200704000457409.png)
+ ![image-20200704000457409](https://cdn.jsdelivr.net/gh/kender1314/NotePicture/image-20200704000457409.png)
 
 图 2—3
 
@@ -759,7 +759,7 @@ GET /megacorp/employee/_search
 
 显示结果
 
- ![image-20200704000700562](https://raw.githubusercontent.com/kender1314/NotePicture/master/image-20200704000700562.png)
+ ![image-20200704000700562](https://cdn.jsdelivr.net/gh/kender1314/NotePicture/image-20200704000700562.png)
 
 图 2—4
 
@@ -787,7 +787,7 @@ GET /megacorp/employee/_search
 
 当执行该查询时，结果中会返回一个叫做 highlight 的部分。这个部分包含了 about 属性匹配的文本片段，并以 HTML 标签 <em></em> 封装：
 
- ![image-20200704000713263](https://raw.githubusercontent.com/kender1314/NotePicture/master/image-20200704000713263.png)
+ ![image-20200704000713263](https://cdn.jsdelivr.net/gh/kender1314/NotePicture/image-20200704000713263.png)
 
 图 2—5
 
@@ -810,7 +810,7 @@ GET /megacorp/employee/_search
 
 匹配结果是有哪些interests
 
- ![image-20200704000733622](https://raw.githubusercontent.com/kender1314/NotePicture/master/image-20200704000733622.png)
+ ![image-20200704000733622](https://cdn.jsdelivr.net/gh/kender1314/NotePicture/image-20200704000733622.png)
 
 图 2—6
 
@@ -834,7 +834,7 @@ GET /megacorp/employee/_search
 
 all_interests 聚合已经变为只包含匹配查询的文档：
 
- ![image-20200704000746075](https://raw.githubusercontent.com/kender1314/NotePicture/master/image-20200704000746075.png)
+ ![image-20200704000746075](https://cdn.jsdelivr.net/gh/kender1314/NotePicture/image-20200704000746075.png)
 
 图 2—7
 
@@ -860,7 +860,7 @@ GET /megacorp/employee/_search
 
 结果
 
- ![image-20200704000904034](https://raw.githubusercontent.com/kender1314/NotePicture/master/image-20200704000904034.png)
+ ![image-20200704000904034](https://cdn.jsdelivr.net/gh/kender1314/NotePicture/image-20200704000904034.png)
 
 图 2—8
 
@@ -965,7 +965,7 @@ curl -H "Content-Type: application/json" -XPUT localhost:9200/blogs/_settings -d
 
 在主副上成功创建文档后，索引和删除文档所需要的步骤顺序：
 
- ![image-20200704001621314](https://raw.githubusercontent.com/kender1314/NotePicture/master/image-20200704001621314.png)
+ ![image-20200704001621314](https://cdn.jsdelivr.net/gh/kender1314/NotePicture/image-20200704001621314.png)
 
 <center>图 8—1</center>
 
@@ -976,7 +976,7 @@ curl -H "Content-Type: application/json" -XPUT localhost:9200/blogs/_settings -d
 
 #### 取回一个文档
 
- ![image-20200704001630991](https://raw.githubusercontent.com/kender1314/NotePicture/master/image-20200704001630991.png)
+ ![image-20200704001630991](https://cdn.jsdelivr.net/gh/kender1314/NotePicture/image-20200704001630991.png)
 
 图 8—2
 
@@ -988,7 +988,7 @@ curl -H "Content-Type: application/json" -XPUT localhost:9200/blogs/_settings -d
 
 #### 局部更新文档
 
- ![image-20200704001637124](https://raw.githubusercontent.com/kender1314/NotePicture/master/image-20200704001637124.png)
+ ![image-20200704001637124](https://cdn.jsdelivr.net/gh/kender1314/NotePicture/image-20200704001637124.png)
 
 图 8—3
 
@@ -1004,7 +1004,7 @@ curl -H "Content-Type: application/json" -XPUT localhost:9200/blogs/_settings -d
 
 #####  使用 mget 取回多个文档
 
- ![image-20200704001646206](https://raw.githubusercontent.com/kender1314/NotePicture/master/image-20200704001646206.png)
+ ![image-20200704001646206](https://cdn.jsdelivr.net/gh/kender1314/NotePicture/image-20200704001646206.png)
 
 图 8—4
 
@@ -1016,7 +1016,7 @@ curl -H "Content-Type: application/json" -XPUT localhost:9200/blogs/_settings -d
 
 ##### 使用 bulk 修改多个文档
 
- ![image-20200704001651701](https://raw.githubusercontent.com/kender1314/NotePicture/master/image-20200704001651701.png)
+ ![image-20200704001651701](https://cdn.jsdelivr.net/gh/kender1314/NotePicture/image-20200704001651701.png)
 
 图 8—5
 
@@ -1037,7 +1037,7 @@ bulk API 还可以在整个批量请求的最顶层使用 consistency 参数，�
 
 #### 查询过程分布式搜索
 
- ![image-20200704001658122](https://raw.githubusercontent.com/kender1314/NotePicture/master/image-20200704001658122.png)
+ ![image-20200704001658122](https://cdn.jsdelivr.net/gh/kender1314/NotePicture/image-20200704001658122.png)
 
 图 8—6
 
@@ -1105,7 +1105,7 @@ GET /_cluster/health
 
 返回结果：
 
- ![image-20200704000919850](https://raw.githubusercontent.com/kender1314/NotePicture/master/image-20200704000919850.png)
+ ![image-20200704000919850](https://cdn.jsdelivr.net/gh/kender1314/NotePicture/image-20200704000919850.png)
 
 图 3—1
 
@@ -1217,7 +1217,7 @@ Elasticsearch 中强大灵活的查询语言
 
 现在索引看上去像这样：
 
- ![image-20200704000941652](https://raw.githubusercontent.com/kender1314/NotePicture/master/image-20200704001011544.png)
+ ![image-20200704000941652](https://cdn.jsdelivr.net/gh/kender1314/NotePicture/image-20200704001011544.png)
 
 图 5—1
 
@@ -1225,7 +1225,7 @@ Elasticsearch 中强大灵活的查询语言
 
 例1：quick brown
 
- ![image-20200704001011544](https://raw.githubusercontent.com/kender1314/NotePicture/master/image-20200704001011544.png)
+ ![image-20200704001011544](https://cdn.jsdelivr.net/gh/kender1314/NotePicture/image-20200704001011544.png)
 
 图 5—2
 
@@ -1233,7 +1233,7 @@ Elasticsearch 中强大灵活的查询语言
 
 例2：Foxes leap
 
- ![image-20200704001016879](https://raw.githubusercontent.com/kender1314/NotePicture/master/image-20200704001016879.png)
+ ![image-20200704001016879](https://cdn.jsdelivr.net/gh/kender1314/NotePicture/image-20200704001016879.png)
 
 图 5—3
 
@@ -1330,7 +1330,7 @@ GET /_analyze
 
 结果：
 
- ![image-20200704001034181](https://raw.githubusercontent.com/kender1314/NotePicture/master/image-20200704001034181.png)
+ ![image-20200704001034181](https://cdn.jsdelivr.net/gh/kender1314/NotePicture/image-20200704001034181.png)
 
 图 5—4
 
@@ -1909,7 +1909,7 @@ GET /website/blog/_validate/query
 
 结果
 
- ![image-20200704001148687](https://raw.githubusercontent.com/kender1314/NotePicture/master/image-20200704001148687.png)
+ ![image-20200704001148687](https://cdn.jsdelivr.net/gh/kender1314/NotePicture/image-20200704001148687.png)
 
 图 6—1
 
@@ -1930,7 +1930,7 @@ GET /website/blog/_validate/query?explain
 
 结果
 
- ![image-20200704001206579](https://raw.githubusercontent.com/kender1314/NotePicture/master/image-20200704001206579.png)
+ ![image-20200704001206579](https://cdn.jsdelivr.net/gh/kender1314/NotePicture/image-20200704001206579.png)
 
 图 6—2
 
@@ -1949,7 +1949,7 @@ GET /website/blog/_validate/query?explain
 
 结果
 
- ![image-20200704001213335](https://raw.githubusercontent.com/kender1314/NotePicture/master/image-20200704001213335.png)
+ ![image-20200704001213335](https://cdn.jsdelivr.net/gh/kender1314/NotePicture/image-20200704001213335.png)
 
 图 6—3
 
@@ -1979,7 +1979,7 @@ GET /_search
 
 结果
 
- ![image-20200704001238077](https://raw.githubusercontent.com/kender1314/NotePicture/master/image-20200704001250534.png)
+ ![image-20200704001238077](https://cdn.jsdelivr.net/gh/kender1314/NotePicture/image-20200704001250534.png)
 
 图 7—1
 
@@ -2011,7 +2011,7 @@ GET /website/blog/_search
 
 结果
 
- ![image-20200704001250534](https://raw.githubusercontent.com/kender1314/NotePicture/master/image-20200704001250534.png)
+ ![image-20200704001250534](https://cdn.jsdelivr.net/gh/kender1314/NotePicture/image-20200704001250534.png)
 
 图 7—2
 
@@ -2156,7 +2156,7 @@ norm(d) = 1 / √numTerms
 
 设想如果查询 “happy hippopotamus” ，常见词 happy 的权重较低，不常见词 hippopotamus 权重较高，假设 happy 的权重是 2 ， hippopotamus 的权重是 5 ，可以将这个二维向量—— [2,5] ——在坐标系下作条直线，线的起点是 (0,0) 终点是 (2,5)
 
- ![image-20200704001326184](https://raw.githubusercontent.com/kender1314/NotePicture/master/image-20200704001326184.png)
+ ![image-20200704001326184](https://cdn.jsdelivr.net/gh/kender1314/NotePicture/image-20200704001326184.png)
 
 图 7—3
 
@@ -2174,7 +2174,7 @@ l The happy hippopotamus helped Harry 。
 
 文档 3： (happy,hippopotamus) —— [2,5]
 
- ![image-20200704001339510](https://raw.githubusercontent.com/kender1314/NotePicture/master/image-20200704001339510.png)
+ ![image-20200704001339510](https://cdn.jsdelivr.net/gh/kender1314/NotePicture/image-20200704001339510.png)
 
 图 7—4
 
@@ -2196,7 +2196,7 @@ GET /website/blog/66grLnABnwFX5xMmNfpB/_explain
 
 结果
 
- ![image-20200704001351589](https://raw.githubusercontent.com/kender1314/NotePicture/master/image-20200704001351589.png)
+ ![image-20200704001351589](https://cdn.jsdelivr.net/gh/kender1314/NotePicture/image-20200704001351589.png)
 
 图 7—5
 
@@ -2218,7 +2218,7 @@ l 某些与字段相关的脚本计算
 
 普通的倒排索引，搜索brown
 
- ![image-20200704001405077](https://raw.githubusercontent.com/kender1314/NotePicture/master/image-20200704001405077.png)
+ ![image-20200704001405077](https://cdn.jsdelivr.net/gh/kender1314/NotePicture/image-20200704001405077.png)
 
 图 7—6
 
@@ -2226,7 +2226,7 @@ l 某些与字段相关的脚本计算
 
 Doc values 通过转置两者间的关系来解决这个问题。倒排索引将词项映射到包含它们的文档，doc values 将文档映射到它们包含的词项，如下：
 
- ![image-20200704001416090](https://raw.githubusercontent.com/kender1314/NotePicture/master/image-20200704001416090.png)
+ ![image-20200704001416090](https://cdn.jsdelivr.net/gh/kender1314/NotePicture/image-20200704001416090.png)
 
 图 7—7
 
