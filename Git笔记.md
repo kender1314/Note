@@ -137,7 +137,7 @@ git commit -m "remove test.txt"
 git remote add origin git@github.com:michaelliao/learngit.git
 ```
 
-### 1.3.12     将本地内容推送到远程库
+### 将本地内容推送到远程库
 
 ```
 git push -u origin master:master
@@ -151,15 +151,15 @@ git push -u origin master:master
 git push origin master
 ```
 
-### 1.3.13     克隆远程项目
+### 克隆远程项目
 
 ```
 git clone git@github.com:michaelliao/gitskills.git
 ```
 
-### 1.3.14     分支
+### 分支
 
-#### 1.3.14.1   本地创建dev分支，并换到dev分支 ，同时远程也创建dev分支，并提交信息
+#### 本地创建dev分支，并换到dev分支 ，同时远程也创建dev分支，并提交信息
 
 ```
 git checkout -b dev
@@ -178,6 +178,18 @@ $ git checkout dev
 
 ```
 git branch -a
+```
+
+#### 返回到某个commit版本
+
+```
+git reset --hard 0909d90b
+```
+
+#### 合并其他分支的某次提交
+
+```
+git cherry-pick 62ecb3  
 ```
 
 #### dev分支合并到master
