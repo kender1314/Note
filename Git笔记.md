@@ -40,15 +40,21 @@ Git 与常用的版本控制工具 CVS, Subversion 等不同，它采用了分�
 
  
 
-## 1.3  Git命令
+## Git命令
 
-### 1.3.1  把当前目录变成Git管理的仓库
+### idea同步远程仓库的分支
+
+```
+git fetch origin
+```
+
+### 把当前目录变成Git管理的仓库
 
 ```
 git init
 ```
 
-### 1.3.2  将文件添加到仓库
+### 将文件添加到仓库
 
 ```
 git add <filename>
@@ -483,7 +489,7 @@ git stash apply stash@{0}
 git stash drop
 ```
 
-### 1.6.4  如何在多个分支同步修复的bug
+### 如何在多个分支同步修复的bug
 
 同样的bug，要在dev上修复，我们只需要把4c805e2 fix bug 101这个提交所做的修改“复制”到dev分支。注意：我们只想复制4c805e2 fix bug 101这个提交所做的修改，并不是把整个master分支merge过来。
 
