@@ -1022,9 +1022,231 @@ echo `date`
 
 ## shell printf命令
 
+1. printf 命令用于格式化输出， 是echo命令的增强版。
 
 
+*注意：printf 由 POSIX 标准所定义，移植性要比 echo 好。*
 
+1. printf 不像 echo 那样会自动换行，必须显式添加换行符(\n)。
+
+
+与C语言printf()函数的不同：
+
+- printf 命令不用加括号
+- format-string 可以没有引号，但最好加上，单引号双引号均可。
+- 参数多于格式控制符(%)时，format-string 可以重用，可以将所有参数都转换。
+- arguments 使用空格分隔，不用逗号。
+
+例子：创建printf.sh
+
+```
+# format-string为双引号
+printf "%d %s\n" 1 "abc"
+# 单引号与双引号效果一样 
+printf '%d %s\n' 1 "abc"
+# 没有引号也可以输出
+printf %s abcdef
+# 格式只指定了一个参数，但多出的参数仍然会按照该格式输出，format-string 被重用
+printf %s abc def
+printf "%s\n" abc def
+printf "%s %s %s\n" a b c d e f g h i j
+# 如果没有 arguments，那么 %s 用NULL代替，%d 用 0 代替
+printf "%s and %d \n" 
+# 如果以 %d 的格式来显示字符串，那么会有警告，提示无效的数字，此时默认置为 0
+printf "The first program always prints'%s,%d\n'" Hello Shell
+```
+
+运行结果：
+
+![image-20210105195250473](https://cdn.jsdelivr.net/gh/kender1314/NotePicture/20210105195259.png)
+
+## Shell if else语句
+
+if 语句通过关系运算符判断表达式的真假来决定执行哪个分支。Shell 有三种 if ... else 语句：
+
+- if ... fi 语句；
+- if ... else ... fi 语句；
+- if ... elif ... else ... fi 语句。
+
+### if ... else 语句
+
+if ... else 语句的语法：
+
+```
+if [ expression ]
+then
+   Statement(s) to be executed if expression is true
+fi
+```
+
+如果 expression 返回 true，then 后边的语句将会被执行；如果返回 false，不会执行任何语句。
+
+最后必须以 fi 来结尾闭合 if，fi 就是 if 倒过来拼写，后面也会遇见。
+
+注意：expression 和方括号([ ])之间必须有空格，否则会有语法错误。
+
+if ... else 语句也经常与 test 命令结合使用，如下所示：
+
+```
+num1=$[2*3]num2=$[1+5]if test $[num1] -eq $[num2]then    echo 'The two numbers are equal!'else    echo 'The two numbers are not equal!'fi
+```
+
+输出：
+
+```
+The two numbers are equal!
+```
+
+test 命令用于检查某个条件是否成立，与方括号([ ])类似。
+
+## Shell test命令
+
+Shell中的 test 命令用于检查某个条件是否成立，它可以进行数值、字符和文件三个方面的测试。
+
+### **数值测试**
+
+| 参数 | 说明           |
+| ---- | -------------- |
+| -eq  | 等于则为真     |
+| -ne  | 不等于则为真   |
+| -gt  | 大于则为真     |
+| -ge  | 大于等于则为真 |
+| -lt  | 小于则为真     |
+| -le  | 小于等于则为真 |
+
+例如：
+
+```
+num1=100
+num2=100
+if test $[num1] -eq $[num2]
+then    
+	echo 'The two numbers are equal!'
+else    
+	echo 'The two numbers are not equal!'
+fi
+```
+
+输出：
+
+```
+The two numbers are equal!
+```
+
+### 字符串测试
+
+| 参数      | 说明                 |
+| --------- | -------------------- |
+| =         | 等于则为真           |
+| !=        | 不相等则为真         |
+| -z 字符串 | 字符串长度伪则为真   |
+| -n 字符串 | 字符串长度不伪则为真 |
+
+例如：
+
+```
+num1=100
+num2=100
+if test num1=num2
+then    
+echo 
+	'The two strings are equal!'
+else    
+	echo 'The two strings are not equal!'
+fi
+```
+
+输出：
+
+```
+The two strings are equal!
+```
+
+### 文件测试
+
+| 参数      | 说明                                 |
+| --------- | ------------------------------------ |
+| -e 文件名 | 如果文件存在则为真                   |
+| -r 文件名 | 如果文件存在且可读则为真             |
+| -w 文件名 | 如果文件存在且可写则为真             |
+| -x 文件名 | 如果文件存在且可执行则为真           |
+| -s 文件名 | 如果文件存在且至少有一个字符则为真   |
+| -d 文件名 | 如果文件存在且为目录则为真           |
+| -f 文件名 | 如果文件存在且为普通文件则为真       |
+| -c 文件名 | 如果文件存在且为字符型特殊文件则为真 |
+| -b 文件名 | 如果文件存在且为块特殊文件则为真     |
+
+例如：
+
+```
+cd /bin
+if test -e ./bash
+then    
+	echo 'The file already exists!'
+else    
+	echo 'The file does not exists!'
+fi
+```
+
+输出：
+
+```
+The file already exists!
+```
+
+另外，Shell还提供了与( ! )、或( -o )、非( -a )三个逻辑操作符用于将测试条件连接起来，其优先级为：“!”最高，“-a”次之，“-o”最低。例如：
+
+```
+cd /bin
+if test -e ./notFile -o ./bash
+then    
+	echo 'One file exists at least!'
+else    
+	echo 'Both dose not exists!'
+fi
+```
+
+输出：
+
+```
+One file exists at least!
+```
+
+## Shell case esac语句
+
+case ... esac 与其他语言中的 switch ... case 语句类似，是一种多分枝选择结构
+
+<font style="color: red">case工作方式如上所示。取值后面必须为关键字 in，每一模式必须以右括号结束。取值可以为变量或常数。匹配发现取值符合某一模式后，其间所有命令开始执行直至 ;;。;; 与其他语言中的 break 类似，意思是跳到整个 case 语句的最后。</font>
+
+<font style="color: red">取值将检测匹配的每一个模式。一旦模式匹配，则执行完匹配模式相应命令后不再继续其他模式。如果无一匹配模式，使用星号 * 捕获该值，再执行后面的命令。</font>
+
+举例：创建case.sh
+
+```
+echo 'Input a number between 1 to 4'
+echo 'Your number is:\c'
+read num
+case ${num} in
+        1) echo 'You select 1'
+        ;;
+        2)  echo 'You select 2'
+        ;;
+        3)  echo 'You select 3'
+        ;;
+        4)  echo 'You select 4'
+        ;;
+        *)  echo 'You do not select a number between 1 to 4'
+        ;;
+esac
+```
+
+运行结果：
+
+![image-20210105201811782](https://cdn.jsdelivr.net/gh/kender1314/NotePicture/20210105201817.png)
+
+## Shell for循环
+
+与其他编程语言类似，Shell支持for循环。
 
 
 

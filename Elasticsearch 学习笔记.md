@@ -9,6 +9,10 @@
 
 ## Elasticsearch概述
 
+### Elasticsearch起源
+
+搜索结果有关键字高亮，并且能按各种匹配分数来排序，能切换不同的分词算法来满足各种分词需求。
+
 ### Elasticsearch是什么
 
 1. Elasticsearch 是一个分布式、可扩展、实时的搜索与数据分析引擎。
@@ -18,14 +22,46 @@
 ###  Elasticsearch优势
 
 1. 在处理大规模的数据的时候，以很快的速度进行数据搜索。
-
 2. 革命性的成果：将单独的，有用的组件融合到一个单一的、一致的、实时的应用中。如全文搜索、 分析系统和分布式数据库
-
 3. 一个分布式的实时文档存储，每个字段 可以被索引与搜索
-
 4. 一个分布式实时分析搜索引擎
-
 5. 能胜任上百个服务节点的扩展，并支持 PB 级别的结构化或者非结构化数据
+
+###  线程池
+
+一个节点使用多个线程池来管理内存消耗。与许多线程池关联的队列使待处理的请求得以保留而不是被丢弃。
+
+有几个线程池，但是重要的线程池包括：
+
+- **`generic`**
+
+  用于常规操作（例如，后台节点发现）。线程池类型为`scaling`。
+
+
+
+- **`search`**
+
+  用于计数/搜索/建议操作。线程池类型 `fixed_auto_queue_size`的大小为，初始queue_size为 。 `int((`[`# of allocated processors`](https://www.elastic.co/guide/en/elasticsearch/reference/7.11/modules-threadpool.html#node.processors)` * 3) / 2) + 1``1000`
+
+- **`search_throttled`**
+
+  用于对进行计数/搜索/建议/获取操作`search_throttled indices`。线程池类型`fixed_auto_queue_size`的大小为`1`，初始queue_size为`100`。
+
+- **`get`**
+
+  获取操作。线程池类型`fixed` 的大小为[`# of allocated processors`](https://www.elastic.co/guide/en/elasticsearch/reference/7.11/modules-threadpool.html#node.processors)，queue_size为`1000`。
+
+- **`analyze`**
+
+  用于分析请求。线程池类型`fixed`的大小为`1`，队列大小为`16`。
+
+.....
+
+
+
+
+
+
 
 ### Elasticsearch请求方式
 
