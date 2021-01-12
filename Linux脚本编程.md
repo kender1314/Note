@@ -145,7 +145,9 @@ chmod +x ./test.sh  #使脚本具有执行权限
 再看一个例子。下面的脚本使用 **read** 命令从 stdin 获取输入并赋值给 PERSON 变量，最后在 stdout 上输出：
 
 ```
-#!/bin/bash# Author : mozhiyan# Copyright (c) http://see.xidian.edu.cn/cpp/linux/# Script follows here:echo "What is your name?"read PERSONecho "Hello, $PERSON"
+#!/bin/bash
+# Author : mozhiyan# Copyright (c) http://see.xidian.edu.cn/cpp/linux/
+# Script follows here:echo "What is your name?"read PERSONecho "Hello, $PERSON"
 ```
 
 运行脚本：
@@ -1248,17 +1250,244 @@ esac
 
 与其他编程语言类似，Shell支持for循环。
 
+for循环一般格式为：
+
+```
+for 变量 in 列表
+do
+    command1
+    command2
+    ...
+    commandN
+done
+```
+
+列表是一组值（数字、字符串等）组成的序列，<font style="color: red">每个值通过空格分隔</font>。每循环一次，就将列表中的下一个值赋给变量。
+
+举例：创建for.sh
+
+```
+for loop in 1 2 3 4 5 6
+do
+        echo "The value is: ${loop}"
+done
+```
+
+运行结果：
+
+![image-20210111190448966](https://cdn.jsdelivr.net/gh/kender1314/NotePicture/20210111190450.png)
+
+读取文件举例，显示主目录下以 .bash 开头的文件：
+
+```
+纯文本复制
+#!/bin/bash
+for FILE in $HOME/.bash*
+do   
+	echo $FILE
+done
+```
+
+运行结果：
+
+![image-20210111190834335](https://cdn.jsdelivr.net/gh/kender1314/NotePicture/20210111190835.png)
+
+## Shell while循环
+
+while循环用于不断执行一系列命令，也用于从输入文件中读取数据；命令通常为测试条件。其格式为：
+
+```
+while command
+do
+   Statement(s) to be executed if command is true
+done
+```
+
+命令执行完毕，控制返回循环顶部，从头开始直至测试条件为假。
+
+举例：创建while.sh
+
+```
+#!/bin/bash
+COUNT=0
+while [ $COUNT -lt 5 ]
+do
+        COUNT=`expr $COUNT + 1`
+        echo $COUNT
+done
+```
+
+运行结果：
+
+![image-20210111192435735](https://cdn.jsdelivr.net/gh/kender1314/NotePicture/20210111192437.png)
 
 
 
+while循环可用于读取键盘信息。下面的例子中，输入信息被设置为变量FILM，按<Ctrl-D>结束循环。
 
+创建while-read.sh：
 
+```
+#!/bin/bash
+echo 'type <CTRL-D> to terminate'
+#echo 中-n表示不换行
+echo -n 'enter your most liked film: '
+while read FILM
+do
+        echo "Your enter value: ${FILM}"
+done
+```
 
+运行结果：
 
+![image-20210111193111219](https://cdn.jsdelivr.net/gh/kender1314/NotePicture/20210111193112.png)
 
+## Shell until循环
 
+until 循环执行一系列命令直至条件为 true 时停止。until 循环与 while 循环在处理方式上刚好相反。一般while循环优于until循环，但在某些时候，也只是极少数情况下，until 循环更加有用。
 
+until 循环格式为：
 
+```
+until command
+do
+   Statement(s) to be executed until command is true
+done
+```
+
+command 一般为条件表达式，如果返回值为 false，则继续执行循环体内的语句，否则跳出循环。
+
+## Shell break和continue命令
+
+在循环过程中，有时候需要在未达到循环结束条件时强制跳出循环，像大多数编程语言一样，Shell也使用 break 和 continue 来跳出循环。
+
+**break命令**
+
+break命令允许跳出所有循环（终止执行后面的所有循环）。
+
+与java不同的是，break 命令后面还可以跟一个整数，表示跳出第几层循环。
+
+比如下面的这个例子，break 1的时候，只会跳出内层向外的第一层循环。
+
+举例：创建break.sh
+
+```
+#!/bin/bash
+for var1 in 1 2 3
+do
+        for var2 in 0 5
+        do
+                if [ $var1 -eq 2 -a $var2 -eq 5 ]
+                then
+                        echo "break -> $var1, $var2"
+                        break 1
+                else
+                        echo "$var1, $var2"
+                fi
+        done
+        echo "$var1"
+done
+```
+
+运行结果：
+
+![image-20210111195746264](https://cdn.jsdelivr.net/gh/kender1314/NotePicture/20210111195747.png)
+
+**continue命令**
+
+continue命令与break命令类似，只有一点差别，它不会跳出所有循环，仅仅跳出当前循环。
+
+同样，continue 后面也可以跟一个数字，表示跳出第几层循环。
+
+## Shell函数
+
+Shell 函数的定义格式如下：
+
+```
+function_name () {
+    list of commands
+    [ return value ]
+}
+```
+
+如果你愿意，也可以在函数名前加上关键字 function：
+
+```
+function function_name () {
+    list of commands
+    [ return value ]
+}
+```
+
+函数返回值，可以显式增加return语句；如果不加，会将最后一条命令运行结果作为返回值
+
+<font style="color: red">Shell 函数返回值只能是整数，一般用来表示函数执行成功与否，0表示成功，其他值表示失败。如果 return 其他数据，比如一个字符串，往往会得到错误提示：“numeric argument required”。</font>
+
+```
+#!/bin/bash
+funWithReturn(){
+    echo "The function is to get the sum of two numbers..."
+    echo -n "Input first number: "
+    read aNum
+    echo -n "Input another number: "
+    read anotherNum
+    echo "The two numbers are $aNum and $anotherNum !"
+    return $(($aNum+$anotherNum))
+}
+funWithReturn
+# Capture value returnd by last command
+ret=$?
+echo "The sum of two numbers is $ret !"
+```
+
+运行结果：
+
+![image-20210111202253495](https://cdn.jsdelivr.net/gh/kender1314/NotePicture/20210111202255.png)
+
+函数嵌套的例子：
+
+```
+#!/bin/bash
+# Calling one function from another
+number_one () {
+   echo "Url_1 is http://see.xidian.edu.cn/cpp/shell/"
+   number_two
+}
+number_two () {
+   echo "Url_2 is http://see.xidian.edu.cn/cpp/u/xitong/"
+}
+number_one
+```
+
+运行结果：
+
+![image-20210111202411926](https://cdn.jsdelivr.net/gh/kender1314/NotePicture/20210111202413.png)
+
+## Shell函数参数
+
+在Shell中，调用函数时可以向其传递参数。在函数体内部，通过 $n 的形式来获取参数的值，例如，$1表示第一个参数，$2表示第二个参数...
+
+带参数的函数示例：
+
+```
+#!/bin/bash
+funWithParam(){
+    echo "The value of the first parameter is $1 !"
+    echo "The value of the second parameter is $2 !"
+    echo "The value of the tenth parameter is $10 !"
+    echo "The value of the tenth parameter is ${10} !"
+    echo "The value of the eleventh parameter is ${11} !"
+    echo "The amount of the parameters is $# !"  # 参数个数
+    echo "The string of the parameters is $* !"  # 传递给函数的所有参数
+}
+funWithParam 1 2 3 4 5 6 7 8 9 34 73
+```
+
+运行结果：
+
+![image-20210111203000181](https://cdn.jsdelivr.net/gh/kender1314/NotePicture/20210111203001.png)
+
+## Shell输入输出重定向
 
 
 

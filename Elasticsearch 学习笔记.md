@@ -1393,9 +1393,9 @@ GET /_search?q=date:2014         # 0  results !
 
  
 
-### 5.4      映射
+### 映射
 
-#### 5.4.1    核心简单域类型
+#### 核心简单域类型
 
 字符串: string
 
@@ -1407,9 +1407,9 @@ GET /_search?q=date:2014         # 0  results !
 
 日期: date
 
-#### 5.4.2    自定义域映射
+#### 自定义域映射
 
-##### 5.4.2.1    index
+##### index
 
 index 属性控制怎样索引字符串。它可以是下面三个值：
 
@@ -1433,8 +1433,6 @@ PUT /gb/_mapping/tweet
 }
 ```
 
-
-
 使用自定义域类型
 
 ```
@@ -1447,19 +1445,31 @@ GET /gb/_analyze
 
 重点：在5.0以后，string类型的not_analyzed被keyword类型代替了，而string方法的analyzed被text类型替换了。
 
- 
+#### 查看具体字段映射
 
-### 5.5      复杂核心域类型
+查看employee-id字段的映射
 
-#### 5.5.1    多值域
+```
+GET /my-index-000001/_mapping/field/employee-id
+```
+
+返回结果
+
+![image-20210111140021548](https://cdn.jsdelivr.net/gh/kender1314/NotePicture/20210111140029.png)
+
+
+
+### 复杂核心域类型
+
+**多值域**
 
 tag 域包含多个标签。我们可以以数组的形式索引标签：
 
+```
 { "tag": [ "search", "nosql" ]}
+```
 
- 
-
-#### 5.5.2    空域
+**空域**
 
 当然，数组可以为空。这相当于存在零值。 事实上，在 Lucene 中是不能存储 null 值的，所以我们认为存在 null 值的域为空域。
 
@@ -1473,149 +1483,112 @@ tag 域包含多个标签。我们可以以数组的形式索引标签：
 
 "array_with_null_value":  [ null ]
 
- 
-
-#### 5.5.3    多层级对象
+**多层级对象**
 
 内部对象 经常用于嵌入一个实体或对象到其它对象中。例如，与其在 tweet 文档中包含 user_name 和 user_id 域，我们也可以这样写：
 
+```
 {
-
   "tweet":      "Elasticsearch is very flexible",
-
   "user": {
-
-​    "id":      "@johnsmith",
-
-​    "gender":    "male",
-
-​    "age":     26,
-
-​    "name": {
-
-​      "full":   "John Smith",
-
-​      "first":  "John",
-
-​      "last":   "Smith"
-
-​    }
-
+    "id":      "@johnsmith",
+    "gender":    "male",
+    "age":     26,
+    "name": {
+      "full":   "John Smith",
+      "first":  "John",
+      "last":   "Smith"
+    }
   }
-
 }
+```
 
- 
-
-#### 5.5.4    内部对象的映射
+**内部对象的映射**
 
 Elasticsearch 会动态监测新的对象域并映射它们为 对象 ，在 properties 属性下列出内部域：
 
+```
 {
-
- "gb": {
-
-  "tweet": { 
-
-   "properties": {
-
-​    "tweet":      { "type": "string" },
-
-​    "user": { 
-
-​     "type":       "object",
-
-​     "properties": {
-
-​      "id":      { "type": "string" },
-
-​      "gender":    { "type": "string" },
-
-​      "age":     { "type": "long"  },
-
-​      "name":  { 
-
-​       "type":     "object",
-
-​       "properties": {
-
-​        "full":   { "type": "string" },
-
-​        "first":  { "type": "string" },
-
-​        "last":   { "type": "string" }
-
-​       }
-
-​      }
-
-​     }
-
-​    }
-
-   }
-
-  }
-
- }
-
+	"gb": {
+		"tweet": {
+			"properties": {
+				"tweet": {
+					"type": "string"
+				},
+				"user": {
+					"type": "object",
+					"properties": {
+						"id": {
+							"type": "string"
+						},
+						"gender": {
+							"type": "string"
+						},
+						"age": {
+							"type": "long"
+						},
+						"name": {
+							"type": "object",
+							"properties": {
+								"full": {
+									"type": "string"
+								},
+								"first": {
+									"type": "string"
+								},
+								"last": {
+									"type": "string"
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	}
 }
+```
 
 user 和 name 域的映射结构与 tweet 类型的相同。事实上， type 映射只是一种特殊的 对象 映射，我们称之为 根对象
 
- 
-
-#### 5.5.5    内部对象是如何索引的
+**内部对象是如何索引的**
 
 为了能让 Elasticsearch 有效地索引内部类，它把我们的文档转化成这样：
 
+```
 {
-
   "tweet":      [elasticsearch, flexible, very],
-
   "user.id":     [@johnsmith],
-
   "user.gender":   [male],
-
   "user.age":     [26],
-
   "user.name.full":  [john, smith],
-
   "user.name.first": [john],
-
   "user.name.last":  [smith]
-
 }
+```
 
- 
-
-#### 5.5.6    内部对象数组
+**内部对象数组**
 
 最后，考虑包含内部对象的数组是如何被索引的。 假设我们有个 followers 数组：
 
+```
 {
-
   "followers": [
-
-​    { "age": 35, "name": "Mary White"},
-
-​    { "age": 26, "name": "Alex Jones"},
-
-​    { "age": 19, "name": "Lisa Smith"}
-
+    { "age": 35, "name": "Mary White"},
+    { "age": 26, "name": "Alex Jones"},
+    { "age": 19, "name": "Lisa Smith"}
   ]
-
 }
+```
 
 这个文档会像我们之前描述的那样被扁平化处理，结果如下所示：
 
+```
 {
-
   "followers.age":  [19, 26, 35],
-
   "followers.name":  [alex, jones, lisa, smith, mary, white]
-
 }
+```
 
  
 
