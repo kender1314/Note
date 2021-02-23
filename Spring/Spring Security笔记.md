@@ -65,7 +65,7 @@ SpringSecurity 本质是一个过滤器链：
 - [x] org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter
 - [x] org.springframework.security.web.context.SecurityContextPersistenceFilter org.springframework.security.web.header.HeaderWriterFilter
 - [x] org.springframework.security.web.csrf.CsrfFilter org.springframework.security.web.authentication.logout.LogoutFilter（对登陆之后进行拦截）
-- [x] org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter（对登陆之前进行拦截）
+- [x] org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter（对登陆进行拦截，验证账号密码是否正确）
 - [x] org.springframework.security.web.authentication.ui.DefaultLoginPageGeneratingFilter
 - [x] org.springframework.security.web.authentication.ui.DefaultLogoutPageGeneratingFilter
 - [x] org.springframework.security.web.savedrequest.RequestCacheAwareFilter
@@ -74,11 +74,17 @@ SpringSecurity 本质是一个过滤器链：
 - [x] org.springframework.security.web.session.SessionManagementFilter org.springframework.security.web.access.ExceptionTranslationFilter（异常过滤器）
 - [x] org.springframework.security.web.access.intercept.FilterSecurityInterceptor（方法级别的过滤器，位于过滤链的最底端）
 
+如果spring单独使用spring securty，需要在application.yml中配置DelegatingFilterProxy，但是springboot已经帮我们配置好了
 
+## spring security认证
 
+设置登录用户名密码的几种方式
 
+第一种：通过配置文件
 
+第二种：通过配置类（需要继承WebSecurityConfigurerAdapter）
 
+第三种：自定义编写实现类（继承UsernamePasswordAuthenticationFilter类，可以通过数据库进行认证）
 
 
 
