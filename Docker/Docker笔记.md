@@ -465,18 +465,6 @@ $ sudo sed -i 's/download.docker.com/mirrors.ustc.edu.cn\/docker-ce/g' /etc/yum.
 #     https://download.docker.com/linux/centos/docker-ce.repo
 ```
 
-如果需要测试版本的 Docker CE 请使用以下命令：
-
-```bash
-$ sudo yum-config-manager --enable docker-ce-test
-```
-
-如果需要每日构建版本的 Docker CE 请使用以下命令：
-
-```bash
-$ sudo yum-config-manager --enable docker-ce-nightly
-```
-
 ### 安装 Docker CE
 
 更新 `yum` 软件源缓存，并安装 `docker-ce`。
