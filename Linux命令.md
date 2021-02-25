@@ -709,6 +709,106 @@ ping [-dfnqrRv][-c<完成次数>][-i<间隔秒数>][-I<网络界面>][-l<前置�
 - -t<存活数值> 设置存活数值TTL的大小。
 - -v 详细显示指令的执行过程。
 
+## awk 命令
+
+AWK 是一种处理文本文件的语言，是一个强大的文本分析工具。
+
+**语法**
+
+```
+awk [选项参数] 'script' var=value file(s)
+或
+awk [选项参数] -f scriptfile var=value file(s)
+```
+
+**选项参数说明：**
+
+- -F fs or --field-separator fs
+
+  指定输入文件折分隔符，fs是一个字符串或者是一个正则表达式，如-F:。
+
+- -v var=value or --asign var=value
+
+  赋值一个用户定义变量。
+
+- -f scripfile or --file scriptfile
+
+  从脚本文件中读取awk命令。
+
+- -mf nnn and -mr nnn
+
+  对nnn值设置内在限制，-mf选项限制分配给nnn的最大块数目；-mr选项限制记录的最大数目。这两个功能是Bell实验室版awk的扩展功能，在标准awk中不适用。
+
+- -W compact or --compat, -W traditional or --traditional
+
+  在兼容模式下运行awk。所以gawk的行为和标准的awk完全一样，所有的awk扩展都被忽略。
+
+- -W copyleft or --copyleft, -W copyright or --copyright
+
+  打印简短的版权信息。
+
+- -W help or --help, -W usage or --usage
+
+  打印全部awk选项和每个选项的简短说明。
+
+- -W lint or --lint
+
+  打印不能向传统unix平台移植的结构的警告。
+
+- -W lint-old or --lint-old
+
+  打印关于不能向传统unix平台移植的结构的警告。
+
+- -W posix
+
+  打开兼容模式。但有以下限制，不识别：/x、函数关键字、func、换码序列以及当fs是一个空格时，将新行作为一个域分隔符；操作符**和**=不能代替^和^=；fflush无效。
+
+- -W re-interval or --re-inerval
+
+  允许间隔正则表达式的使用，参考(grep中的Posix字符类)，如括号表达式[[:alpha:]]。
+
+- -W source program-text or --source program-text
+
+  使用program-text作为源代码，可与-f命令混用。
+
+- -W version or --version
+
+  打印bug报告信息的版本。
+
+用法一：
+
+```
+awk '{[pattern] action}' {filenames}   # 行匹配语句 awk '' 只能用单引号
+实例：打印log.txt中每行的第二个和第五个值
+awk '{print $1,$4}' log.txt
+```
+
+用法二：
+
+```
+awk -F  #-F相当于内置变量FS, 指定分割字符
+实例：# 使用","分割
+ $  awk -F, '{print $1,$2}'   log.txt
+```
+
+用法三：
+
+```
+awk -v  # 设置变量
+实例：
+awk -va=1 '{print $1,$1+a}' log.txt
+```
+
+用法四：
+
+```
+awk -f {awk脚本} {文件名}
+实例：
+awk -f cal.awk log.txt
+```
+
+详细用法：https://www.runoob.com/linux/linux-comm-awk.html
+
 
 
 

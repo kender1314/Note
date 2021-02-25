@@ -6831,7 +6831,8 @@ POST /_search?pretty
 
 #### 模糊查询之正则查询-regexp
 
-**注意：字母要小写！**
+
+
 **注意：字母要小写！**
 **注意：字母要小写！**
 支持标准的正则。
@@ -6857,8 +6858,6 @@ POST /_search?pretty
 	]
 }
 ```
-
-
 
 
 
@@ -9891,35 +9890,23 @@ l within：索引的形状完全被包含在查询的形状中。
 
 与 geo_point 类型的字段相似， 地理形状也必须在使用前明确映射：
 
+```
 PUT /attractions
-
 {
-
  "mappings": {
-
   "landmark": {
-
    "properties": {
-
-​    "name": {
-
-​     "type": "string"
-
-​    },
-
-​    "location": {
-
-​     "type": "geo_shape"
-
-​    }
-
+    "name": {
+     "type": "string"
+    },
+    "location": {
+     "type": "geo_shape"
+    }
    }
-
   }
-
  }
-
 }
+```
 
 同时需要考虑修改两个非常重要的设置： 精度 和 距离误差 。
 
@@ -10035,57 +10022,34 @@ GET /attractions/landmark/_search
 
 举个例子，我们可以查找阿姆斯特丹中心区域所有的地标：
 
+```
 GET /attractions/landmark/_search
-
 {
-
  "query": {
-
   "geo_shape": {
-
    "location": {
-
-​    "relation": "within", 
-
-​    "shape": {
-
-​     "type": "polygon",
-
-​     "coordinates": [[ 
-
-​       [4.88330,52.38617],
-
-​       [4.87463,52.37254],
-
-​       [4.87875,52.36369],
-
-​       [4.88939,52.35850],
-
-​       [4.89840,52.35755],
-
-​       [4.91909,52.36217],
-
-​       [4.92656,52.36594],
-
-​       [4.93368,52.36615],
-
-​       [4.93342,52.37275],
-
-​       [4.92690,52.37632],
-
-​       [4.88330,52.38617]
-
-​      ]]
-
-​    }
-
+    "relation": "within", 
+    "shape": {
+     "type": "polygon",
+     "coordinates": [[ 
+       [4.88330,52.38617],
+       [4.87463,52.37254],
+       [4.87875,52.36369],
+       [4.88939,52.35850],
+       [4.89840,52.35755],
+       [4.91909,52.36217],
+       [4.92656,52.36594],
+       [4.93368,52.36615],
+       [4.93342,52.37275],
+       [4.92690,52.37632],
+       [4.88330,52.38617]
+      ]]
+    }
    }
-
   }
-
  }
-
 }
+```
 
 注：
 
@@ -10099,111 +10063,69 @@ GET /attractions/landmark/_search
 
 首先，我们仿照之前设置 landmark 时的方式建立映射：
 
+```
 PUT /attractions
-
 {
-
  "mappings": {
-
   "neighborhood": {
-
    "properties": {
-
-​    "name": {
-
-​     "type": "text"
-
-​    },
-
-​    "location": {
-
-​     "type": "geo_shape"
-
-​    }
-
+    "name": {
+     "type": "text"
+    },
+    "location": {
+     "type": "geo_shape"
+    }
    }
-
   }
-
  }
-
 }
+```
 
 然后我们索引阿姆斯特丹中部对应的形状：
 
+```
 PUT /attractions/neighborhood/central_amsterdam
-
 {
-
  "name" : "Central Amsterdam",
-
  "location" : {
-
    "type" : "polygon",
-
    "coordinates" : [[
-
-​    [4.88330,52.38617],
-
-​    [4.87463,52.37254],
-
-​    [4.87875,52.36369],
-
-​    [4.88939,52.35850],
-
-​    [4.89840,52.35755],
-
-​    [4.91909,52.36217],
-
-​    [4.92656,52.36594],
-
-​    [4.93368,52.36615],
-
-​    [4.93342,52.37275],
-
-​    [4.92690,52.37632],
-
-​    [4.88330,52.38617]
-
+    [4.88330,52.38617],
+    [4.87463,52.37254],
+    [4.87875,52.36369],
+    [4.88939,52.35850],
+    [4.89840,52.35755],
+    [4.91909,52.36217],
+    [4.92656,52.36594],
+    [4.93368,52.36615],
+    [4.93342,52.37275],
+    [4.92690,52.37632],
+    [4.88330,52.38617]
    ]]
-
  }
-
 }
+```
 
 形状索引好之后，我们就可以在查询中通过 index ， type 和 id 来引用它了：
 
+```
 GET /attractions/landmark/_search
-
 {
-
  "query": {
-
   "geo_shape": {
-
    "location": {
-
-​    "relation": "within",
-
-​    "indexed_shape": { 
-
-​     "index": "attractions",
-
-​     "type": "neighborhood",
-
-​     "id":  "central_amsterdam",
-
-​     "path": "location"
-
-​    }
-
+    "relation": "within",
+    "indexed_shape": { 
+     "index": "attractions",
+     "type": "neighborhood",
+     "id":  "central_amsterdam",
+     "path": "location"
+    }
    }
-
   }
-
  }
-
 }
+```
 
 注：*指定* *indexed_shape* *而不是* *shape* *，**Elasticesearch* *就知道需要从指定的文档和* *path* *检索出对应的形状了。*
 
@@ -10215,31 +10137,21 @@ GET /attractions/landmark/_search
 
 例如，比方说我们正在对用户和他们的博客文章进行索引。在关系世界中，我们会这样来操作：
 
+```
 PUT /my_index/user/1 
-
 {
-
  "name":   "John Smith",
-
  "email":  "john@smith.com",
-
  "dob":   "1970/10/24"
-
 }
-
- 
 
 PUT /my_index/blogpost/2 
-
 {
-
  "title":  "Relationships",
-
  "body":   "It's complicated...",
-
  "user":   1 
-
 }
+```
 
 注：
 
@@ -10249,25 +10161,20 @@ PUT /my_index/blogpost/2
 
 通过用户的 ID 1 可以很容易的找到博客帖子。
 
+```
 GET /my_index/blogpost/_search
-
 {
-
  "query": {
-
   "filtered": {
-
    "filter": {
-
-​    "term": { "user": 1 }
-
+    "term": { "user": 1 }
    }
-
   }
-
  }
-
 }
+```
+
+
 
 #### 非规范化你的数据（关系嵌套）
 
