@@ -273,7 +273,7 @@ docker cp  2de5df86252d:/anaconda-post.log /data
 
 ```
 docker cp 目的主机路径 容器id：容器内路径
-docker cp /data 2de5df86252d:/anaconda-post.log
+docker cp anaconda-post.log 2de5df86252d:/data
 ```
 
 
@@ -716,7 +716,7 @@ DockerFile是用来构建Docker镜像的构建文件，是由一系列命令和�
 |   EXPOSE   |                  当前容器对外暴露出的端口号                  |
 |  WORKDIR   |   指定在创建容器后，终端默认登录进来的工作目录，一个落脚点   |
 |    ENV     |               用来在构建镜像过程中设置环境变量               |
-|    ADD     | 将宿主机目录下的文件拷贝进镜像且ADD命令会自动处理URL和解压tar压缩包 |
+|    ADD     | 将宿主机目录下的文件拷贝进镜像且ADD命令会自动处理URL和解压tar压缩包，ADD 命令可以完成 COPY 命令的所有功能 |
 |    COPY    |             （1）类似ADD，拷贝文件和目录到镜像中             |
 |            | （2）将从构建上下文<源路径>的文件/目录复制到新的一层的镜像内的<目标路径>位置 |
 |   VOLUME   |             容器数据卷，用于数据保存和持久化工作             |

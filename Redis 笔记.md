@@ -265,20 +265,6 @@ redis 127.0.0.1:6379> ZRANGE javatpoint 0 10 WITHSCORES
 |  19  |  ZUNIONSTORE destination numkeys key [key …]   |    计算给定的一个或多个有序集的并集，并存储在新的 key 中     |
 |  20  | ZSCAN key cursor [MATCH pattern] [COUNT count] |        迭代有序集合中的元素（包括元素成员和元素分值）        |
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 ## Redis是什么?
 
 Redis 通常被称为数据结构服务器，因为值(value)可以是字符串(String), 哈希(Map), 列表(list), 集合(sets) 或有序集合(sorted sets)等类型。

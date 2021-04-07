@@ -2,9 +2,9 @@
 
 ## 概要
 
-Spring 是非常流行和成功的 Java 应用开发框架，Spring Security 正是 Spring 家族中的 成员。Spring Security 基于 Spring 框架，提供了一套 Web 应用安全性的完整解决方案。 正如你可能知道的关于安全方面的两个主要区域是“认证”和“授权”（或者访问控 制），一般来说，Web 应用的安全性包括用户认证（Authentication）和用户授权 （Authorization）两个部分，这两点也是 Spring Security 重要核心功能。 
+Spring 是非常流行和成功的 Java 应用开发框架，Spring Security是 Spring 家族中的 成员。Spring Security 基于 Spring 框架，提供了一套 Web 应用安全性的完整解决方案。 正如你可能知道的关于安全方面的两个主要区域是“认证”和“授权”（或者访问控 制），一般来说，Web 应用的安全性包括用户认证（Authentication）和用户授权 （Authorization）两个部分，这两点也是 Spring Security 重要核心功能。 
 
-- [x] 用户认证指的是：验证某个用户是否为系统中的合法主体，也就是说用户能否访问 该系统。用户认证一般要求用户提供用户名和密码。系统通过校验用户名和密码来完成认 证过程。通俗点说就是系统认为用户是否能登录 。
+- [x] 用户认证指的是：验证某个用户是否为系统中的合法主体，也就是说用户能否访问该系统。用户认证一般要求用户提供用户名和密码。系统通过校验用户名和密码来完成认 证过程。通俗点说就是系统认为用户是否能登录 。
 - [x] 用户授权指的是验证某个用户是否有权限执行某个操作。在一个系统中，不同用户 所具有的权限是不同的。比如对一个文件来说，有的用户只能进行读取，而有的用户可以 进行修改。一般来说，系统会为不同的用户分配不同的角色，而每个角色则对应一系列的 权限。通俗点讲就是系统判断用户是否有权限去做某些事情。
 
 
@@ -15,7 +15,7 @@ Spring 是非常流行和成功的 Java 应用开发框架，Spring Security 正
 
 英文单词：principal 
 
-使用系统的用户或设备或从其他系统远程登录的用户等等。简单说就是谁使用系 统谁就是主体。 
+使用系统的用户或设备或从其他系统远程登录的用户等等。简单说就是谁使用系统谁就是主体。 
 
 **认证** 
 
@@ -60,7 +60,7 @@ Apache 旗下的轻量级权限控制框架。
 
 SpringSecurity 本质是一个过滤器链： 
 
-从启动是可以获取到过滤器链： 
+启动可以获取到过滤器链： 
 
 - [x] org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter
 - [x] org.springframework.security.web.context.SecurityContextPersistenceFilter org.springframework.security.web.header.HeaderWriterFilter
