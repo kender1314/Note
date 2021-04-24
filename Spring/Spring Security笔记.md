@@ -86,13 +86,36 @@ SpringSecurity 本质是一个过滤器链：
 
 第三种：自定义编写实现类（继承UsernamePasswordAuthenticationFilter类，可以通过数据库进行认证）
 
+## 配置不需要认证的路径
 
+ignore是完全绕过了spring security的所有filter，相当于不走spring security
 
+```
+@EnableWebSecurity
+public class SecurityConfig extends WebSecurityConfigurerAdapter {
+    @Override
+    public void configure(WebSecurity web) throws Exception {
+        web.ignoring().antMatchers("/css/**");
+        web.ignoring().antMatchers("/js/**");
+        web.ignoring().antMatchers("/fonts/**");
+    }
+}
+```
 
+permitall没有绕过spring security，其中包含了登录的以及匿名的。
 
-
-
-
+```
+@EnableWebSecurity
+public class SecurityConfig extends WebSecurityConfigurerAdapter {
+    @Override
+    public void configure(HttpSecurity http) throws Exception {
+        http
+                .authorizeRequests()
+                .antMatchers("/css/**", "/js/**","/fonts/**").permitAll()
+                .anyRequest().authenticated();
+    }
+}
+```
 
 
 
