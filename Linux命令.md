@@ -682,7 +682,7 @@ netstat -nap|
 2. 客户端发送一个TTL为2的数据包，在第二跳的路由器节点处超时，得到第二跳路由器的地址。
 3. 客户端发送一个TTL为3的数据包，数据包成功到达目标主机，返回一个**端口不可达**错误，traceroute结束。
 
-## Ping命令
+## ping命令
 
 Linux ping命令用于检测主机。
 
@@ -808,6 +808,12 @@ awk -f cal.awk log.txt
 ```
 
 详细用法：https://www.runoob.com/linux/linux-comm-awk.html
+
+
+
+
+
+
 
 
 
