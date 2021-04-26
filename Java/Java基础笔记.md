@@ -1031,7 +1031,7 @@ Java中的异常分为两大类：
 
 2. **checked exception**：指的是编译时异常，该类异常需要本函数必须处理的，用try和catch处理，或者用throws抛出异常，然后交给调用者去处理异常。
 
-3. **runtime exception**：指的是运行时异常，该类异常不必须本函数必须处理，当然也可以处理。
+3. **runtime exception**：指的是运行时异常，该类异常不必本函数必须处理，当然也可以处理。
 
 ![image-20200726201449421](https://cdn.jsdelivr.net/gh/kender1314/NotePicture/20200726201451.png)
 
