@@ -64,6 +64,18 @@ sudo systemctl start docker
 
 ### 镜像
 
+#### 导出镜像
+
+```
+docker save starcoin/starcoin:latest > /home/starcoin.tar
+```
+
+#### 导入镜像
+
+```
+docker load < /home/starcoin.tar
+```
+
 #### 列出本机的所有 image 文件
 
 ```
