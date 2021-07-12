@@ -56,6 +56,12 @@ Apache 旗下的轻量级权限控制框架。
 
 以上只是一个推荐的组合而已，如果单纯从技术上来说，无论怎么组合，都是可以运行 的。
 
+### OAuth2.0
+
+主要用于分布式系统的认证授权？
+
+
+
 ## 基本原理
 
 SpringSecurity 本质是一个过滤器链： 
@@ -116,6 +122,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     }
 }
 ```
+
+
+
+
+
+
 
 
 
